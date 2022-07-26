@@ -20,7 +20,7 @@ class OnBoardingAdapter
             0 -> OnBoardingFragment.newInstance(
                 context.resources.getString(R.string.title_onboarding_1),
                 context.resources.getString(R.string.description_onboarding_1),
-                R.drawable.onboarding_one
+                R.drawable.onboarding_one_try
             )
             1 -> OnBoardingFragment.newInstance(
                 context.resources.getString(R.string.title_onboarding_2),
