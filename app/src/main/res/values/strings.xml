@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BallBall</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_onboarding_1">Bắt kèo nhanh chóng</string>
+    <string name="title_onboarding_2">Tạo trận dễ dàng</string>
+    <string name="title_onboarding_3">Liên lạc đơn giản</string>
+    <string name="description_onboarding_1">Here is an open-source project which shows sweet &amp; original onboarding ViewPagers that follows Material Design Guidelines</string>
+    <string name="skip">Skip</string>
+
+</resources>

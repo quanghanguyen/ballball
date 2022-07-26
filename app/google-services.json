@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "2707857991",
+    "project_id": "ball-ball-866d0",
+    "storage_bucket": "ball-ball-866d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2707857991:android:5106664e1ab06b91d6c762",
+        "android_client_info": {
+          "package_name": "com.example.ballball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2707857991-152afulajeqanj59pn36vhqqk8g9mcu2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ballball",
+            "certificate_hash": "4ab156b54f2b9bf62e8af8d29d315c094ba03a8b"
+          }
+        },
+        {
+          "client_id": "2707857991-ihn7f8uhtk8jempc1ujl694mf3814rj9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYwww8_OaZmgaFwjzmnz92K_q35O29GAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2707857991-ihn7f8uhtk8jempc1ujl694mf3814rj9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
