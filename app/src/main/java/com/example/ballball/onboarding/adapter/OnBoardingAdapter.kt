@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.ballball.R
 import com.example.ballball.onboarding.fragment.OnBoardingFragment
-import javax.inject.Inject
 
 class OnBoardingAdapter
     (fragmentActivity: FragmentActivity,

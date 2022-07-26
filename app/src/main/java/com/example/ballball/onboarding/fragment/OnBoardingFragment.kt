@@ -1,5 +1,6 @@
 package com.example.ballball.onboarding.fragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ class OnBoardingFragment : Fragment() {
 
     private var title: String? = null
     private var description: String? = null
-    private var imageResource = 0
+    private var imageResource : Int = 0
     private lateinit var tvTitle: AppCompatTextView
     private lateinit var tvDescription: AppCompatTextView
     private lateinit var image: ImageView
@@ -40,7 +41,7 @@ class OnBoardingFragment : Fragment() {
         image = onBoardingBinding.image
         tvTitle.text = title
         tvDescription.text = description
-        image.setImageLevel(imageResource)
+        image.setImageResource(imageResource)
         return onBoardingBinding.root
     }
 

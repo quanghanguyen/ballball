@@ -18,7 +18,7 @@
             android:name=".main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".onboarding.activity.OnBoardingActivity"
+            android:name=".onboarding.activity.OnBoardingActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,5 +27,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
