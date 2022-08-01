@@ -4,20 +4,25 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ballball.databinding.ActivityOnBoarding2Binding
+import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.main.MainActivity
 import com.example.ballball.onboarding.adapter.OnBoardingAdapter
 import com.example.ballball.onboarding.transitions.DepthPageTransformer
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.DatabaseConnection
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 
 
 class OnBoardingActivity2 : AppCompatActivity() {
 
     private lateinit var onBoarding2Binding: ActivityOnBoarding2Binding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +38,6 @@ class OnBoardingActivity2 : AppCompatActivity() {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
             window.statusBarColor = Color.TRANSPARENT
         }
-
         onBoarding2Binding.viewPager.setPageTransformer(DepthPageTransformer())
         initViewPager()
         initEvents()
@@ -58,7 +62,7 @@ class OnBoardingActivity2 : AppCompatActivity() {
     private fun next() {
         onBoarding2Binding.next.setOnClickListener {
             if (getItem() > onBoarding2Binding.viewPager.childCount) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, SignInActivity::class.java))
                 finish()
                 Animation.animateSlideLeft(this)
             } else {
@@ -73,7 +77,7 @@ class OnBoardingActivity2 : AppCompatActivity() {
 
     private fun skip() {
         onBoarding2Binding.skip.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, SignInActivity::class.java))
             finish()
             Animation.animateSlideRight(this)
         }

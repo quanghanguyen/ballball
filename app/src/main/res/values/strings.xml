@@ -7,5 +7,13 @@
     <string name="title_onboarding_3">Liên lạc đơn giản</string>
     <string name="description_onboarding_1">Here is an open-source project which shows sweet &amp; original onboarding ViewPagers that follows Material Design Guidelines</string>
     <string name="skip">Skip</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="phone_tutorial">Nhập số điện thoại của bạn để nhận mã xác minh</string>
+    <string name="send_code">Gửi mã</string>
+    <string name="enter_phone_number">Nhập số điện thoại</string>
+    <string name="_84">+84</string>
+    <string name="user_phone_number">+84 869258210</string>
+    <string name="phone_title">Mã OTP 6 số đã được gửi về số máy</string>
+    <string name="verify">Xác minh</string>
 
 </resources>

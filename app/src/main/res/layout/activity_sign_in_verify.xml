@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".login.phone.verify.SignInVerifyActivity"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/back" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/phone_title"
+        android:textColor="#363636"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/user_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/user_phone_number"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <com.chaos.view.PinView
+        android:id="@+id/pin"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_phone_number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:cursorVisible="true"
+        android:textColor="@color/black"
+        app:cursorColor="@color/colorPrimary"
+        app:cursorWidth="2dp"
+        app:itemCount="6"
+        app:itemRadius="8dp"
+        app:itemSpacing="12dp"
+        app:lineColor="#363636"
+        android:inputType="number"
+        />
+
+    <Button
+        android:id="@+id/verify"
+        style="@style/Button"
+        android:text="@string/verify"
+        android:layout_below="@+id/pin"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_shape"/>
+
+    <LinearLayout
+        android:id="@+id/resend_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/verify"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Không nhận được mã ?"
+            android:textColor="#363636"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_regular"
+            />
+
+        <TextView
+            android:id="@+id/resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/inter_bold"
+            android:text="Gửi lại"
+            android:layout_marginStart="4dp"
+            android:background="?android:attr/selectableItemBackground"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/resend_layout"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hoặc thử bằng"
+            android:textColor="#363636"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_regular"
+            />
+
+        <TextView
+            android:id="@+id/try_other_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/inter_bold"
+            android:text="số điện thoại khác"
+            android:layout_marginStart="4dp"
+            android:background="?android:attr/selectableItemBackground"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

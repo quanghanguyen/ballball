@@ -42,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             app:tabBackground="@drawable/onboarding_viewpager_selector_white"
-            app:tabIndicatorHeight="0dp"
             app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
             />
 
         <ImageView
@@ -52,6 +52,7 @@
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/next_icon" />
 
     </RelativeLayout>

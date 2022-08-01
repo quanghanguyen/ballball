@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/onboarding_one"
-        />
+        android:src="@drawable/onboarding_one" />
 
     <RelativeLayout
         android:id="@+id/intro"

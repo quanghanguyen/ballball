@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".user.walkthrough.avatar.AvatarActivity"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/navigation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="24dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/page_selector_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/page_selector_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/page_unselector_background" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="24dp"
+        android:layout_below="@+id/navigation_layout"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn ảnh đại diện"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="Thêm ảnh đại diện để người khác có thể nhận ra bạn"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/avatar"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_below="@+id/title_layout"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--        android:src="@drawable/add_photo_alternate" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/title_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/blank_avatar"
+        app:civ_border_color="#7A7A7A"
+        app:civ_border_width="2dp"
+        />
+
+    <ImageView
+        android:id="@+id/edit_profile_picture_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignEnd="@+id/profile_picture"
+        android:layout_alignBottom="@+id/profile_picture"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/edit_avatar"
+        />
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="80dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/next_icon" />
+
+</RelativeLayout>

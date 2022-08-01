@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.phone.login.SignInActivity"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/sign_in"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/phone_tutorial"
+            android:textColor="#363636"
+            android:textSize="16sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/phone_information"
+        android:layout_width="112dp"
+        android:layout_height="44dp"
+        android:layout_below="@+id/title_container"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/shadow"
+        android:elevation="30dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/vn_flag"
+            android:layout_width="28dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/vn_flag" />
+
+        <TextView
+            android:id="@+id/phone_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/vn_flag"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/_84"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/phone_code"
+            android:src="@drawable/down_icon" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_below="@+id/title_container"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:layout_toEndOf="@+id/phone_information"
+        android:background="@drawable/shadow"
+        android:elevation="30dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_number"
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/shadow"
+            android:drawableEnd="@drawable/ic_baseline_clear_24"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="center_vertical"
+            android:hint="@string/enter_phone_number"
+            android:textColor="@color/black"
+            android:textColorHint="#6D6D6D"
+            android:textSize="16sp"
+            android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/send"
+        style="@style/Button"
+        android:layout_below="@+id/phone_input_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/send_code" />
+
+</RelativeLayout>
