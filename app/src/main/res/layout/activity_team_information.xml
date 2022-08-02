@@ -1,89 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.walkthrough.team.TeamActivity"
-    android:background="@color/white"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".user.teaminformation.TeamInformationActivity"
+    android:background="@color/white">
 
     <RelativeLayout
-        android:id="@+id/navigation_layout"
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back"
-            />
+            android:src="@drawable/back" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="24dp"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/page_selector_background"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/page_selector_background"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/page_selector_background"
-                />
-        </LinearLayout>
-
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:text="Thông tin đội"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/black"
+            />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/navigation_layout"
+        android:layout_below="@+id/title_layout"
         >
 
         <RelativeLayout
             android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             >
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="@font/inter_bold"
-                android:text="Nhập thông tin đội"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                />
 
             <RelativeLayout
                 android:id="@+id/team_image_layout"
                 android:layout_width="242dp"
                 android:layout_height="136dp"
-                android:layout_below="@+id/title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/team_image_background"
@@ -148,8 +110,7 @@
                     android:fontFamily="@font/inter_semibold"
                     android:text="Tên đội"
                     android:textColor="#09101D"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/team_name"
@@ -276,17 +237,15 @@
 
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/next"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <Button
+                android:id="@+id/save"
+                style="@style/Button"
                 android:layout_below="@+id/infomation_layout"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="60dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/next_icon" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Lưu thông tin" />
 
         </RelativeLayout>
 
