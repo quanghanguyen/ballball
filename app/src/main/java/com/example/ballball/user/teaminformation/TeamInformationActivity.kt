@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.ballball.R
@@ -254,7 +255,15 @@ class TeamInformationActivity : AppCompatActivity() {
 
     private fun teamImageObserve() {
         teamInformationViewModel.loadTeamImage.observe(this) {result ->
+            with(teamInformationBinding) {
+                progressBar.visibility = View.GONE
+                titleLayout.visibility = View.VISIBLE
+                scrollView.visibility = View.VISIBLE
+            }
             when (result) {
+                is TeamInformationViewModel.LoadTeamImage.Loading -> {
+                    teamInformationBinding.progressBar.visibility = View.VISIBLE
+                }
                 is TeamInformationViewModel.LoadTeamImage.ResultOk -> {
                     teamInformationBinding.teamImage.setImageBitmap(result.image)
                 }

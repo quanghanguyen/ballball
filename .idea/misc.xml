@@ -8,6 +8,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/bottom_nav_color.xml" value="0.117" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/bottomsheet_background.xml" value="0.1155" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/button_shape.xml" value="0.1155" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/dialog_rounded.xml" value="0.1175" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/edittext_background.xml" value="0.136" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.112" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.1155" />
@@ -55,6 +56,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/layout_bottom_sheet_people_number.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/layout_bottom_sheet_pople_number.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/progressbar_layout.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/sign_out_dialog.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
       </map>
     </option>

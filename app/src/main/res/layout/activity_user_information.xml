@@ -8,7 +8,16 @@
     android:background="@color/white"
     >
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        />
+
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,6 +41,7 @@
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:visibility="gone"
         android:id="@+id/profile_picture"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -43,6 +53,7 @@
         app:civ_border_width="2dp" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/edit_profile_picture_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -55,30 +66,31 @@
         android:src="@drawable/add_a_photo" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_profile_picture_button"
         android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true"
-        android:text="Nguyễn Quang Hà"
         android:textSize="18sp"
         android:fontFamily="@font/inter_medium"
         android:textColor="@color/black"
         />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/user_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/user_name"
-        android:text="+84 869258210"
         android:textColor="#363636"
         android:textSize="16sp"
         />
 
     <View
+        android:visibility="gone"
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -89,6 +101,7 @@
         android:background="#B1B1B1" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -199,6 +212,8 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/sign_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -216,8 +231,7 @@
             android:fontFamily="@font/inter_medium"
             android:text="Đăng xuất"
             android:textColor="#363636"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
         <ImageView
             android:layout_width="20dp"
@@ -227,7 +241,6 @@
             android:layout_toEndOf="@+id/log_out_text"
             android:layout_marginStart="4dp"
             />
-
     </RelativeLayout>
 
 </RelativeLayout>

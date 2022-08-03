@@ -24,6 +24,7 @@ class TeamInformationViewModel @Inject constructor(
     val saveTeamsImage = MutableLiveData<SaveTeamsImage>()
 
     sealed class LoadTeamImage {
+        object Loading : LoadTeamImage()
         class ResultOk(val image : Bitmap) : LoadTeamImage()
         object ResultError : LoadTeamImage()
     }

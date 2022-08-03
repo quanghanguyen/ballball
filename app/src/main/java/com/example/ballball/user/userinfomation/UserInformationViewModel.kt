@@ -27,6 +27,7 @@ class UserInformationViewModel @Inject constructor(
     val saveAvatar = MutableLiveData<SaveAvatar>()
 
     sealed class LoadAvatar {
+        object Loading : LoadAvatar()
         class ResultOk(val image : Bitmap) : LoadAvatar()
         object ResultError : LoadAvatar()
     }
