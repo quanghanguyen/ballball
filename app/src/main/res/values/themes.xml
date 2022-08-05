@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.BallBall" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <!-- Customize your theme here. -->
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
-
+        <item name="android:timePickerStyle">@style/MyTimePickerTheme</item>
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
     </style>
 
@@ -63,6 +63,32 @@
     <style name="MyAlertDialogTheme" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowFixedWidthMajor">90%</item>
         <item name="windowFixedWidthMinor">90%</item>
+    </style>
+
+    <style name="CalenderViewCustom" parent="@android:style/TextAppearance.Small">
+        <item name="colorControlActivated">#FFF500</item>
+        <item name="android:textColorPrimaryInverse">@color/black</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textSize">32sp</item>
+        <item name="fontFamily">@font/inter_regular</item>
+    </style>
+
+    <style name="CustomCalendarDay" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomCalendarWeek" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MyTimePickerTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:timePickerMode">spinner</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
 </resources>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".creatematch.CreateMatchActivity"
+    android:background="@color/white"
+    >
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/inter_bold"
+            android:text="Tạo trận"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:visibility="gone"
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_layout">
+
+        <RelativeLayout
+            android:id="@+id/scroll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <RelativeLayout
+                android:id="@+id/team_image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/team_image_background">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="28dp">
+
+                    <ImageView
+                        android:id="@+id/team_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/add_photo_alternate" />
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/information_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/team_image_layout"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Sân"
+                    android:textColor="#363636"
+                    android:textSize="16sp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/location_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/_location"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_background">
+
+                    <ImageView
+                        android:id="@+id/location_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/location" />
+
+                    <TextView
+                        android:id="@+id/pitch_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/location_icon"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Sân Monaco Huế"
+                        android:textColor="#363636"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/drop_icon" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/location_layout"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Thời gian"
+                    android:textColor="#363636"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:id="@+id/time_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/_time"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_background">
+
+                    <ImageView
+                        android:id="@+id/dot_icon"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/dot" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/dot_icon"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="18:00"
+                        android:textColor="#363636"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/drop_icon" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/time_layout"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Ngày"
+                    android:textColor="#363636"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:id="@+id/date_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/_date"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_background">
+
+                    <CalendarView
+                        android:id="@+id/calendar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:dateTextAppearance="@style/CustomCalendarDay"
+                        android:theme="@style/CalenderViewCustom"
+                        android:weekDayTextAppearance="@style/CustomCalendarWeek" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/people_number_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/date_layout"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:id="@+id/user_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/user" />
+
+                    <TextView
+                        android:id="@+id/_people"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/user_icon"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="Số người:"
+                        android:textColor="#363636"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/people_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/_people"
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="#363636"
+                        android:textSize="16sp"
+                        />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/people_number_layout"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Ghi chú"
+                    android:textColor="#363636"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/_note"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/textview_background"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="Nhập ghi chú"
+                    android:inputType="text"
+                    android:paddingStart="16dp"
+                    android:textColor="#363636"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/save_request"
+                    style="@style/Button"
+                    android:layout_below="@+id/note"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/button_shape"
+                    android:text="Tạo trận"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

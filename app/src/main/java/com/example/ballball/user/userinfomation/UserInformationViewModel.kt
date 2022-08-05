@@ -22,19 +22,15 @@ class UserInformationViewModel @Inject constructor(
     private val avatarRepository: AvatarRepository
     ) : ViewModel() {
 
-    val loadAvatar = MutableLiveData<LoadAvatar>()
-    val loadNameAndPhone = MutableLiveData<LoadNameAndPhone>()
+    val loadUserInfo = MutableLiveData<LoadUserData>()
     val saveAvatar = MutableLiveData<SaveAvatar>()
 
-    sealed class LoadAvatar {
-        object Loading : LoadAvatar()
-        class ResultOk(val image : Bitmap) : LoadAvatar()
-        object ResultError : LoadAvatar()
-    }
-
-    sealed class LoadNameAndPhone {
-        class ResultOk(val userName : String, val userPhone : String) : LoadNameAndPhone()
-        object ResultError : LoadNameAndPhone()
+    sealed class LoadUserData {
+        object Loading : LoadUserData()
+        class LoadAvatarOk(val image: Bitmap) : LoadUserData()
+        object LoadAvatarError : LoadUserData()
+        class LoadNameAndPhoneOk(val userName : String, val userPhone : String) : LoadUserData()
+        object LoadNameAndPhoneError : LoadUserData()
     }
 
     sealed class SaveAvatar {
@@ -42,22 +38,19 @@ class UserInformationViewModel @Inject constructor(
         class ResultError(val errorMessage : String) : SaveAvatar()
     }
 
-    fun loadAvatar(
-        userUID : String,
-        localFile : File
+    fun loadUserInfo(
+        userUID: String,
+        localFile: File
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             homeRepository.loadAvatar(userUID, localFile, {
-                loadAvatar.value = LoadAvatar.ResultOk(it)
+                loadUserInfo.value = LoadUserData.LoadAvatarOk(it)
             }, {
-                loadAvatar.value = LoadAvatar.ResultError
+                loadUserInfo.value = LoadUserData.LoadAvatarError
             })
         }
-    }
-
-    fun loadNameAndPhone(userUID : String) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
@@ -65,10 +58,10 @@ class UserInformationViewModel @Inject constructor(
                 if (it.exists()) {
                     val userName = it.child("userName").value.toString()
                     val userPhone = it.child("userPhone").value.toString()
-                    loadNameAndPhone.value = LoadNameAndPhone.ResultOk(userName, userPhone)
+                    loadUserInfo.value = LoadUserData.LoadNameAndPhoneOk(userName, userPhone)
                 }
             }, {
-                loadNameAndPhone.value = LoadNameAndPhone.ResultError
+                loadUserInfo.value = LoadUserData.LoadNameAndPhoneError
             })
         }
     }

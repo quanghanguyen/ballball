@@ -48,10 +48,7 @@ class UserInformationActivity : AppCompatActivity() {
         initEvents()
         initObserve()
         if (userUID != null) {
-            userInformationViewModel.loadAvatar(userUID, localFile)
-        }
-        if (userUID != null) {
-            userInformationViewModel.loadNameAndPhone(userUID)
+            userInformationViewModel.loadUserInfo(userUID, localFile)
         }
     }
 
@@ -79,6 +76,7 @@ class UserInformationActivity : AppCompatActivity() {
             dialog.dismiss()
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(this, SignInActivity::class.java))
+            Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
             finishAffinity()
             Animation.animateSlideLeft(this)
         }
@@ -171,13 +169,12 @@ class UserInformationActivity : AppCompatActivity() {
     }
 
     private fun initObserve() {
-        loadAvatarObserver()
-        loadNameAndPhoneObserve()
+        loadUserInfoObserve()
         saveAvatarObserve()
     }
 
-    private fun loadAvatarObserver() {
-        userInformationViewModel.loadAvatar.observe(this) {result ->
+    private fun loadUserInfoObserve() {
+        userInformationViewModel.loadUserInfo.observe(this) {result ->
             with(userInformationBinding) {
                 progressBar.visibility = View.GONE
                 titleLayout.visibility = View.VISIBLE
@@ -189,27 +186,19 @@ class UserInformationActivity : AppCompatActivity() {
                 contentLayout.visibility = View.VISIBLE
                 signOut.visibility = View.VISIBLE
             }
-
             when (result) {
-                is UserInformationViewModel.LoadAvatar.Loading -> {
+                is UserInformationViewModel.LoadUserData.Loading -> {
                     userInformationBinding.progressBar.visibility = View.VISIBLE
                 }
-                is UserInformationViewModel.LoadAvatar.ResultOk -> {
+                is UserInformationViewModel.LoadUserData.LoadAvatarOk -> {
                     userInformationBinding.profilePicture.setImageBitmap(result.image)
                 }
-                is UserInformationViewModel.LoadAvatar.ResultError -> {}
-            }
-        }
-    }
-
-    private fun loadNameAndPhoneObserve() {
-        userInformationViewModel.loadNameAndPhone.observe(this) {result ->
-            when (result) {
-                is UserInformationViewModel.LoadNameAndPhone.ResultOk -> {
+                is UserInformationViewModel.LoadUserData.LoadNameAndPhoneOk -> {
                     userInformationBinding.userName.text = result.userName
                     userInformationBinding.userPhoneNumber.text = result.userPhone
                 }
-                is UserInformationViewModel.LoadNameAndPhone.ResultError -> {}
+                is UserInformationViewModel.LoadUserData.LoadAvatarError -> {}
+                is UserInformationViewModel.LoadUserData.LoadNameAndPhoneError -> {}
             }
         }
     }

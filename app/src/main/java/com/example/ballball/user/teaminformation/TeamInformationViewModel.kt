@@ -16,22 +16,18 @@ import javax.inject.Inject
 @HiltViewModel
 class TeamInformationViewModel @Inject constructor(
     private val teamInformationRepository: TeamInformationRepository,
-    private val teamRepository: TeamRepository ) : ViewModel(){
+    private val teamRepository: TeamRepository ) : ViewModel() {
 
-    val loadTeamImage = MutableLiveData<LoadTeamImage>()
     val loadTeamInfo = MutableLiveData<LoadTeamInfo>()
     val saveTeams = MutableLiveData<SaveTeams>()
     val saveTeamsImage = MutableLiveData<SaveTeamsImage>()
 
-    sealed class LoadTeamImage {
-        object Loading : LoadTeamImage()
-        class ResultOk(val image : Bitmap) : LoadTeamImage()
-        object ResultError : LoadTeamImage()
-    }
-
     sealed class LoadTeamInfo {
-        class ResultOk(val teamName : String, val teamLocation : String, val teamPeopleNumber : String, val teamNote : String) : LoadTeamInfo()
-        object ResultError : LoadTeamInfo()
+        object Loading : LoadTeamInfo()
+        class LoadImageOk(val image : Bitmap) : LoadTeamInfo()
+        object LoadImageError : LoadTeamInfo()
+        class LoadInfoOk(val teamName : String, val teamLocation : String, val teamPeopleNumber : String, val teamNote : String) : LoadTeamInfo()
+        object LoadInfoError : LoadTeamInfo()
     }
 
     sealed class SaveTeams {
@@ -44,7 +40,7 @@ class TeamInformationViewModel @Inject constructor(
         class ResultError(val errorMessage : String) : SaveTeamsImage()
     }
 
-    fun loadTeamImage(
+    fun loadTeamInfo (
         userUID : String,
         localFile : File
     ) {
@@ -52,27 +48,20 @@ class TeamInformationViewModel @Inject constructor(
             throwable.printStackTrace()
         }) {
             teamInformationRepository.loadTeamImage(userUID, localFile, {
-                loadTeamImage.value = LoadTeamImage.ResultOk(it)
+                loadTeamInfo.value = LoadTeamInfo.LoadImageOk(it)
             }, {
-                loadTeamImage.value = LoadTeamImage.ResultError
+                loadTeamInfo.value = LoadTeamInfo.LoadImageError
             })
-        }
-    }
-
-    fun loadTeamInfo(userUID : String) {
-        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
-            throwable.printStackTrace()
-        }) {
             teamInformationRepository.loadTeamInfo(userUID, {
                 if (it.exists()) {
                     val teamName = it.child("teamName").value.toString()
                     val teamLocation = it.child("teamLocation").value.toString()
                     val teamPeopleNumber = it.child("teamPeopleNumber").value.toString()
                     val teamNote = it.child("teamNote").value.toString()
-                    loadTeamInfo.value = LoadTeamInfo.ResultOk(teamName, teamLocation, teamPeopleNumber, teamNote)
+                    loadTeamInfo.value = LoadTeamInfo.LoadInfoOk(teamName, teamLocation, teamPeopleNumber, teamNote)
                 }
-            },{
-               loadTeamInfo.value = LoadTeamInfo.ResultError
+            }, {
+                loadTeamInfo.value = LoadTeamInfo.LoadInfoError
             })
         }
     }

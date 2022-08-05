@@ -38,10 +38,7 @@ class TeamInformationActivity : AppCompatActivity() {
         initEvents()
         initObserve()
         if (userUID != null) {
-            teamInformationViewModel.loadTeamImage(userUID, localFile)
-        }
-        if (userUID != null) {
-            teamInformationViewModel.loadTeamInfo(userUID)
+            teamInformationViewModel.loadTeamInfo(userUID, localFile)
         }
     }
 
@@ -54,10 +51,35 @@ class TeamInformationActivity : AppCompatActivity() {
     }
 
     private fun initObserve() {
-        teamImageObserve()
         teamInfoObserve()
         saveTeamImageObserve()
         saveTeamObserve()
+    }
+
+    private fun teamInfoObserve() {
+        teamInformationViewModel.loadTeamInfo.observe(this) {result ->
+            with(teamInformationBinding) {
+                progressBar.visibility = View.GONE
+                titleLayout.visibility = View.VISIBLE
+                scrollView.visibility = View.VISIBLE
+            }
+            when (result) {
+                is TeamInformationViewModel.LoadTeamInfo.Loading -> {
+                    teamInformationBinding.progressBar.visibility = View.VISIBLE
+                }
+                is TeamInformationViewModel.LoadTeamInfo.LoadImageOk -> {
+                    teamInformationBinding.teamImage.setImageBitmap(result.image)
+                }
+                is TeamInformationViewModel.LoadTeamInfo.LoadInfoOk -> {
+                    teamInformationBinding.teamName.setText(result.teamName)
+                    teamInformationBinding.location.text = result.teamLocation
+                    teamInformationBinding.peopleNumber.text = result.teamPeopleNumber
+                    teamInformationBinding.note.setText(result.teamNote)
+                }
+                is TeamInformationViewModel.LoadTeamInfo.LoadImageError -> {}
+                is TeamInformationViewModel.LoadTeamInfo.LoadInfoError -> {}
+            }
+        }
     }
 
     private fun saveTeamObserve() {
@@ -236,39 +258,6 @@ class TeamInformationActivity : AppCompatActivity() {
         teamInformationBinding.back.setOnClickListener {
             finish()
             Animation.animateSlideRight(this)
-        }
-    }
-
-    private fun teamInfoObserve() {
-        teamInformationViewModel.loadTeamInfo.observe(this) {result ->
-            when (result) {
-                is TeamInformationViewModel.LoadTeamInfo.ResultOk -> {
-                    teamInformationBinding.teamName.setText(result.teamName)
-                    teamInformationBinding.location.text = result.teamLocation
-                    teamInformationBinding.peopleNumber.text = result.teamPeopleNumber
-                    teamInformationBinding.note.setText(result.teamNote)
-                }
-                is TeamInformationViewModel.LoadTeamInfo.ResultError -> {}
-            }
-        }
-    }
-
-    private fun teamImageObserve() {
-        teamInformationViewModel.loadTeamImage.observe(this) {result ->
-            with(teamInformationBinding) {
-                progressBar.visibility = View.GONE
-                titleLayout.visibility = View.VISIBLE
-                scrollView.visibility = View.VISIBLE
-            }
-            when (result) {
-                is TeamInformationViewModel.LoadTeamImage.Loading -> {
-                    teamInformationBinding.progressBar.visibility = View.VISIBLE
-                }
-                is TeamInformationViewModel.LoadTeamImage.ResultOk -> {
-                    teamInformationBinding.teamImage.setImageBitmap(result.image)
-                }
-                is TeamInformationViewModel.LoadTeamImage.ResultError -> {}
-            }
         }
     }
 }
