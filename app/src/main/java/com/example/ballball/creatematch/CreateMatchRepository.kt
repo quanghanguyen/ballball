@@ -16,10 +16,15 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
         location : String,
         note : String,
         teamPeopleNumber : String,
+        teamImageUrl : String,
+        locationAddress: String,
+        lat: Double,
+        long: Double,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
-        val requestData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location, note, teamPeopleNumber)
+        val requestData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
+            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long)
         firebaseDatabase.getReference("Request_Match").child(matchID).setValue(requestData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

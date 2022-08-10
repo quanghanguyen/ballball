@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
     private fun initEvents() {
         homeBinding.userAvatar.setOnClickListener {
             startActivity(Intent(context, UserInformationActivity::class.java))
-//            Animation.animateSlideRight(requireContext())
         }
     }
 

@@ -28,6 +28,7 @@ class OnBoardingActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         onBoarding2Binding = ActivityOnBoarding2Binding.inflate(layoutInflater)
         setContentView(onBoarding2Binding.root)
+
         if (Build.VERSION.SDK_INT in 19..20) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
@@ -38,6 +39,7 @@ class OnBoardingActivity2 : AppCompatActivity() {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
             window.statusBarColor = Color.TRANSPARENT
         }
+
         onBoarding2Binding.viewPager.setPageTransformer(DepthPageTransformer())
         initViewPager()
         initEvents()

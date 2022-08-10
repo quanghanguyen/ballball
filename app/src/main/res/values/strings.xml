@@ -15,5 +15,6 @@
     <string name="user_phone_number">+84 869258210</string>
     <string name="phone_title">Mã OTP 6 số đã được gửi về số máy</string>
     <string name="verify">Xác minh</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

@@ -27,6 +27,7 @@ import com.example.ballball.creatematch.CreateMatchActivity
 import com.example.ballball.databinding.ActivityMainBinding
 import com.example.ballball.databinding.LocationAccessDialogBinding
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.MessageConnection.firebaseMessaging
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
     }
 
@@ -74,13 +76,6 @@ class MainActivity : AppCompatActivity() {
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
                         Log.e("Latitude", list[0].latitude.toString())
                         Log.e("Latitude", list[0].longitude.toString())
-//                        mainBinding.apply {
-//                            tvLatitude.text = "Latitude\n${list[0].latitude}"
-//                            tvLongitude.text = "Longitude\n${list[0].longitude}"
-//                            tvCountryName.text = "Country Name\n${list[0].countryName}"
-//                            tvLocality.text = "Locality\n${list[0].locality}"
-//                            tvAddress.text = "Address\n${list[0].getAddressLine(0)}"
-//                        }
                     }
                 }
             } else {

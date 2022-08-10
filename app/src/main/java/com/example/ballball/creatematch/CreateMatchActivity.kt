@@ -3,9 +3,9 @@ package com.example.ballball.creatematch
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,11 +16,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ballball.R
 import com.example.ballball.databinding.*
-import com.example.ballball.login.phone.login.SignInActivity
-import com.example.ballball.utils.Animation
-import com.example.ballball.utils.DatabaseConnection
-import com.example.ballball.utils.MessageConnection
+import com.example.ballball.utils.*
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -42,6 +41,10 @@ class CreateMatchActivity : AppCompatActivity() {
     private var deviceToken : String? = null
     private var teamName : String? = null
     private var phone : String? = null
+    private var teamImageUrl : String? = null
+    private var locationAddress : String? = null
+    private var lat : Double? = null
+    private var long : Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +83,15 @@ class CreateMatchActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 teamName = it.child("teamName").value.toString()
             }
+
+        StorageConnection.storageReference.getReference("Teams").child(userUID).downloadUrl
+            .addOnSuccessListener {
+            teamImageUrl = it.toString()
         }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
+    }
 
     private fun initEvents() {
         disablePreDay()
@@ -99,6 +110,9 @@ class CreateMatchActivity : AppCompatActivity() {
         createMatchBinding.saveRequest.setOnClickListener {
             if (matchDate == null) {
                 Toast.makeText(applicationContext, "Vui lòng chọn ngày", Toast.LENGTH_SHORT).show()
+            }
+            if (locationAddress == null) {
+                Toast.makeText(applicationContext, "Vui lòng chọn sân", Toast.LENGTH_SHORT).show()
             } else {
                 val dialog = Dialog(this, R.style.MyAlertDialogTheme)
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -129,21 +143,28 @@ class CreateMatchActivity : AppCompatActivity() {
             val matchID = DatabaseConnection.databaseReference.getReference("Request_Match").push().key
 
             if (userUID != null) {
-                if (matchID != null) {
-                    deviceToken?.let { deviceToken ->
-                        teamName?.let { teamName ->
-                            phone?.let { phone ->
-                                    createMatchViewModel.saveRequest(userUID, matchID,
-                                        deviceToken, teamName, phone, matchDate!!, time, location, note,
-                                        teamPeopleNumber
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+                createMatchViewModel.saveRequest(userUID, matchID!!,
+                    deviceToken!!, teamName!!, phone!!, matchDate!!, time, location, note,
+                    teamPeopleNumber, teamImageUrl!!,
+                    locationAddress!!, lat!!, long!!
+                )
+                Log.e("Info", userUID)
+                Log.e("Info", matchID)
+                Log.e("Info", deviceToken!!)
+                Log.e("Info", teamName!!)
+                Log.e("Info", phone!!)
+                Log.e("Info", matchDate!!)
+                Log.e("Info", time)
+                Log.e("Info", location)
+                Log.e("Info", note)
+                Log.e("Info", teamPeopleNumber)
+                Log.e("Info", teamImageUrl!!)
+                Log.e("Info", locationAddress!!)
+                Log.e("Info", lat.toString())
+                Log.e("Info", long.toString())
             }
         }
+    }
 
     private fun saveRequestObserve() {
         createMatchViewModel.saveRequest.observe(this) {result ->
@@ -199,41 +220,65 @@ class CreateMatchActivity : AppCompatActivity() {
 
             layoutBottomSheetLocationBinding.khoaHoc.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.khoaHoc.text
+                locationAddress = LocationAddress.khoaHocAddress
+                lat = LocationAddress.khoaHocLat
+                long = LocationAddress.khoaHocLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.monaco.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.monaco.text
+                locationAddress = LocationAddress.monacoAddress
+                lat = LocationAddress.monacoLat
+                long = LocationAddress.monacoLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.lamHoang.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.lamHoang.text
+                locationAddress = LocationAddress.lamHoangAddress
+                lat = LocationAddress.lamHoangLat
+                long = LocationAddress.lamHoangLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.anCuu.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.anCuu.text
+                locationAddress = LocationAddress.anCuuAddress
+                lat = LocationAddress.anCuuLat
+                long = LocationAddress.anCuuLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.luat.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.luat.text
+                locationAddress = LocationAddress.luatAddress
+                lat = LocationAddress.luatLat
+                long = LocationAddress.luatLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.uyenPhuong.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.uyenPhuong.text
+                locationAddress = LocationAddress.uyenPhuongAddress
+                lat = LocationAddress.uyenPhuongLat
+                long = LocationAddress.uyenPhuongLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.yDuoc.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.yDuoc.text
+                locationAddress = LocationAddress.yDuocAddress
+                lat = LocationAddress.yDuocLat
+                long = LocationAddress.yDuocLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.xuanPhu.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.xuanPhu.text
+                locationAddress = LocationAddress.xuanPhuAddress
+                lat = LocationAddress.xuanPhuLat
+                long = LocationAddress.xuanPhuLong
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }

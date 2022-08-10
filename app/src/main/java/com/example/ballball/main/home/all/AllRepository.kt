@@ -1,12 +1,18 @@
 package com.example.ballball.main.home.all
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
     fun loadMatchList (
@@ -16,17 +22,23 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
     ) {
         firebaseDatabase.getReference("Request_Match").addValueEventListener(object :
             ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                    val listRequest = ArrayList<CreateMatchModel>()
                    for (requestSnapshot in snapshot.children) {
                        requestSnapshot.getValue(CreateMatchModel::class.java)?.let {list ->
+                           val current = LocalDate.now()
+                           val matchTime = list.date
+                           val formatter = DateTimeFormatter.ofPattern("d/M/yyyy", Locale.ENGLISH)
+                           val date = LocalDate.parse(matchTime, formatter)
                            when {
-                               userUID != list.clientUID1 && userUID != list.clientUID2 && userUID != list.clientUID3 -> {
+                               userUID != list.userUID &&
+                                       userUID != list.clientUID1 &&
+                                       userUID != list.clientUID2 &&
+                                       userUID != list.clientUID3 &&
+                               date >= current -> {
                                    listRequest.add(0, list)
-                               }
-                               else -> {
-                                   Log.e("Error", "Đã xảy ra lỗi")
                                }
                            }
                        }

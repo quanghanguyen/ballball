@@ -64,13 +64,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_bar"
-        app:tabTextAppearance="@style/CustomTextAppearanceTab"
-        app:tabTextColor="#7A7A7A"
-        app:tabSelectedTextColor="@color/black"
-        app:tabIndicatorHeight="4dp"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorColor="@color/colorPrimary"
-        />
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextAppearance="@style/CustomTextAppearanceTab"
+        app:tabTextColor="#7A7A7A" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

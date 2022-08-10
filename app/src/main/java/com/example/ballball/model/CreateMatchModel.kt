@@ -1,7 +1,10 @@
 package com.example.ballball.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CreateMatchModel (
     @SerializedName("userUID")
     val userUID : String = "",
@@ -23,6 +26,14 @@ data class CreateMatchModel (
     val note : String = "",
     @SerializedName("teamPeopleNumber")
     val teamPeopleNumber : String = "",
+    @SerializedName("teamImageUrl")
+    val teamImageUrl : String = "",
+    @SerializedName("locationAddress")
+    val locationAddress : String = "",
+    @SerializedName("lat")
+    val lat : Double = 1.01,
+    @SerializedName("long")
+    val long : Double = 1.01,
     @SerializedName("click")
     val click : Int = 0,
     @SerializedName("clientUid1")
@@ -31,4 +42,4 @@ data class CreateMatchModel (
     var clientUID2 : String = "",
     @SerializedName("clientUid3")
     var clientUID3 : String = ""
-        )
+        ) : Parcelable

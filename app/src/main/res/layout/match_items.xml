@@ -3,11 +3,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:id="@+id/items">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="380dp"
         app:cardCornerRadius="32dp"
         android:elevation="2dp"
         app:strokeWidth="1dp"
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/team_image"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Mortified Coercion"
                 android:textColor="#363636"
@@ -103,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date_layout"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 >
 
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/time_layout"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_alignStart="@+id/time_layout"
                 >
 
@@ -142,8 +143,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/user_icon"
-                    />
+                    android:src="@drawable/user_icon" />
 
                 <TextView
                     android:id="@+id/people_number"
@@ -163,8 +163,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/location_layout"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 >
 
                 <ImageView

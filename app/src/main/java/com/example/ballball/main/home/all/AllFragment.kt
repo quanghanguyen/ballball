@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.databinding.FragmentAllBinding
+import com.example.ballball.main.home.all.details.AllDetailsActivity
+import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,6 +52,14 @@ class AllFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             allAdapter = HomeAdapter(arrayListOf())
             adapter = allAdapter
+
+            allAdapter.setOnItemClickListerner(object :
+                OnItemClickListerner {
+                override fun onItemClick(requestData: CreateMatchModel) {
+                    AllDetailsActivity.startDetails(context, requestData)
+                    }
+                }
+            )
         }
     }
 
