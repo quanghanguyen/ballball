@@ -43,6 +43,7 @@ import com.example.ballball.utils.Model.teamPeopleNumber
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -65,7 +66,8 @@ class AllDetailsActivity : AppCompatActivity() {
     var name : String? = null
     var click : Int? = null
     var matchID : String? = null
-
+    var clientUID : String? = null
+    var clientTeamName : String? = null
 
     companion object {
         private const val KEY_DATA = "request_data"
@@ -87,12 +89,20 @@ class AllDetailsActivity : AppCompatActivity() {
     }
 
     private fun initEvents() {
+        handleVariable()
         binding()
         getLocation()
         openMap()
         back()
         phoneCall()
         catchMatch()
+    }
+
+    private fun handleVariable() {
+        FirebaseDatabase.getInstance().getReference("Teams").child(userUID!!).get()
+            .addOnSuccessListener {
+                clientTeamName = it.child("teamName").value.toString()
+            }
     }
 
     private fun initObserve() {
@@ -117,11 +127,14 @@ class AllDetailsActivity : AppCompatActivity() {
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                     successDialogBinding = SuccessDialogBinding.inflate(layoutInflater)
                     dialog.setContentView(successDialogBinding.root)
-                    dialog.setCancelable(true)
+                    dialog.setCancelable(false)
                     dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     successDialogBinding.text.text = "Yêu cầu của bạn đã được gửi, chờ $name xác nhận"
-                    finish()
-                    Animation.animateSlideRight(this)
+                    successDialogBinding.successLayout.setOnClickListener {
+                        dialog.dismiss()
+                        finish()
+                        Animation.animateSlideRight(this)
+                    }
                     dialog.show()
                 }
                 is AllDetailsViewModel.CatchMatch.ResultError -> {}
@@ -147,8 +160,8 @@ class AllDetailsActivity : AppCompatActivity() {
                         click?.let { click ->
                             allDetailsViewModel.handleCatchMatch(matchID, userUID, clientUID, click)
                             allDetailsViewModel.saveWaitMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
-                                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!,
-                                                teamImageUrl!!, destinationAddress!!, destinationLat!!, destinationLong!!, click)
+                                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
+                                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!)
                         }
                     }
                 }
@@ -212,6 +225,7 @@ class AllDetailsActivity : AppCompatActivity() {
                 teamPeopleNumber = data?.teamPeopleNumber
                 teamImageUrl = data?.teamImageUrl
                 matchLocation = data?.location
+                clientUID = data?.userUID
             }
         }
     }

@@ -104,6 +104,16 @@ class CreateMatchActivity : AppCompatActivity() {
     private fun initObserves() {
         teamInfoObserve()
         saveRequestObserve()
+        notificationObserve()
+    }
+
+    private fun notificationObserve() {
+        createMatchViewModel.notification.observe(this) {result ->
+            when(result) {
+                is CreateMatchViewModel.NotificationResult.ResultOk -> {}
+                is CreateMatchViewModel.NotificationResult.ResultError -> {}
+            }
+        }
     }
 
     private fun saveRequest() {
@@ -148,6 +158,7 @@ class CreateMatchActivity : AppCompatActivity() {
                     teamPeopleNumber, teamImageUrl!!,
                     locationAddress!!, lat!!, long!!
                 )
+                createMatchViewModel.notification(matchID, teamName!!)
                 Log.e("Info", userUID)
                 Log.e("Info", matchID)
                 Log.e("Info", deviceToken!!)

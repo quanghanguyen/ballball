@@ -1,5 +1,6 @@
 package com.example.ballball.creatematch
 
+import com.example.ballball.model.AllNotificationModel
 import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
@@ -34,6 +35,26 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
                 }
             }
             .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+
+    fun notification(
+        matchID : String,
+        teamName: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val allNotification = AllNotificationModel(matchID, teamName)
+        firebaseDatabase.getReference("Request_Match_Notification").child(matchID).setValue(allNotification)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                }
+                else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }.addOnFailureListener {
                 onFail(it.message.orEmpty())
             }
         }

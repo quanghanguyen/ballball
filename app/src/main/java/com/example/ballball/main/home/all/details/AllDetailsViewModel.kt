@@ -45,13 +45,13 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
     fun saveWaitMatch (
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
-        teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
+        teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int, clientTeamName : String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             allDetailsRepository.waitMatch(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
-                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, {
+                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName, {
                 waitMatch.value = WaitMatch.ResultOk
             }, {
                 waitMatch.value = WaitMatch.ResultError

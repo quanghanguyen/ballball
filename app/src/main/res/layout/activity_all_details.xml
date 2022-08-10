@@ -85,7 +85,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/alert_icon"
                 android:fontFamily="@font/inter_medium"
-                android:text="Trận này đã có"
+                android:text="Trận này đang có"
                 android:textColor="#FF4A4A"
                 android:textSize="12sp" />
 

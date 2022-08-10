@@ -21,6 +21,7 @@ class CreateMatchViewModel @Inject constructor(
 
     val loadTeamInfo = MutableLiveData<LoadTeamInfo>()
     val saveRequest = MutableLiveData<SaveRequest>()
+    val notification = MutableLiveData<NotificationResult>()
 
     sealed class LoadTeamInfo {
         object Loading : LoadTeamInfo()
@@ -33,6 +34,11 @@ class CreateMatchViewModel @Inject constructor(
         object Loading : SaveRequest()
         object ResultOk : SaveRequest()
         class ResultError(val errorMessage : String) : SaveRequest()
+    }
+
+    sealed class NotificationResult {
+        object ResultOk : NotificationResult()
+        object ResultError : NotificationResult()
     }
 
     fun loadTeamInfo (
@@ -86,4 +92,19 @@ class CreateMatchViewModel @Inject constructor(
             })
         }
     }
+
+    fun notification(
+        matchID: String,
+        teamName: String
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            createMatchRepository.notification(matchID, teamName,{
+                    saveRequest.value = SaveRequest.ResultOk
+                }, {
+                    saveRequest.value = SaveRequest.ResultError(it)
+                })
+            }
+        }
     }

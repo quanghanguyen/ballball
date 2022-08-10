@@ -29,7 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (remoteMessage.data.isNotEmpty()) {
-            showNotification(remoteMessage.data["teamName"])
+            showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
         }
 
         remoteMessage.notification?.let {
@@ -37,9 +37,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun showNotification(teamName: String?) {
+    private fun showNotification(title: String?, content: String?) {
         val intent = Intent(this, MainActivity::class.java)
-        Animation.animateSlideLeft(this)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -50,16 +49,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(notificationChannel)
 
             builder = NotificationCompat.Builder(this, channelId)
-                .setContentTitle("Thông báo")
-                .setContentText("Có trận mới từ đội $teamName")
+                .setContentTitle(title)
+                .setContentText(content)
                 .setSmallIcon(R.drawable.sym_def_app_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.sym_def_app_icon))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
         } else {
             builder = NotificationCompat.Builder(this, channelId)
-                .setContentTitle("Thông báo")
-                .setContentText("Có trận mới từ đội $teamName")
+                .setContentTitle(title)
+                .setContentText(content)
                 .setSmallIcon(R.drawable.sym_def_app_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.sym_def_app_icon))
                 .setContentIntent(pendingIntent)
