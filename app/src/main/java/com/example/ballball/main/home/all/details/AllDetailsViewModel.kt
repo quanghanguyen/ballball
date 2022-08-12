@@ -13,8 +13,6 @@ import javax.inject.Inject
 class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: AllDetailsRepository) : ViewModel()
 {
     val catchMatch = MutableLiveData<CatchMatch>()
-//    val waitMatch = MutableLiveData<WaitMatch>()
-//    val waitMatchNotification = MutableLiveData<WaitMatchNotification>()
 
     sealed class CatchMatch {
         object ResultOk : CatchMatch()
@@ -23,23 +21,15 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         object WaitMatchError : CatchMatch()
         object WaitMatchNotificationOk : CatchMatch()
         object WaitMatchNotificationError : CatchMatch()
+        object ConfirmMatchOk : CatchMatch()
+        object ConfirmMatchError : CatchMatch()
     }
-
-//    sealed class WaitMatch {
-//        object ResultOk : WaitMatch()
-//        object ResultError : WaitMatch()
-//    }
-
-//    sealed class WaitMatchNotification {
-//        object ResultOk: WaitMatchNotification()
-//        object ResultError: WaitMatchNotification()
-//    }
 
     fun handleCatchMatch(
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientUID : String
+        clientTeamName : String, clientUID : String, clientImageUrl: String, teamConfirmUID : String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
@@ -55,7 +45,8 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
             throwable.printStackTrace()
         }) {
             allDetailsRepository.waitMatch(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
-                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName, {
+                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName,
+                teamConfirmUID, {
                     catchMatch.value = CatchMatch.WaitMatchOk
                 }, {
                     catchMatch.value = CatchMatch.WaitMatchError
@@ -71,36 +62,17 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
                 catchMatch.value = CatchMatch.WaitMatchNotificationError
             })
         }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            allDetailsRepository.confirmMatch(teamConfirmUID, matchID, deviceToken, teamName, teamPhone, date,
+                time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
+                clientTeamName, clientImageUrl, {
+                    catchMatch.value = CatchMatch.ConfirmMatchOk
+                }, {
+                    catchMatch.value = CatchMatch.ConfirmMatchError
+                })
+            }
+        }
     }
-
-//    fun saveWaitMatch (
-//        userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
-//        date : String, time : String, location : String, note : String, teamPeopleNumber: String,
-//        teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int, clientTeamName : String
-//    ) {
-//        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
-//            throwable.printStackTrace()
-//        }) {
-//            allDetailsRepository.waitMatch(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
-//                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName, {
-//                waitMatch.value = WaitMatch.ResultOk
-//            }, {
-//                waitMatch.value = WaitMatch.ResultError
-//            })
-//        }
-//    }
-
-//    fun saveWaitMatchNotification(
-//        userUID: String, matchID: String, date: String, time: String, clientTeamName: String
-//    ) {
-//        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
-//            throwable.printStackTrace()
-//        }) {
-//            allDetailsRepository.waitMatchNotification(userUID, matchID, date, time, clientTeamName, {
-//                waitMatchNotification.value = WaitMatchNotification.ResultOk
-//            }, {
-//                waitMatchNotification.value = WaitMatchNotification.ResultError
-//            })
-//        }
-//    }
-}

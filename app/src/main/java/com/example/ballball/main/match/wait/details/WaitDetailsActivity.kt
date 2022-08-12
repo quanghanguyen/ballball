@@ -15,8 +15,6 @@ import com.example.ballball.R
 import com.example.ballball.databinding.ActivityWaitDetailsBinding
 import com.example.ballball.databinding.SignOutDialogBinding
 import com.example.ballball.databinding.SuccessDialogBinding
-import com.example.ballball.main.home.all.details.AllDetailsActivity
-import com.example.ballball.main.match.newcreate.details.NewCreateDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
@@ -24,7 +22,7 @@ import com.example.ballball.utils.Model.clientTeamName
 import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchID
 import com.example.ballball.utils.Model.matchTime
-import com.example.ballball.utils.Model.teamname
+import com.example.ballball.utils.Model.teamName
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,7 +106,7 @@ class WaitDetailsActivity : AppCompatActivity() {
             dialog.setCancelable(false)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             signOutDialogBinding.title.text = "Hủy yêu cầu"
-            signOutDialogBinding.content.text = "Bạn có muốn hủy yêu cầu bắt trận với $teamname không?"
+            signOutDialogBinding.content.text = "Bạn có muốn hủy yêu cầu bắt trận với $teamName không?"
             signOutDialogBinding.yes.setOnClickListener {
                 if (userUID != null) {
                     waitDetailsViewModel.cancelWaitMatch(userUID, matchID!!, matchDate!!, matchTime!!, clientTeamName!!)
@@ -146,7 +144,7 @@ class WaitDetailsActivity : AppCompatActivity() {
                 locationAddress.text = data?.locationAddress
                 note.text = data?.note
                 matchID = data?.matchID
-                teamname = data?.teamName
+                Model.teamName = data?.teamName
                 matchDate = data?.date
                 matchTime = data?.time
 

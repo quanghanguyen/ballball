@@ -33,13 +33,16 @@ import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.Model.clientImageUrl
 import com.example.ballball.utils.Model.deviceToken
 import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchLocation
 import com.example.ballball.utils.Model.matchTime
+import com.example.ballball.utils.Model.teamConfirmUID
 import com.example.ballball.utils.Model.teamImageUrl
 import com.example.ballball.utils.Model.teamNote
 import com.example.ballball.utils.Model.teamPeopleNumber
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -66,7 +69,6 @@ class AllDetailsActivity : AppCompatActivity() {
     var name : String? = null
     var click : Int? = null
     var matchID : String? = null
-    var clientUID : String? = null
     var clientTeamName : String? = null
 
     companion object {
@@ -103,31 +105,19 @@ class AllDetailsActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 clientTeamName = it.child("teamName").value.toString()
             }
+
+        StorageConnection.storageReference.getReference("Teams").child(userUID).downloadUrl
+            .addOnSuccessListener {
+                clientImageUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
     }
 
     private fun initObserve() {
         catchMatchObserve()
-//        saveWaitMatchObserve()
-//        saveWaitMatchNotification()
     }
-
-//    private fun saveWaitMatchNotification() {
-//        allDetailsViewModel.waitMatchNotification.observe(this) {result ->
-//            when (result) {
-//                is AllDetailsViewModel.WaitMatchNotification.ResultOk -> {}
-//                is AllDetailsViewModel.WaitMatchNotification.ResultError -> {}
-//            }
-//        }
-//    }
-
-//    private fun saveWaitMatchObserve() {
-//        allDetailsViewModel.waitMatch.observe(this) {result ->
-//            when (result) {
-//                is AllDetailsViewModel.WaitMatch.ResultOk -> {}
-//                is AllDetailsViewModel.WaitMatch.ResultError -> {}
-//            }
-//        }
-//    }
 
     private fun catchMatchObserve() {
         allDetailsViewModel.catchMatch.observe(this) {result ->
@@ -152,6 +142,8 @@ class AllDetailsActivity : AppCompatActivity() {
                 is AllDetailsViewModel.CatchMatch.WaitMatchError -> {}
                 is AllDetailsViewModel.CatchMatch.WaitMatchNotificationOk -> {}
                 is AllDetailsViewModel.CatchMatch.WaitMatchNotificationError -> {}
+                is AllDetailsViewModel.CatchMatch.ConfirmMatchOk -> {}
+                is AllDetailsViewModel.CatchMatch.ConfirmMatchError -> {}
             }
         }
     }
@@ -172,16 +164,10 @@ class AllDetailsActivity : AppCompatActivity() {
                 matchID?.let { matchID ->
                     if (userUID != null) {
                         click?.let { click ->
-                            //update Request_Match databse
                             allDetailsViewModel.handleCatchMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
-                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID)
-                            //save waitMatch
-//                            allDetailsViewModel.saveWaitMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
-//                                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
-//                                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!)
-//                            //save waitRequest_Notification
-//                            allDetailsViewModel.saveWaitMatchNotification(userUID, matchID, matchDate!!, matchTime!!, clientTeamName!!)
+                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
+                                clientImageUrl!!, teamConfirmUID!!)
                             //Log
                             Log.e("userUID", userUID)
                             Log.e("matchID", matchID)
@@ -262,7 +248,7 @@ class AllDetailsActivity : AppCompatActivity() {
                 teamPeopleNumber = data?.teamPeopleNumber
                 teamImageUrl = data?.teamImageUrl
                 matchLocation = data?.location
-                clientUID = data?.userUID
+                teamConfirmUID = data?.userUID
             }
         }
     }

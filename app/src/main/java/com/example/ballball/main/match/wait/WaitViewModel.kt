@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WaitViewModel @Inject constructor(private val waitRepository: WaitRepository) : ViewModel() {
+
     val loadWait = MutableLiveData<LoadWaitResult>()
 
     sealed class LoadWaitResult {

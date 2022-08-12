@@ -45,16 +45,15 @@
                 android:id="@+id/wait_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/new_create"
-                android:text="Chờ xác nhận"
-                android:textColor="@color/white"
-                android:background="@drawable/wait_confirm_background"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:paddingHorizontal="12dp"
+                android:layout_toEndOf="@+id/new_create"
+                android:background="@drawable/wait_confirm_background"
                 android:fontFamily="@font/inter_medium"
-                android:textSize="12sp"
-                />
+                android:paddingHorizontal="12dp"
+                android:text="Chưa xác nhận"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/team_name"

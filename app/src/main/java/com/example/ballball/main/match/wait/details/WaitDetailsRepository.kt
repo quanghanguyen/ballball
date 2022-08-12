@@ -6,7 +6,10 @@ import javax.inject.Inject
 
 class WaitDetailsRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
 
-    fun cancelRequest(userUID: String, matchID: String, onSuccess : (String) -> Unit, onFail : (String) -> Unit) {
+    fun cancelRequest(userUID: String, matchID: String,
+                      onSuccess : (String) -> Unit,
+                      onFail : (String) -> Unit)
+    {
         firebaseDatabase.getReference("waitRequest").child(userUID).child(matchID).removeValue()
             .addOnCompleteListener {
                 if (it.isSuccessful) {

@@ -9,8 +9,15 @@ object Model {
     var teamImageUrl : String? = null
     var matchLocation : String? = null
     var matchID : String? = null
-    var teamname : String? = null
+    var teamName : String? = null
     var clientTeamName : String? = null
+    var clientImageUrl : String? = null
+    var teamConfirmUID : String? = null
+    var teamPhone : String? = null
+    var locationAddress : String? = null
+    var lat : Double? = null
+    var long : Double? = null
+    var click : Int? = null
 
     var currentAddress : String? = null
     var currentLat : Double? = null

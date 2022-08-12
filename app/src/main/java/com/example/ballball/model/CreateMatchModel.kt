@@ -38,6 +38,8 @@ data class CreateMatchModel (
     val click : Int = 0,
     @SerializedName("clientTeamName")
     val clientTeamName : String = "",
+    @SerializedName("clientImageUrl")
+    val clientImageUrl : String = "",
     @SerializedName("clientUid")
 //    val clientUid : String = "",
 //    @SerializedName("clientUid1")

@@ -1,4 +1,4 @@
-package com.example.ballball.main.match.upcoming
+package com.example.ballball.main.match.confirm
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -13,13 +13,13 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class UpComingRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
-    fun loadUpComingList(
+class ConfirmRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
+    fun loadConfirmList(
         userUID : String,
         onSuccess : (ArrayList<CreateMatchModel>) -> Unit,
         onFail : (String) -> Unit
     ) {
-        firebaseDatabase.getReference("upComingMatch").child(userUID).addValueEventListener(object :
+        firebaseDatabase.getReference("confirmRequest").child(userUID).addValueEventListener(object :
             ValueEventListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {

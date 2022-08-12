@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.match.wait.details.WaitDetailsActivity"
+    tools:context=".main.match.confirm.details.ConfirmDetailsActivity"
     android:background="@color/white">
 
     <RelativeLayout
@@ -61,64 +61,63 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/click_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/team_image_layout"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            >
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/click_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/team_image_layout"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:gravity="center"-->
+<!--            >-->
 
-            <ImageView
-                android:id="@+id/alert_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/alert_icon"
-                />
+<!--            <ImageView-->
+<!--                android:id="@+id/alert_icon"-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:src="@drawable/alert_icon" />-->
 
-            <TextView
-                android:id="@+id/_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/alert_icon"
-                android:fontFamily="@font/inter_medium"
-                android:text="Trận này đang có"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_toEndOf="@+id/alert_icon"-->
+<!--                android:fontFamily="@font/inter_medium"-->
+<!--                android:text="Trận này đang có"-->
+<!--                android:textColor="#FF4A4A"-->
+<!--                android:textSize="12sp" />-->
 
-            <TextView
-                android:id="@+id/click_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/_text"
-                android:fontFamily="@font/inter_medium"
-                android:text="X"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/click_number"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:layout_toEndOf="@+id/_text"-->
+<!--                android:fontFamily="@font/inter_medium"-->
+<!--                android:text="X"-->
+<!--                android:textColor="#FF4A4A"-->
+<!--                android:textSize="12sp" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/click_number"
-                android:fontFamily="@font/inter_medium"
-                android:text="người gửi yêu cầu"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:layout_toEndOf="@+id/click_number"-->
+<!--                android:fontFamily="@font/inter_medium"-->
+<!--                android:text="người gửi yêu cầu"-->
+<!--                android:textColor="#FF4A4A"-->
+<!--                android:textSize="12sp" />-->
 
-        </RelativeLayout>
+<!--        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/match_information"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_below="@+id/click_layout"
+            android:layout_below="@+id/team_image_layout"
             android:layout_marginTop="16dp"
             android:background="@drawable/textview_background">
 
@@ -469,30 +468,30 @@
                 android:textSize="12sp" />
 
         </RelativeLayout>
-        
-<!--        <TextView-->
-<!--            android:id="@+id/deny_match"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#7A7A7A"-->
-<!--            android:text="Từ chối"-->
-<!--            android:fontFamily="@font/inter_semibold"-->
-<!--            android:background="?android:attr/selectableItemBackground"-->
-<!--            android:layout_below="@+id/note_layout"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            />-->
 
-
-        <Button
-            android:id="@+id/cancel_request"
-            style="@style/Button"
+        <TextView
+            android:id="@+id/deny_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#7A7A7A"
+            android:text="Từ chối"
+            android:fontFamily="@font/inter_semibold"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_below="@+id/note_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
+            />
+
+
+        <Button
+            android:id="@+id/accept_request"
+            style="@style/Button"
+            android:layout_below="@+id/deny_match"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
             android:background="@drawable/button_shape"
-            android:text="Hủy yêu cầu"
+            android:text="Đồng ý"
             android:textAllCaps="false"
             />
 
