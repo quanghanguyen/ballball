@@ -60,6 +60,12 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="CustomTextAppearanceTab_Small" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="MyAlertDialogTheme" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowFixedWidthMajor">90%</item>
         <item name="windowFixedWidthMinor">90%</item>

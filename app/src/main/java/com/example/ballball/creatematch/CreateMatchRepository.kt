@@ -58,4 +58,37 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
                 onFail(it.message.orEmpty())
             }
         }
+
+    fun saveNewCreate(
+        userUID : String,
+        matchID : String,
+        deviceToken : String,
+        teamName : String,
+        teamPhone : String,
+        date : String,
+        time : String,
+        location : String,
+        note : String,
+        teamPeopleNumber : String,
+        teamImageUrl : String,
+        locationAddress: String,
+        lat: Double,
+        long: Double,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val upComingData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
+            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long)
+        firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).setValue(upComingData)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+            onFail(it.message.orEmpty())
+            }
+        }
     }

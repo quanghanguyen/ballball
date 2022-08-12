@@ -22,6 +22,7 @@ class CreateMatchViewModel @Inject constructor(
     val loadTeamInfo = MutableLiveData<LoadTeamInfo>()
     val saveRequest = MutableLiveData<SaveRequest>()
     val notification = MutableLiveData<NotificationResult>()
+    val saveNewCreate = MutableLiveData<NewCreateResult>()
 
     sealed class LoadTeamInfo {
         object Loading : LoadTeamInfo()
@@ -35,10 +36,13 @@ class CreateMatchViewModel @Inject constructor(
         object ResultOk : SaveRequest()
         class ResultError(val errorMessage : String) : SaveRequest()
     }
-
     sealed class NotificationResult {
         object ResultOk : NotificationResult()
         object ResultError : NotificationResult()
+    }
+    sealed class NewCreateResult {
+        object ResultOk : NewCreateResult()
+        object ResultError : NewCreateResult()
     }
 
     fun loadTeamInfo (
@@ -104,6 +108,34 @@ class CreateMatchViewModel @Inject constructor(
                     saveRequest.value = SaveRequest.ResultOk
                 }, {
                     saveRequest.value = SaveRequest.ResultError(it)
+                })
+            }
+        }
+
+    fun saveNewCreate(
+        userUID : String,
+        matchID : String,
+        deviceToken : String,
+        teamName : String,
+        teamPhone : String,
+        date : String,
+        time : String,
+        location : String,
+        note : String,
+        teamPeopleNumber: String,
+        teamImageUrl: String,
+        locationAddress: String,
+        lat: Double,
+        long: Double
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            createMatchRepository.saveNewCreate(userUID, matchID, deviceToken, teamName, teamPhone,
+                date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long,{
+                    saveNewCreate.value = NewCreateResult.ResultOk
+                }, {
+                    saveNewCreate.value = NewCreateResult.ResultError
                 })
             }
         }

@@ -105,6 +105,16 @@ class CreateMatchActivity : AppCompatActivity() {
         teamInfoObserve()
         saveRequestObserve()
         notificationObserve()
+        saveUpComingObserve()
+    }
+
+    private fun saveUpComingObserve() {
+        createMatchViewModel.saveNewCreate.observe(this) {result ->
+            when (result) {
+                is CreateMatchViewModel.NewCreateResult.ResultOk -> {}
+                is CreateMatchViewModel.NewCreateResult.ResultError -> {}
+            }
+        }
     }
 
     private fun notificationObserve() {
@@ -153,12 +163,19 @@ class CreateMatchActivity : AppCompatActivity() {
             val matchID = DatabaseConnection.databaseReference.getReference("Request_Match").push().key
 
             if (userUID != null) {
+                //save request match
                 createMatchViewModel.saveRequest(userUID, matchID!!,
                     deviceToken!!, teamName!!, phone!!, matchDate!!, time, location, note,
                     teamPeopleNumber, teamImageUrl!!,
-                    locationAddress!!, lat!!, long!!
-                )
+                    locationAddress!!, lat!!, long!!)
+                //save request match notifications
                 createMatchViewModel.notification(matchID, teamName!!)
+                //save new create match
+                createMatchViewModel.saveNewCreate(userUID, matchID,
+                    deviceToken!!, teamName!!, phone!!, matchDate!!, time, location, note,
+                    teamPeopleNumber, teamImageUrl!!,
+                    locationAddress!!, lat!!, long!!)
+
                 Log.e("Info", userUID)
                 Log.e("Info", matchID)
                 Log.e("Info", deviceToken!!)

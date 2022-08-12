@@ -107,17 +107,27 @@ class AllDetailsActivity : AppCompatActivity() {
 
     private fun initObserve() {
         catchMatchObserve()
-        saveWaitMatchObserve()
+//        saveWaitMatchObserve()
+//        saveWaitMatchNotification()
     }
 
-    private fun saveWaitMatchObserve() {
-        allDetailsViewModel.waitMatch.observe(this) {result ->
-            when (result) {
-                is AllDetailsViewModel.WaitMatch.ResultOk -> {}
-                is AllDetailsViewModel.WaitMatch.ResultError -> {}
-            }
-        }
-    }
+//    private fun saveWaitMatchNotification() {
+//        allDetailsViewModel.waitMatchNotification.observe(this) {result ->
+//            when (result) {
+//                is AllDetailsViewModel.WaitMatchNotification.ResultOk -> {}
+//                is AllDetailsViewModel.WaitMatchNotification.ResultError -> {}
+//            }
+//        }
+//    }
+
+//    private fun saveWaitMatchObserve() {
+//        allDetailsViewModel.waitMatch.observe(this) {result ->
+//            when (result) {
+//                is AllDetailsViewModel.WaitMatch.ResultOk -> {}
+//                is AllDetailsViewModel.WaitMatch.ResultError -> {}
+//            }
+//        }
+//    }
 
     private fun catchMatchObserve() {
         allDetailsViewModel.catchMatch.observe(this) {result ->
@@ -138,6 +148,10 @@ class AllDetailsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is AllDetailsViewModel.CatchMatch.ResultError -> {}
+                is AllDetailsViewModel.CatchMatch.WaitMatchOk -> {}
+                is AllDetailsViewModel.CatchMatch.WaitMatchError -> {}
+                is AllDetailsViewModel.CatchMatch.WaitMatchNotificationOk -> {}
+                is AllDetailsViewModel.CatchMatch.WaitMatchNotificationError -> {}
             }
         }
     }
@@ -158,10 +172,33 @@ class AllDetailsActivity : AppCompatActivity() {
                 matchID?.let { matchID ->
                     if (userUID != null) {
                         click?.let { click ->
-                            allDetailsViewModel.handleCatchMatch(matchID, userUID, clientUID, click)
-                            allDetailsViewModel.saveWaitMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
-                                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
-                                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!)
+                            //update Request_Match databse
+                            allDetailsViewModel.handleCatchMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
+                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
+                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID)
+                            //save waitMatch
+//                            allDetailsViewModel.saveWaitMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
+//                                                matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
+//                                                destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!)
+//                            //save waitRequest_Notification
+//                            allDetailsViewModel.saveWaitMatchNotification(userUID, matchID, matchDate!!, matchTime!!, clientTeamName!!)
+                            //Log
+                            Log.e("userUID", userUID)
+                            Log.e("matchID", matchID)
+                            Log.e("deviceToken", deviceToken!!)
+                            Log.e("name", name!!)
+                            Log.e("phoneNumber", phoneNumber!!)
+                            Log.e("matchDate", matchDate!!)
+                            Log.e("matchTime", matchTime!!)
+                            Log.e("matchLocation", matchLocation!!)
+                            Log.e("teamNote", teamNote!!)
+                            Log.e("teamPeopleNumber", teamPeopleNumber!!)
+                            Log.e("teamImageUrl", teamImageUrl!!)
+                            Log.e("destinationAddress", destinationAddress!!)
+                            Log.e("destinationLat", destinationLat!!.toString())
+                            Log.e("destinationLong", destinationLong!!.toString())
+                            Log.e("click", click.toString())
+                            Log.e("clientTeamName", clientTeamName!!)
                         }
                     }
                 }

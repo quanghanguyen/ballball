@@ -33,7 +33,9 @@
             android:fontFamily="@font/inter_medium"
             android:text="Bạn có muốn đăng xuất không?"
             android:textColor="#363636"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginEnd="20dp"
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"

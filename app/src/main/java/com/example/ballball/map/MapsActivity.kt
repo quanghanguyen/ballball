@@ -115,11 +115,9 @@ class MapsActivity :
 
         val originLocation = LatLng(currentLat!!, currentLong!!)
         val destinationLocation = LatLng(destinationLat!!, destinationLong!!)
-//        val destinationLocation = LatLng(16.48194127564437, 107.60030369996487)
 
         mapFragment.getMapAsync {
             map = it
-//            map.addMarker(MarkerOptions().position(destinationLocation))
             val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
             GetDirection(urll).execute()
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))

@@ -21,11 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BallBall"
         tools:targetApi="31">
+        <activity
+            android:name=".main.match.wait.details.WaitDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.match.newcreate.details.NewCreateDetailsActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCAJDtAbxn74gSDZ82i5oDUDRUgZuQkQpU"
-            />
+            android:value="AIzaSyCAJDtAbxn74gSDZ82i5oDUDRUgZuQkQpU" />
 
         <activity
             android:name=".map.MapsActivity"
@@ -76,15 +81,15 @@
 
         <service
             android:name=".messageservice.MyFirebaseMessagingService"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND"
-            tools:ignore="ExtraText"
-            android:exported="true">
+            tools:ignore="ExtraText">
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
     </application>
+
 </manifest>
