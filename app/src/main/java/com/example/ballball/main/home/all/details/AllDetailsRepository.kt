@@ -35,7 +35,7 @@ class AllDetailsRepository @Inject constructor(private val firebaseDatabase: Fir
         }
 
     fun waitMatch(
-        userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
+        uID: String, userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
         clientTeamName : String, clientImageUrl : String,
@@ -45,7 +45,7 @@ class AllDetailsRepository @Inject constructor(private val firebaseDatabase: Fir
         val waitData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
             clientTeamName, clientImageUrl)
-        firebaseDatabase.getReference("waitRequest").child(userUID).child(matchID).setValue(waitData)
+        firebaseDatabase.getReference("waitRequest").child(uID).child(matchID).setValue(waitData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess(it.toString())
@@ -75,18 +75,18 @@ class AllDetailsRepository @Inject constructor(private val firebaseDatabase: Fir
         }
 
     fun confirmMatch(
-        teamConfirmUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
+        waitUID: String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String,
+        clientTeamName : String, clientImageUrl : String, teamWaitUID : String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
-        val confirmMatch = CreateMatchModel(teamConfirmUID, matchID, deviceToken, teamName, teamPhone, date,
+        val confirmMatch = CreateMatchModel(waitUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl)
+            clientTeamName, clientImageUrl, teamWaitUID)
 
-        firebaseDatabase.getReference("confirmRequest").child(teamConfirmUID).child(matchID).setValue(confirmMatch)
+        firebaseDatabase.getReference("confirmRequest").child(waitUID).child(matchID).setValue(confirmMatch)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess(it.toString())

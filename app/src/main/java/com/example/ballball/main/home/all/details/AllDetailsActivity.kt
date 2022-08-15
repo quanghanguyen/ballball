@@ -164,10 +164,11 @@ class AllDetailsActivity : AppCompatActivity() {
                 matchID?.let { matchID ->
                     if (userUID != null) {
                         click?.let { click ->
-                            allDetailsViewModel.handleCatchMatch(userUID, matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
+                            allDetailsViewModel.handleCatchMatch(uID = userUID, userUID = teamConfirmUID!!, waitUID = teamConfirmUID!!,
+                                matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
-                                clientImageUrl!!, teamConfirmUID!!)
+                                clientImageUrl!!, userUID)
                             //Log
                             Log.e("userUID", userUID)
                             Log.e("matchID", matchID)

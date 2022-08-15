@@ -26,10 +26,10 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
     }
 
     fun handleCatchMatch(
-        userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
+        uID: String, userUID : String, waitUID: String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientUID : String, clientImageUrl: String, teamConfirmUID : String
+        clientTeamName : String, clientUID : String, clientImageUrl: String, teamWaitUID : String,
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
@@ -44,9 +44,9 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            allDetailsRepository.waitMatch(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
-                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName,
-                teamConfirmUID, {
+            allDetailsRepository.waitMatch(uID, userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
+                note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName, clientImageUrl,
+                {
                     catchMatch.value = CatchMatch.WaitMatchOk
                 }, {
                     catchMatch.value = CatchMatch.WaitMatchError
@@ -66,9 +66,9 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            allDetailsRepository.confirmMatch(teamConfirmUID, matchID, deviceToken, teamName, teamPhone, date,
+            allDetailsRepository.confirmMatch(waitUID, matchID, deviceToken, teamName, teamPhone, date,
                 time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-                clientTeamName, clientImageUrl, {
+                clientTeamName, clientImageUrl, teamWaitUID, {
                     catchMatch.value = CatchMatch.ConfirmMatchOk
                 }, {
                     catchMatch.value = CatchMatch.ConfirmMatchError

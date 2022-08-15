@@ -228,13 +228,14 @@ class CreateMatchActivity : AppCompatActivity() {
 
             TimePickerDialog(this, object : TimePickerDialog.OnTimeSetListener {
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                    if (hourOfDay >= mCurrentTime.get(Calendar.HOUR_OF_DAY)
-                        && minute > mCurrentTime.get(Calendar.MINUTE)
-                    ) {
-                        createMatchBinding.time.text = String.format("%d:%d", hourOfDay, minute)
-                    } else {
-                        Toast.makeText(applicationContext, "Vui lòng chọn thời gian hợp lệ", Toast.LENGTH_SHORT).show()
-                    }
+                    createMatchBinding.time.text = String.format("%d:%d", hourOfDay, minute)
+//                    if (hourOfDay >= mCurrentTime.get(Calendar.HOUR_OF_DAY)
+//                        && minute > mCurrentTime.get(Calendar.MINUTE)
+//                    ) {
+//                        createMatchBinding.time.text = String.format("%d:%d", hourOfDay, minute)
+//                    } else {
+//                        Toast.makeText(applicationContext, "Vui lòng chọn thời gian hợp lệ", Toast.LENGTH_SHORT).show()
+//                    }
                 }
             }, hour, minute, true).show()
         }

@@ -40,9 +40,9 @@ data class CreateMatchModel (
     val clientTeamName : String = "",
     @SerializedName("clientImageUrl")
     val clientImageUrl : String = "",
+    @SerializedName("confirmUID")
+    val confirmUID : String = "",
     @SerializedName("clientUid")
-//    val clientUid : String = "",
-//    @SerializedName("clientUid1")
     var clientUID1 : String = "",
     @SerializedName("clientUid2")
     var clientUID2 : String = "",
