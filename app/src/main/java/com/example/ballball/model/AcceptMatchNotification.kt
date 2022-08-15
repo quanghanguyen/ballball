@@ -3,6 +3,8 @@ package com.example.ballball.model
 import com.google.gson.annotations.SerializedName
 
 data class AcceptMatchNotification(
+    @SerializedName("clientUID")
+    val clientUID : String,
     @SerializedName("userUID")
     val userUID: String = "",
     @SerializedName("matchID")
@@ -11,6 +13,6 @@ data class AcceptMatchNotification(
     val date: String = "",
     @SerializedName("time")
     val time: String = "",
-    @SerializedName("clientTeamName")
-    val clientTeamName: String = ""
+    @SerializedName("teamName")
+    val teamName: String = ""
 )

@@ -15,5 +15,7 @@ data class TeamsModel (
     @SerializedName("teamPeopleNumber")
     var teamPeopleNumber : String = "",
     @SerializedName("teamNote")
-    var teamNote : String
+    var teamNote : String = "",
+    @SerializedName("deviceToken")
+    var deviceToken : String = ""
         ) : Parcelable

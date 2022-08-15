@@ -1,9 +1,11 @@
 package com.example.ballball.user.walkthrough.team
 
+import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.ballball.R
@@ -13,6 +15,9 @@ import com.example.ballball.databinding.LayoutBottomSheetPeopleNumberBinding
 import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
 import com.example.ballball.loadingdialog.LoadingDialog
+import com.example.ballball.utils.MessageConnection
+import com.example.ballball.utils.Model.deviceToken
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,11 +43,24 @@ class TeamActivity : AppCompatActivity() {
     }
 
     private fun initEvents() {
+        handleVariables()
         locationSelect()
         peopleNumberSelect()
         selectTeamImage()
         back()
         next()
+    }
+
+    private fun handleVariables() {
+        MessageConnection.firebaseMessaging.token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                } else {
+                    deviceToken = task.result
+                }
+            })
     }
 
     private fun next() {
@@ -55,10 +73,9 @@ class TeamActivity : AppCompatActivity() {
             ) {
                 if (userUid != null) {
                     teamViewModel.saveTeamsImage(imgUri, userUid)
-
                     teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
                         teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
-                        teamBinding.note.text.toString())
+                        teamBinding.note.text.toString(), deviceToken!!)
                 }
             } else {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()

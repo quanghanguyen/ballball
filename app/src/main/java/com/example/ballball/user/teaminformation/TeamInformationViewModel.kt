@@ -71,12 +71,13 @@ class TeamInformationViewModel @Inject constructor(
         teamName: String,
         teamLocation: String,
         teamPeopleNumber: String,
-        teamNote: String
+        teamNote: String,
+        deviceToken : String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            teamRepository.saveTeam(teamUid, teamName, teamLocation, teamPeopleNumber, teamNote, {
+            teamRepository.saveTeam(teamUid, teamName, teamLocation, teamPeopleNumber, teamNote, deviceToken, {
                 saveTeams.value = SaveTeams.ResultOk
             }, {
                 saveTeams.value = SaveTeams.ResultError

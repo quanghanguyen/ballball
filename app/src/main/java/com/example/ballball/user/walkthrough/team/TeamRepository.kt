@@ -16,10 +16,11 @@ class TeamRepository @Inject constructor (
         teamLocation: String,
         teamPeopleNumber: String,
         teamNote: String,
+        deviceToken : String,
         onSuccess: (String) -> Unit,
         onFail: (String) -> Unit
     ) {
-        val teams = TeamsModel(teamUid, teamName, teamLocation, teamPeopleNumber, teamNote)
+        val teams = TeamsModel(teamUid, teamName, teamLocation, teamPeopleNumber, teamNote, deviceToken)
         firebaseDatabase.getReference("Teams").child(teamUid).setValue(teams)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

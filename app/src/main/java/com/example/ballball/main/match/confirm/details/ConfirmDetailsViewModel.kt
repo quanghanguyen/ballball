@@ -99,7 +99,7 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            confirmDetailsRepository.acceptRequestNotification(userUID, matchID, date, time, clientTeamName, {
+            confirmDetailsRepository.acceptRequestNotification(confirmUID, userUID, matchID, date, time, teamName, {
                 acceptMatch.value = AcceptMatch.AcceptMatchNotificationOk
             }, {
                 acceptMatch.value = AcceptMatch.AcceptMatchNotificationError

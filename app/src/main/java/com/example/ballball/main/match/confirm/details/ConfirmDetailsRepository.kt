@@ -116,11 +116,11 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         }
 
     fun acceptRequestNotification(
-        userUID: String, matchID: String, date: String, time: String, clientTeamName: String,
+        clientUID: String, userUID: String, matchID: String, date: String, time: String, teamName: String,
         onSuccess: (String) -> Unit,
         onFail: (String) -> Unit,
     ) {
-        val acceptMatchNotification = AcceptMatchNotification(userUID, matchID, date, time, clientTeamName)
+        val acceptMatchNotification = AcceptMatchNotification(clientUID, userUID, matchID, date, time, teamName)
         firebaseDatabase.getReference("acceptRequest_Notification").child(userUID).child(matchID).setValue(acceptMatchNotification)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
