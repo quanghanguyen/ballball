@@ -19,10 +19,16 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
     }
 
     sealed class AcceptMatch {
-//        object DeleteConfirmOk: AcceptMatch()
-//        object DeleteConfirmError : AcceptMatch()
+        object DeleteConfirmOk: AcceptMatch()
+        object DeleteConfirmError : AcceptMatch()
         object SaveUpComingOk : AcceptMatch()
         object SaveUpComingError : AcceptMatch()
+        object DeleteWaitOk: AcceptMatch()
+        object DeleteWaitError: AcceptMatch()
+        object SaveUpComingClientOk: AcceptMatch()
+        object SaveUpComingClientError: AcceptMatch()
+        object AcceptMatchNotificationOk: AcceptMatch()
+        object AcceptMatchNotificationError: AcceptMatch()
     }
 
     fun denyConfirmMatch(
@@ -44,7 +50,7 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String
+        clientTeamName : String, clientImageUrl : String, confirmUID: String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
@@ -61,10 +67,42 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            confirmDetailsRepository.denyMatch(userUID, matchID, {
-                denyConfirmMatch.value = DenyConfirmMatch.ResultOk
+            confirmDetailsRepository.deleteConfirmMatch(userUID, matchID, {
+                acceptMatch.value = AcceptMatch.DeleteConfirmOk
             }, {
-                denyConfirmMatch.value = DenyConfirmMatch.ResultError
+                acceptMatch.value = AcceptMatch.DeleteConfirmError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.upComingMatchClient(confirmUID, userUID, matchID, deviceToken, teamName, teamPhone, date,
+                time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
+                clientTeamName, clientImageUrl, {
+                    acceptMatch.value = AcceptMatch.SaveUpComingClientOk
+                }, {
+                    acceptMatch.value = AcceptMatch.SaveUpComingClientError
+                })
+            }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.deleteWaitMatch(confirmUID, matchID, {
+                acceptMatch.value = AcceptMatch.DeleteWaitOk
+            }, {
+                acceptMatch.value = AcceptMatch.DeleteWaitError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.acceptRequestNotification(userUID, matchID, date, time, clientTeamName, {
+                acceptMatch.value = AcceptMatch.AcceptMatchNotificationOk
+            }, {
+                acceptMatch.value = AcceptMatch.AcceptMatchNotificationError
             })
         }
     }

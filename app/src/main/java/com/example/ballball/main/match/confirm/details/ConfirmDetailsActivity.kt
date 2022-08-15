@@ -20,6 +20,7 @@ import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.click
 import com.example.ballball.utils.Model.clientImageUrl
 import com.example.ballball.utils.Model.clientTeamName
+import com.example.ballball.utils.Model.confirmUID
 import com.example.ballball.utils.Model.deviceToken
 import com.example.ballball.utils.Model.lat
 import com.example.ballball.utils.Model.locationAddress
@@ -94,6 +95,14 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingClientOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingClientError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteConfirmOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteConfirmError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteWaitOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteWaitError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.AcceptMatchNotificationOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.AcceptMatchNotificationError -> {}
             }
         }
     }
@@ -112,7 +121,7 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 if (userUID != null) {
                     confirmDetailsViewModel.acceptMatch(userUID, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!,
                         matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
-                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!)
+                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!)
                 }
                 dialog.dismiss()
             }
@@ -206,6 +215,7 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 click = data?.click
                 clientTeamName = data?.clientTeamName
                 clientImageUrl = data?.clientImageUrl
+                confirmUID = data?.confirmUID
             }
         }
     }

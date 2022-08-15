@@ -37,5 +37,8 @@ class WaitDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
                     onFail(it.exception?.message.orEmpty())
                 }
             }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
         }
     }

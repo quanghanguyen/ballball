@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
+import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 class ConfirmAdapter @Inject constructor(private var confirmList: ArrayList<CreateMatchModel>)
@@ -28,7 +29,7 @@ class ConfirmAdapter @Inject constructor(private var confirmList: ArrayList<Crea
 
     class MyViewHolder (
         private val matchItemsBinding: MatchItemsBinding,
-        private val listerner: OnItemClickListerner
+        private val listerner: OnItemClickListerner,
     ) : RecyclerView.ViewHolder(matchItemsBinding.root) {
         fun bind(list : CreateMatchModel) {
             with(matchItemsBinding) {
