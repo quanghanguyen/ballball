@@ -28,6 +28,8 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         object DeleteWaitError: AcceptMatch()
         object AcceptMatchNotificationOk: AcceptMatch()
         object AcceptMatchNotificationError: AcceptMatch()
+        object DenyMatchNotificationOk: AcceptMatch()
+        object DenyMatchNotificationError: AcceptMatch()
     }
 
     sealed class UpComingClientResult {
@@ -38,7 +40,11 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
     fun denyConfirmMatch(
         userUID: String,
         matchId: String,
-        confirmUID: String
+        confirmUID: String,
+        clientUID : String,
+        date: String,
+        time: String,
+        teamName: String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
@@ -57,6 +63,16 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
                 acceptMatch.value = AcceptMatch.DeleteWaitOk
             }, {
                 acceptMatch.value = AcceptMatch.DeleteWaitError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.denyRequestNotification(clientUID, userUID, matchId, date, time, teamName, {
+                acceptMatch.value = AcceptMatch.DenyMatchNotificationOk
+            }, {
+                acceptMatch.value = AcceptMatch.DenyMatchNotificationError
             })
         }
     }

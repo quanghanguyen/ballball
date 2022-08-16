@@ -46,20 +46,13 @@ import java.util.*
 
 @AndroidEntryPoint
 class NewCreateDetailsActivity : AppCompatActivity() {
-
     private lateinit var newCreateBinding : ActivityNewCreateDetailsBinding
     private val newCreateDetailsViewModel : NewCreateDetailsViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var signOutDialogBinding: SignOutDialogBinding
     private lateinit var successDialogBinding: SuccessDialogBinding
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private val permissionId = 2
-    var currentAddress : String? = null
-    var currentLat : Double? = null
-    var currentLong : Double? = null
-    var destinationLat : Double? = null
-    var destinationLong : Double? = null
-    var destinationAddress : String? = null
+    private val permissionId = 3
 
     companion object {
         private const val NEW_CREATE_DATA = "newCreate_data"
@@ -85,27 +78,6 @@ class NewCreateDetailsActivity : AppCompatActivity() {
         back()
         cancelMatch()
         openMap()
-    }
-
-    private fun openMap() {
-        newCreateBinding.navigationLayout.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("currentLat", currentLat)
-            intent.putExtra("currentLong", currentLong)
-            intent.putExtra("currentAddress", currentAddress)
-            intent.putExtra("destinationLat", destinationLat)
-            intent.putExtra("destinationLong", destinationLong)
-            intent.putExtra("destinationAddress", destinationAddress)
-
-            Log.e("currentLat", currentLat.toString())
-            Log.e("currentLong", currentLong.toString())
-            Log.e("currentAddress", currentAddress.toString())
-            Log.e("destinationLat", destinationLat.toString())
-            Log.e("destinationLong", destinationLong.toString())
-            Log.e("destinationAddress", destinationAddress.toString())
-            startActivity(intent)
-            Animation.animateSlideLeft(this)
-        }
     }
 
     private fun initObserve() {
@@ -190,6 +162,27 @@ class NewCreateDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun openMap() {
+        newCreateBinding.navigationLayout.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            intent.putExtra("currentLat", currentLat)
+            intent.putExtra("currentLong", currentLong)
+            intent.putExtra("currentAddress", currentAddress)
+            intent.putExtra("destinationLat", destinationLat)
+            intent.putExtra("destinationLong", destinationLong)
+            intent.putExtra("destinationAddress", destinationAddress)
+
+//            Log.e("currentLat", currentLat.toString())
+//            Log.e("currentLong", currentLong.toString())
+//            Log.e("currentAddress", currentAddress.toString())
+//            Log.e("destinationLat", destinationLat.toString())
+//            Log.e("destinationLong", destinationLong.toString())
+//            Log.e("destinationAddress", destinationAddress.toString())
+            startActivity(intent)
+            Animation.animateSlideLeft(this)
+        }
+    }
+
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
         if (checkPermissions()) {
@@ -203,6 +196,7 @@ class NewCreateDetailsActivity : AppCompatActivity() {
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
                         currentAddress = list[0].getAddressLine(0)
+                        Log.e("Address", currentAddress.toString())
                     }
                 }
             } else {

@@ -133,4 +133,23 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
                 onFail(it.message.orEmpty())
             }
         }
+
+    fun denyRequestNotification(
+        clientUID: String, userUID: String, matchID: String, date: String, time: String, teamName: String,
+        onSuccess: (String) -> Unit,
+        onFail: (String) -> Unit
+    ) {
+        val acceptMatchNotification = AcceptMatchNotification(clientUID, userUID, matchID, date, time, teamName)
+        firebaseDatabase.getReference("denyRequest_Notification").child(userUID).child(matchID).setValue(acceptMatchNotification)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
     }

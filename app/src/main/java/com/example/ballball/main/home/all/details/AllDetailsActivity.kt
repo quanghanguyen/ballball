@@ -34,6 +34,12 @@ import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model.clientImageUrl
+import com.example.ballball.utils.Model.currentAddress
+import com.example.ballball.utils.Model.currentLat
+import com.example.ballball.utils.Model.currentLong
+import com.example.ballball.utils.Model.destinationAddress
+import com.example.ballball.utils.Model.destinationLat
+import com.example.ballball.utils.Model.destinationLong
 import com.example.ballball.utils.Model.deviceToken
 import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchLocation
@@ -59,12 +65,12 @@ class AllDetailsActivity : AppCompatActivity() {
     private val allDetailsViewModel : AllDetailsViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private val permissionId = 2
-    var currentAddress : String? = null
-    var currentLat : Double? = null
-    var currentLong : Double? = null
-    var destinationLat : Double? = null
-    var destinationLong : Double? = null
-    var destinationAddress : String? = null
+//    var currentAddress : String? = null
+//    var currentLat : Double? = null
+//    var currentLong : Double? = null
+//    var destinationLat : Double? = null
+//    var destinationLong : Double? = null
+//    var destinationAddress : String? = null
     var phoneNumber : String? = null
     var name : String? = null
     var click : Int? = null
@@ -281,6 +287,7 @@ class AllDetailsActivity : AppCompatActivity() {
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
                         currentAddress = list[0].getAddressLine(0)
+                        Log.e("Address", currentAddress.toString())
                     }
                 }
             } else {
