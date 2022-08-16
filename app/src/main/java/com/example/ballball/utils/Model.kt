@@ -20,7 +20,7 @@ object Model {
     var click : Int? = null
     var confirmUID : String? = null
     var clientUID : String? = null
-
+    var clientPhone : String? = null
     var currentAddress : String? = null
     var currentLat : Double? = null
     var currentLong : Double? = null

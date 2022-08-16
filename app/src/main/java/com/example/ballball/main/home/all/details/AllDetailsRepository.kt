@@ -78,13 +78,13 @@ class AllDetailsRepository @Inject constructor(private val firebaseDatabase: Fir
         waitUID: String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String, teamWaitUID : String,
+        clientTeamName : String, clientImageUrl : String, teamWaitUID : String, clientUID: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val confirmMatch = CreateMatchModel(waitUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl, teamWaitUID)
+            clientTeamName, clientImageUrl, teamWaitUID, clientUID)
 
         firebaseDatabase.getReference("confirmRequest").child(waitUID).child(matchID).setValue(confirmMatch)
             .addOnCompleteListener {

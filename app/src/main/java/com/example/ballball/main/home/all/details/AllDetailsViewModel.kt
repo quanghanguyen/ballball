@@ -68,7 +68,7 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         }) {
             allDetailsRepository.confirmMatch(waitUID, matchID, deviceToken, teamName, teamPhone, date,
                 time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-                clientTeamName, clientImageUrl, teamWaitUID, {
+                clientTeamName, clientImageUrl, teamWaitUID, clientUID, {
                     catchMatch.value = CatchMatch.ConfirmMatchOk
                 }, {
                     catchMatch.value = CatchMatch.ConfirmMatchError

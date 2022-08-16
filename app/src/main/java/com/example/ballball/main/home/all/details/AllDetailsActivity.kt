@@ -34,6 +34,7 @@ import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model.clientImageUrl
+import com.example.ballball.utils.Model.clientPhone
 import com.example.ballball.utils.Model.currentAddress
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
@@ -65,12 +66,6 @@ class AllDetailsActivity : AppCompatActivity() {
     private val allDetailsViewModel : AllDetailsViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private val permissionId = 2
-//    var currentAddress : String? = null
-//    var currentLat : Double? = null
-//    var currentLong : Double? = null
-//    var destinationLat : Double? = null
-//    var destinationLong : Double? = null
-//    var destinationAddress : String? = null
     var phoneNumber : String? = null
     var name : String? = null
     var click : Int? = null
@@ -118,6 +113,11 @@ class AllDetailsActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Log.e("Error", it.toString())
+            }
+
+        FirebaseDatabase.getInstance().getReference("Users").child(userUID).get()
+            .addOnSuccessListener {
+                clientPhone = it.child("userPhone").value.toString()
             }
     }
 
@@ -170,28 +170,28 @@ class AllDetailsActivity : AppCompatActivity() {
                 matchID?.let { matchID ->
                     if (userUID != null) {
                         click?.let { click ->
-                            allDetailsViewModel.handleCatchMatch(uID = userUID, userUID = teamConfirmUID!!, waitUID = teamConfirmUID!!,
+                            allDetailsViewModel.handleCatchMatch(userUID, teamConfirmUID!!, teamConfirmUID!!,
                                 matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
                                 clientImageUrl!!, userUID)
-                            //Log
-                            Log.e("userUID", userUID)
-                            Log.e("matchID", matchID)
-                            Log.e("deviceToken", deviceToken!!)
-                            Log.e("name", name!!)
-                            Log.e("phoneNumber", phoneNumber!!)
-                            Log.e("matchDate", matchDate!!)
-                            Log.e("matchTime", matchTime!!)
-                            Log.e("matchLocation", matchLocation!!)
-                            Log.e("teamNote", teamNote!!)
-                            Log.e("teamPeopleNumber", teamPeopleNumber!!)
-                            Log.e("teamImageUrl", teamImageUrl!!)
-                            Log.e("destinationAddress", destinationAddress!!)
-                            Log.e("destinationLat", destinationLat!!.toString())
-                            Log.e("destinationLong", destinationLong!!.toString())
-                            Log.e("click", click.toString())
-                            Log.e("clientTeamName", clientTeamName!!)
+//                            //Log
+//                            Log.e("userUID", userUID)
+//                            Log.e("matchID", matchID)
+//                            Log.e("deviceToken", deviceToken!!)
+//                            Log.e("name", name!!)
+//                            Log.e("phoneNumber", phoneNumber!!)
+//                            Log.e("matchDate", matchDate!!)
+//                            Log.e("matchTime", matchTime!!)
+//                            Log.e("matchLocation", matchLocation!!)
+//                            Log.e("teamNote", teamNote!!)
+//                            Log.e("teamPeopleNumber", teamPeopleNumber!!)
+//                            Log.e("teamImageUrl", teamImageUrl!!)
+//                            Log.e("destinationAddress", destinationAddress!!)
+//                            Log.e("destinationLat", destinationLat!!.toString())
+//                            Log.e("destinationLong", destinationLong!!.toString())
+//                            Log.e("click", click.toString())
+//                            Log.e("clientTeamName", clientTeamName!!)
                         }
                     }
                 }

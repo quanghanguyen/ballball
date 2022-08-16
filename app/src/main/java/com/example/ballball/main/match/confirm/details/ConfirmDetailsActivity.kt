@@ -12,6 +12,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -20,6 +21,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityConfirmDetailsBinding
@@ -31,6 +33,7 @@ import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.click
 import com.example.ballball.utils.Model.clientImageUrl
+import com.example.ballball.utils.Model.clientPhone
 import com.example.ballball.utils.Model.clientTeamName
 import com.example.ballball.utils.Model.clientUID
 import com.example.ballball.utils.Model.confirmUID
@@ -95,6 +98,20 @@ class ConfirmDetailsActivity : AppCompatActivity() {
         denyConfirmMatch()
         acceptMatch()
         openMap()
+        phoneCall()
+    }
+
+    private fun phoneCall() {
+        confirmDetailsBinding.phoneCall.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),
+                    1)
+            } else {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$clientPhone"))
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            }
+        }
     }
 
     private fun initObserves() {
