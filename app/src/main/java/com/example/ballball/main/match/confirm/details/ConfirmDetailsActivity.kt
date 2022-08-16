@@ -59,6 +59,7 @@ import com.example.ballball.utils.Model.teamPhone
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -94,11 +95,19 @@ class ConfirmDetailsActivity : AppCompatActivity() {
 
     private fun initEvents() {
         binding()
+        handleVariables()
         back()
         denyConfirmMatch()
         acceptMatch()
         openMap()
         phoneCall()
+    }
+
+    private fun handleVariables() {
+        FirebaseDatabase.getInstance().getReference("Users").child(confirmUID!!).get()
+            .addOnSuccessListener {
+                clientPhone = it.child("userPhone").value.toString()
+            }
     }
 
     private fun phoneCall() {
@@ -278,7 +287,7 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 destinationLat = data?.lat
                 destinationLong = data?.long
                 destinationAddress = data?.locationAddress
-            }
+             }
         }
     }
 

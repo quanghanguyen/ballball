@@ -12,6 +12,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -22,6 +23,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.*
@@ -30,6 +32,7 @@ import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.clientPhone
 import com.example.ballball.utils.Model.clientTeamName
 import com.example.ballball.utils.Model.clientUID
 import com.example.ballball.utils.Model.destinationAddress
@@ -42,6 +45,7 @@ import com.example.ballball.utils.Model.teamName
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -77,9 +81,36 @@ class UpComingDetailsActivity : AppCompatActivity() {
 
     private fun initEvents() {
         binding()
+        handleVariable()
         back()
         cancelMatch()
         openMap()
+        phoneCall()
+    }
+
+    private fun handleVariable() {
+        FirebaseDatabase.getInstance().getReference("Teams").child(userUID!!).get()
+            .addOnSuccessListener {
+                teamName = it.child("teamName").value.toString()
+            }
+
+        FirebaseDatabase.getInstance().getReference("Users").child(clientUID!!).get()
+            .addOnSuccessListener {
+                clientPhone = it.child("userPhone").value.toString()
+            }
+        }
+
+    private fun phoneCall() {
+        upComingDetailsBinding.phoneCall.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),
+                    1)
+            } else {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${clientPhone}"))
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            }
+        }
     }
 
     private fun initObserve() {
@@ -102,7 +133,7 @@ class UpComingDetailsActivity : AppCompatActivity() {
                     val radioText = radio.text.toString()
                     if (userUID != null) {
                         upComingDetailsViewModel.cancelUpComingMatch(clientUID!!, userUID, matchID!!, matchDate!!, matchTime!!,
-                        clientTeamName!!, radioText)
+                        teamName!!, radioText)
                     }
                     dialog.dismiss()
                 } else {

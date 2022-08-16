@@ -114,11 +114,6 @@ class AllDetailsActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.e("Error", it.toString())
             }
-
-        FirebaseDatabase.getInstance().getReference("Users").child(userUID).get()
-            .addOnSuccessListener {
-                clientPhone = it.child("userPhone").value.toString()
-            }
     }
 
     private fun initObserve() {

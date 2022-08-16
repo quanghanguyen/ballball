@@ -44,6 +44,8 @@ data class CreateMatchModel (
     val confirmUID : String = "",
     @SerializedName("clientUID")
     val clientUID : String = "",
+//    @SerializedName("clientPhone")
+//    val clientPhone: String = "",
     @SerializedName("clientUid1")
     var clientUID1 : String = "",
     @SerializedName("clientUid2")
