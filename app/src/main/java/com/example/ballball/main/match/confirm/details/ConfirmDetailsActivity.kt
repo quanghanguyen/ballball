@@ -74,6 +74,16 @@ class ConfirmDetailsActivity : AppCompatActivity() {
     private fun initObserves() {
         denyConfirmMatchObserve()
         acceptMatchObserve()
+        saveUpComingClientObserve()
+    }
+
+    private fun saveUpComingClientObserve() {
+        confirmDetailsViewModel.saveUpComingClient.observe(this) {result ->
+            when (result) {
+                is ConfirmDetailsViewModel.UpComingClientResult.SaveUpComingClientOk -> {}
+                is ConfirmDetailsViewModel.UpComingClientResult.SaveUpComingClientError -> {}
+            }
+        }
     }
 
     private fun acceptMatchObserve() {
@@ -95,8 +105,6 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingError -> {}
-                is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingClientOk -> {}
-                is ConfirmDetailsViewModel.AcceptMatch.SaveUpComingClientError -> {}
                 is ConfirmDetailsViewModel.AcceptMatch.DeleteConfirmOk -> {}
                 is ConfirmDetailsViewModel.AcceptMatch.DeleteConfirmError -> {}
                 is ConfirmDetailsViewModel.AcceptMatch.DeleteWaitOk -> {}
@@ -121,7 +129,12 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 if (userUID != null) {
                     confirmDetailsViewModel.acceptMatch(userUID, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!,
                         matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
-                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!)
+                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, confirmUID!!)
+                }
+                if (userUID != null) {
+                    confirmDetailsViewModel.saveUpComingClient(userUID, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!,
+                        matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
+                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, userUID)
                 }
                 dialog.dismiss()
             }
@@ -167,7 +180,7 @@ class ConfirmDetailsActivity : AppCompatActivity() {
             signOutDialogBinding.content.text = "Bạn muốn từ chối yêu cầu bắt trận của $clientTeamName?"
             signOutDialogBinding.yes.setOnClickListener {
                 if (userUID != null) {
-                    confirmDetailsViewModel.denyConfirmMatch(userUID, matchID!!)
+                    confirmDetailsViewModel.denyConfirmMatch(userUID, matchID!!, confirmUID!!)
                 }
                 dialog.dismiss()
             }

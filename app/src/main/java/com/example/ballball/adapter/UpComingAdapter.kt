@@ -42,7 +42,6 @@ class UpComingAdapter @Inject constructor(private var upComingList: ArrayList<Cr
                 Glide.with(teamImage).load(list.clientImageUrl).centerCrop().into(teamImage)
                 newCreate.visibility = View.GONE
                 waitConfirm.visibility = View.GONE
-
                 if (userUID == list.userUID) {
                     Glide.with(teamImage).load(list.clientImageUrl).centerCrop().into(teamImage)
                     teamName.text = list.clientTeamName

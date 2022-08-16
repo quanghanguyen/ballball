@@ -29,13 +29,13 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String,
+        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val upComingMatch = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl)
+            clientTeamName, clientImageUrl, confirmUID, clientUID)
 
         firebaseDatabase.getReference("upComingMatch").child(userUID).child(matchID).setValue(upComingMatch)
             .addOnCompleteListener {
@@ -74,13 +74,13 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         confirmUID : String, userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String,
+        clientTeamName : String, clientImageUrl : String, clientUID: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val upComingMatchClient = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl, confirmUID)
+            clientTeamName, clientImageUrl, confirmUID, clientUID)
 
         firebaseDatabase.getReference("upComingMatch").child(confirmUID).child(matchID).setValue(upComingMatchClient)
             .addOnCompleteListener {
@@ -118,7 +118,7 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
     fun acceptRequestNotification(
         clientUID: String, userUID: String, matchID: String, date: String, time: String, teamName: String,
         onSuccess: (String) -> Unit,
-        onFail: (String) -> Unit,
+        onFail: (String) -> Unit
     ) {
         val acceptMatchNotification = AcceptMatchNotification(clientUID, userUID, matchID, date, time, teamName)
         firebaseDatabase.getReference("acceptRequest_Notification").child(userUID).child(matchID).setValue(acceptMatchNotification)

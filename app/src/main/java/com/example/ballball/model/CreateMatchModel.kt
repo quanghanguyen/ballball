@@ -42,6 +42,8 @@ data class CreateMatchModel (
     val clientImageUrl : String = "",
     @SerializedName("confirmUID")
     val confirmUID : String = "",
+    @SerializedName("clientUID")
+    val clientUID : String = "",
     @SerializedName("clientUid")
     var clientUID1 : String = "",
     @SerializedName("clientUid2")

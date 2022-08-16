@@ -19,6 +19,7 @@ object Model {
     var long : Double? = null
     var click : Int? = null
     var confirmUID : String? = null
+    var clientUID : String? = null
 
     var currentAddress : String? = null
     var currentLat : Double? = null
