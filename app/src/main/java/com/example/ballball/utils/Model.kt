@@ -27,4 +27,5 @@ object Model {
     var destinationLat : Double? = null
     var destinationLong : Double? = null
     var destinationAddress : String? = null
+    var avatarUrl : String? = null
 }

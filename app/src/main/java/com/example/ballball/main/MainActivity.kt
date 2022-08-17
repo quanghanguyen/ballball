@@ -18,6 +18,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Window
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -26,10 +27,16 @@ import com.example.ballball.R
 import com.example.ballball.creatematch.CreateMatchActivity
 import com.example.ballball.databinding.ActivityMainBinding
 import com.example.ballball.databinding.LocationAccessDialogBinding
+import com.example.ballball.user.walkthrough.team.TeamViewModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.MessageConnection.firebaseMessaging
+import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.teamName
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -37,10 +44,14 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
+    private val mainViewModel : MainViewModel by viewModels()
     private lateinit var navController: NavController
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 0
     private lateinit var locationAccessDialogBinding: LocationAccessDialogBinding
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid
+    private var userAvatarUrl : String? = null
+    private var teamName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +60,37 @@ class MainActivity : AppCompatActivity() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
+        initObserves()
+    }
+
+    private fun initObserves() {
+        updateUserObserve()
+    }
+
+    private fun updateUserObserve() {
     }
 
     private fun initEvents() {
+        handleVariables()
         navBinding()
         locationRequest()
         createMatch()
+    }
+
+    private fun handleVariables() {
+        StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
+            .addOnSuccessListener {
+                userAvatarUrl = it.toString()
+                Log.e("URL", userAvatarUrl.toString())
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
+
+        FirebaseDatabase.getInstance().getReference("Teams").child(userUID).get()
+            .addOnSuccessListener {
+                teamName = it.child("teamName").value.toString()
+            }
     }
 
     private fun createMatch() {

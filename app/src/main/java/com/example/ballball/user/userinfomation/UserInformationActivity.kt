@@ -12,6 +12,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Toast
@@ -25,6 +26,9 @@ import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.onboarding.activity.OnBoardingActivity2
 import com.example.ballball.user.teaminformation.TeamInformationActivity
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.avatarUrl
+import com.example.ballball.utils.StorageConnection
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint

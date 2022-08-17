@@ -15,8 +15,11 @@ import com.example.ballball.databinding.LayoutBottomSheetPeopleNumberBinding
 import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
 import com.example.ballball.loadingdialog.LoadingDialog
+import com.example.ballball.main.MainViewModel
 import com.example.ballball.utils.MessageConnection
+import com.example.ballball.utils.Model.avatarUrl
 import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -61,7 +64,7 @@ class TeamActivity : AppCompatActivity() {
                     deviceToken = task.result
                 }
             })
-    }
+        }
 
     private fun next() {
         teamBinding.next.setOnClickListener {
@@ -76,6 +79,7 @@ class TeamActivity : AppCompatActivity() {
                     teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
                         teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
                         teamBinding.note.text.toString(), deviceToken!!)
+                    teamViewModel.updateUsers(userUid, teamBinding.teamName.text.toString())
                 }
             } else {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
@@ -111,6 +115,16 @@ class TeamActivity : AppCompatActivity() {
     private fun initObserve() {
         saveTeamObserve()
         saveTeamImageObserve()
+        updateUserObserve()
+    }
+
+    private fun updateUserObserve() {
+        teamViewModel.updateUsers.observe(this) {result ->
+            when (result) {
+                is TeamViewModel.UpdateUsers.ResultOk -> {}
+                is TeamViewModel.UpdateUsers.ResultError -> {}
+            }
+        }
     }
 
     private fun saveTeamObserve() {

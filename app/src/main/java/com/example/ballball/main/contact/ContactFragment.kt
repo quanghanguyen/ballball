@@ -1,60 +1,164 @@
 package com.example.ballball.main.contact
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.OnIconClickListerner
+import com.example.ballball.`interface`.OnNewContactClickListerner
+import com.example.ballball.adapter.ContactAdapter
+import com.example.ballball.adapter.NewContactAdapter
+import com.example.ballball.databinding.AddContactBottomSheetBinding
+import com.example.ballball.databinding.FragmentContactBinding
+import com.example.ballball.model.NewContactModel
+import com.example.ballball.model.UsersModel
+import com.example.ballball.utils.Animation
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ContactFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ContactFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var contactBinding: FragmentContactBinding
+    private lateinit var contactAdapter: ContactAdapter
+    private val contactViewModel : ContactViewModel by viewModels()
+    private lateinit var newContactAdapter : NewContactAdapter
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid
+    private lateinit var addContactBottomSheetBinding: AddContactBottomSheetBinding
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initList()
+        initEvents()
+        initObserve()
+        if (userUID != null) {
+            contactViewModel.loadContactList(userUID)
+        }
+        if (userUID != null) {
+            contactViewModel.loadNewContactList(userUID)
+        }
+    }
+
+    private fun initEvents() {
+        addContact()
+    }
+
+    private fun addContact() {
+        contactBinding.addContact.setOnClickListener {
+            val addContactDialog = BottomSheetDialog(requireContext(), R.style.CustomBottomSheetDialog)
+            addContactBottomSheetBinding = AddContactBottomSheetBinding.inflate(layoutInflater)
+            addContactDialog.setContentView(addContactBottomSheetBinding.root)
+
+            addContactBottomSheetBinding.save.setOnClickListener {
+                val name = addContactBottomSheetBinding.name.text.toString()
+                val phoneNumber = addContactBottomSheetBinding.phoneNumber.text.toString()
+                if (name.isEmpty() || phoneNumber.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                } else {
+                    if (userUID != null) {
+                        contactViewModel.saveNewContact(userUID, name, phoneNumber)
+                        addContactDialog.dismiss()
+                    }
+                }
+            }
+            addContactDialog.show()
+        }
+    }
+
+    private fun initObserve() {
+        loadContactObserve()
+        addNewContactObserve()
+        loadNewContactObserve()
+    }
+
+    private fun loadNewContactObserve() {
+        contactViewModel.loadNewContactList.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is ContactViewModel.LoadNewContactList.ResultOk -> {
+                    newContactAdapter.addNewData(result.list)
+                }
+                is ContactViewModel.LoadNewContactList.ResultError -> {}
+            }
+        }
+    }
+
+    private fun addNewContactObserve() {
+        contactViewModel.saveNewContact.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is ContactViewModel.SaveNewContact.ResultOk -> {}
+                is ContactViewModel.SaveNewContact.ResultError -> {}
+            }
+        }
+    }
+
+    private fun loadContactObserve() {
+        contactViewModel.loadContactList.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is ContactViewModel.LoadContactList.ResultOk -> {
+                    contactAdapter.addNewData(result.list)
+                }
+                is ContactViewModel.LoadContactList.ResultError -> {}
+            }
+        }
+    }
+
+    private fun initList() {
+        contactBinding.recyclerView1.apply {
+            layoutManager = LinearLayoutManager(context)
+            contactAdapter = ContactAdapter(arrayListOf())
+            adapter = contactAdapter
+
+            contactAdapter.setOnIconClickListerner(object :
+            OnIconClickListerner{
+                override fun onIconClick(requestData: UsersModel) {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE),
+                            1)
+                    } else {
+                        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${requestData.userPhone}"))
+                        startActivity(intent)
+                    }
+                }
+            })
+        }
+
+        contactBinding.recyclerView2.apply {
+            layoutManager = LinearLayoutManager(context)
+            newContactAdapter = NewContactAdapter(arrayListOf())
+            adapter = newContactAdapter
+
+            newContactAdapter.setOnNewContactClickListerner(object:
+            OnNewContactClickListerner{
+                override fun onNewContactClick(list: NewContactModel) {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE),
+                            1)
+                    } else {
+                        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${list.phoneNumber}"))
+                        startActivity(intent)
+                    }
+                }
+            })
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ContactFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    ): View {
+        contactBinding = FragmentContactBinding.inflate(inflater, container, false)
+        return contactBinding.root
     }
 }

@@ -53,4 +53,26 @@ class TeamRepository @Inject constructor (
                 onFail(it.message.orEmpty())
             }
         }
+
+    fun updateUser(
+        userUID : String,
+        teamName : String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val updateUsers = mapOf(
+            "teamName" to teamName
+        )
+        firebaseDatabase.getReference("Users").child(userUID).updateChildren(updateUsers)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+    }
     }

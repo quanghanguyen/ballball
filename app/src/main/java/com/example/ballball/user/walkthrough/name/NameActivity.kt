@@ -36,7 +36,6 @@ class NameActivity : AppCompatActivity() {
         initObserve()
     }
 
-
     private fun initEvents() {
         makeClearableEditText()
         next()

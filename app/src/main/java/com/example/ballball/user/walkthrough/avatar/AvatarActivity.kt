@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.example.ballball.databinding.ActivityAvatarBinding
 import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
 import com.example.ballball.user.walkthrough.team.TeamActivity
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.StorageConnection
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,7 @@ class AvatarActivity : AppCompatActivity() {
     private val avatarViewModel : AvatarViewModel by viewModels()
     private lateinit var imgUri : Uri
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
+    private var userAvatarUrl : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

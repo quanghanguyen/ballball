@@ -13,6 +13,12 @@ import javax.inject.Inject
 class TeamViewModel @Inject constructor(private val teamRepository: TeamRepository) : ViewModel() {
     val saveTeams = MutableLiveData<SaveTeams>()
     val saveTeamsImage = MutableLiveData<SaveTeamsImage>()
+    val updateUsers = MutableLiveData<UpdateUsers>()
+
+    sealed class UpdateUsers {
+        object ResultOk : UpdateUsers()
+        object ResultError : UpdateUsers()
+    }
 
     sealed class SaveTeams {
         object ResultOk : SaveTeams()
@@ -55,6 +61,21 @@ class TeamViewModel @Inject constructor(private val teamRepository: TeamReposito
                 saveTeamsImage.value = SaveTeamsImage.ResultOk
             }, {
                 saveTeamsImage.value = SaveTeamsImage.ResultError("")
+            })
+        }
+    }
+
+    fun updateUsers(
+        userUID : String,
+        teamName : String,
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            teamRepository.updateUser(userUID, teamName, {
+                updateUsers.value = UpdateUsers.ResultOk
+            }, {
+                updateUsers.value = UpdateUsers.ResultError
             })
         }
     }

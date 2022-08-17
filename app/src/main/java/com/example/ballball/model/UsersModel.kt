@@ -12,4 +12,8 @@ data class UsersModel (
     var userName : String = "",
     @SerializedName("userPhone")
     var userPhone : String = "",
+    @SerializedName("avatarUrl")
+    var avatarUrl : String = "",
+    @SerializedName("teamName")
+    var teamName : String = ""
         ) : Parcelable

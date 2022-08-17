@@ -26,7 +26,6 @@ import java.util.*
 
 @AndroidEntryPoint
 class CreateMatchActivity : AppCompatActivity() {
-
     private lateinit var createMatchBinding: ActivityCreateMatchBinding
     private val createMatchViewModel : CreateMatchViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
