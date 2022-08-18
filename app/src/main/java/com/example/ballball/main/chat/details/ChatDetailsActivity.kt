@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,7 +21,11 @@ import com.example.ballball.model.UsersModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.receiverId
+import com.example.ballball.utils.Model.teamImageUrl
+import com.example.ballball.utils.Model.teamName
+import com.example.ballball.utils.StorageConnection
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -83,10 +88,30 @@ class ChatDetailsActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initEvents() {
         binding()
+        handleVariable()
         initListMessage()
         sendChat()
         back()
     }
+
+    private fun handleVariable() {
+        if (userUID != null) {
+            FirebaseDatabase.getInstance().getReference("Teams").child(userUID).get()
+                .addOnSuccessListener {
+                    teamName = it.child("teamName").value.toString()
+                }
+            }
+
+        if (userUID != null) {
+            StorageConnection.storageReference.getReference("Teams").child(userUID).downloadUrl
+                .addOnSuccessListener {
+                    teamImageUrl = it.toString()
+                }
+                .addOnFailureListener {
+                    Log.e("Error", it.toString())
+                }
+            }
+        }
 
     private fun initListMessage() {
         chatDetailsBinding.recyclerView.apply {
@@ -121,7 +146,8 @@ class ChatDetailsActivity : AppCompatActivity() {
                 val formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy")
                 val formatted = current.format(formatter).toString()
                 if (userUID != null) {
-                    chatDetailsViewModel.saveChat(userUID, receiverId!!, chatDetailsBinding.message.text.toString(), formatted)
+                    chatDetailsViewModel.saveChat(userUID, receiverId!!, chatDetailsBinding.message.text.toString(), formatted,
+                    teamImageUrl!!, teamName!!)
                 }
                 chatDetailsBinding.message.text.clear()
             } else {

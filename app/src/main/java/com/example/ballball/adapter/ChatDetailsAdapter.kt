@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.model.ChatModel
 import com.example.ballball.model.UsersModel
 import com.google.firebase.auth.FirebaseAuth
+import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
 class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatModel>)
@@ -26,9 +29,10 @@ class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatMo
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//        val teamName : TextView = view.findViewById(R.id.chat_team_name)
+        val teamName : TextView = view.findViewById(R.id.chat_team_name)
         val message : TextView = view.findViewById(R.id.chat_message)
         val time : TextView = view.findViewById(R.id.chat_time)
+        val image : CircleImageView = view.findViewById(R.id.chat_user_avatar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -45,6 +49,8 @@ class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatMo
         val chat = list[position]
         holder.message.text = chat.message
         holder.time.text = chat.time
+        holder.teamName.text = chat.teamName
+        Glide.with(holder.image).load(chat.teamAvatar).centerCrop().into(holder.image)
     }
 
     override fun getItemCount(): Int {

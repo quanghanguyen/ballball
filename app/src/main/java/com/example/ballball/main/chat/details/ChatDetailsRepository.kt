@@ -15,10 +15,12 @@ class ChatDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
         receiverId : String,
         message : String,
         time : String,
+        teamAvatar : String,
+        teamName : String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
-        val chatData = ChatModel(senderId, receiverId, message, time)
+        val chatData = ChatModel(senderId, receiverId, message, time, teamAvatar, teamName)
         firebaseDatabase.getReference("Chat").push().setValue(chatData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

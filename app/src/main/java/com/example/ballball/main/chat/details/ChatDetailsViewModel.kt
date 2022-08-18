@@ -29,12 +29,14 @@ class ChatDetailsViewModel @Inject constructor(private val chatDetailsRepository
         senderId : String,
         receiverId : String,
         message : String,
-        time : String
+        time : String,
+        teamAvatar : String,
+        teamName : String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            chatDetailsRepository.saveChat(senderId, receiverId, message, time, {
+            chatDetailsRepository.saveChat(senderId, receiverId, message, time, teamAvatar, teamName, {
                 saveChatResult.value = SaveChatResult.ResultOk
             }, {
                 saveChatResult.value = SaveChatResult.ResultError

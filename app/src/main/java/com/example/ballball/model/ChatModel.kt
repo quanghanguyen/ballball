@@ -12,5 +12,8 @@ data class ChatModel(
     val message : String? = "",
     @SerializedName("time")
     val time : String? = "",
-
+    @SerializedName("teamAvatar")
+    val teamAvatar : String? = "",
+    @SerializedName("teamName")
+    val teamName : String? = ""
 )
