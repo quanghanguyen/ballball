@@ -28,4 +28,5 @@ object Model {
     var destinationLong : Double? = null
     var destinationAddress : String? = null
     var avatarUrl : String? = null
+    var receiverId : String? = null
 }

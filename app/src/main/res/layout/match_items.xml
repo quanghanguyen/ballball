@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    android:id="@+id/items">
+    android:id="@+id/items"
+    >
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
