@@ -103,7 +103,7 @@ class ChatDetailsActivity : AppCompatActivity() {
             }
 
         if (userUID != null) {
-            StorageConnection.storageReference.getReference("Teams").child(userUID).downloadUrl
+            StorageConnection.storageReference.getReference("Users").child(userUID).downloadUrl
                 .addOnSuccessListener {
                     teamImageUrl = it.toString()
                 }

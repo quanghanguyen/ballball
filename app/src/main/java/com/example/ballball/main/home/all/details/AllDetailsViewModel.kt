@@ -13,6 +13,12 @@ import javax.inject.Inject
 class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: AllDetailsRepository) : ViewModel()
 {
     val catchMatch = MutableLiveData<CatchMatch>()
+    val waitMatchListNotification = MutableLiveData<WaitMatchListNotificationResult>()
+
+    sealed class WaitMatchListNotificationResult {
+        object ResultOk : WaitMatchListNotificationResult()
+        object ResultError : WaitMatchListNotificationResult()
+    }
 
     sealed class CatchMatch {
         object ResultOk : CatchMatch()
@@ -75,4 +81,24 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
                 })
             }
         }
+
+    fun waiMatchListNotification(
+        clientUID : String,
+        clientTeamName: String,
+        clientImageUrl: String,
+        id : String,
+        date : String,
+        time: String,
+        timeUtils : Long
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            allDetailsRepository.waitMatchListNotification(clientUID, clientTeamName, clientImageUrl, id, date, time, timeUtils, {
+                waitMatchListNotification.value = WaitMatchListNotificationResult.ResultOk
+            }, {
+                waitMatchListNotification.value = WaitMatchListNotificationResult.ResultError
+            })
+        }
     }
+}

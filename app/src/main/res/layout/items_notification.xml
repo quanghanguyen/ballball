@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/items"
+    android:background="?android:attr/selectableItemBackground"
+    >
+
+    <RelativeLayout
+        android:id="@+id/_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <RelativeLayout
+            android:id="@+id/notification_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/user_avatar">
+
+            <RelativeLayout
+                android:id="@+id/team_name_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/team_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Frenzy Shooters"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/notification_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/team_name_layout"
+                android:fontFamily="@font/inter_regular"
+                android:text="Đồng ý đá cùng bạn vào lúc 6:00 (22/06/2022)"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/time_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/_layout"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/time"
+            android:src="@drawable/clock_icon_grey" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="24 phút trước"
+            android:textColor="#6F6F6F"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EAEAEA"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/time_layout"
+        />
+
+</RelativeLayout>

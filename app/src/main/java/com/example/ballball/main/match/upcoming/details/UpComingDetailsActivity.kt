@@ -42,6 +42,8 @@ import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchID
 import com.example.ballball.utils.Model.matchTime
 import com.example.ballball.utils.Model.teamName
+import com.example.ballball.utils.Model.userImageUrl
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -98,6 +100,14 @@ class UpComingDetailsActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 clientPhone = it.child("userPhone").value.toString()
             }
+
+        StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
+            .addOnSuccessListener {
+                userImageUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
         }
 
     private fun phoneCall() {
@@ -115,6 +125,16 @@ class UpComingDetailsActivity : AppCompatActivity() {
 
     private fun initObserve() {
         cancelUpComingMatchObserve()
+        cancelUpComingListNotification()
+    }
+
+    private fun cancelUpComingListNotification() {
+        upComingDetailsViewModel.cancelUpComingListNotification.observe(this) {result ->
+            when (result) {
+                is UpComingDetailsViewModel.CancelUpComingListNotification.ResultOk -> {}
+                is UpComingDetailsViewModel.CancelUpComingListNotification.ResultError -> {}
+            }
+        }
     }
 
     private fun cancelMatch() {
@@ -135,6 +155,8 @@ class UpComingDetailsActivity : AppCompatActivity() {
                         upComingDetailsViewModel.cancelUpComingMatch(clientUID!!, userUID, matchID!!, matchDate!!, matchTime!!,
                         teamName!!, radioText)
                     }
+                    val timeUtils : Long = System.currentTimeMillis()
+                    upComingDetailsViewModel.cancelUpComingListNotification(clientUID!!, teamName!!, userImageUrl!!, "cancelUpComing", matchDate!!, matchTime!!, radioText, timeUtils)
                     dialog.dismiss()
                 } else {
                     Toast.makeText(this, "Vui lòng chọn lí do", Toast.LENGTH_SHORT).show()

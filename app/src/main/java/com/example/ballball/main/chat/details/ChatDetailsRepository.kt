@@ -53,13 +53,6 @@ class ChatDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
                             chat.senderId.equals(receiverId) && chat.receiverId.equals(senderId)) {
                                 listRequest.add(chat)
                         }
-//                        requestSnapshot.getValue(ChatModel::class.java)?.let { list ->
-//                            when {
-//                                userUID != list.userUid -> {
-//                                    listRequest.add(0, list)
-//                                }
-//                            }
-//                        }
                     }
                     onSuccess(listRequest)
                 }

@@ -41,4 +41,36 @@ class WaitDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
                 onFail(it.message.orEmpty())
             }
         }
+
+    fun cancelWaitMatchListNotification(
+        clientUID : String,
+        clientTeamName: String,
+        clientImageUrl: String,
+        id : String,
+        date : String,
+        time: String,
+        timeUtils : Long,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val hashMap : HashMap<String, String> = HashMap()
+        hashMap["clientTeamName"] = clientTeamName
+        hashMap["clientImageUrl"] = clientImageUrl
+        hashMap["id"] = id
+        hashMap["date"] = date
+        hashMap["time"] = time
+        hashMap["timeUtils"] = timeUtils.toString()
+
+        firebaseDatabase.getReference("listNotifications").child(clientUID).push().setValue(hashMap)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
     }

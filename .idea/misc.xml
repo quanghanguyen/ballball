@@ -44,6 +44,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_confirm_details.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_confirm_detals.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_create_match.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_list_notification.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_maps.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_name.xml" value="0.2" />
@@ -80,11 +81,12 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_tomorrow.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_up_coming.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_wait.xml" value="0.24010416666666667" />
-        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/item_left_side.xml" value="0.1" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/item_left_side.xml" value="0.35" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/item_right_side.xml" value="0.36666666666666664" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/items_add_contact.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/items_chat.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/items_contact.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/items_notification.xml" value="0.35" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/layout_bottom_sheet_dialog.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/layout_bottom_sheet_location.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/layout_bottom_sheet_people_number.xml" value="0.25416666666666665" />

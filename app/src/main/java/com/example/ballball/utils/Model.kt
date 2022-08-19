@@ -29,4 +29,5 @@ object Model {
     var destinationAddress : String? = null
     var avatarUrl : String? = null
     var receiverId : String? = null
+    var userImageUrl : String? = null
 }

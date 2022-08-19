@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.ballball.R
 import com.example.ballball.adapter.HomePagerAdapter
 import com.example.ballball.databinding.FragmentHomeBinding
+import com.example.ballball.listnotification.ListNotificationActivity
 import com.example.ballball.user.userinfomation.UserInformationActivity
 import com.example.ballball.utils.Animation
 import com.google.android.material.tabs.TabLayoutMediator
@@ -36,6 +37,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun initEvents() {
+        goUserInfo()
+        goListNotification()
+    }
+
+    private fun goListNotification() {
+        homeBinding.notification.setOnClickListener {
+            startActivity(Intent(context, ListNotificationActivity::class.java))
+        }
+    }
+
+    private fun goUserInfo() {
         homeBinding.userAvatar.setOnClickListener {
             startActivity(Intent(context, UserInformationActivity::class.java))
         }

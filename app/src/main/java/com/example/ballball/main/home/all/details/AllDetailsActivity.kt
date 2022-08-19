@@ -49,6 +49,7 @@ import com.example.ballball.utils.Model.teamConfirmUID
 import com.example.ballball.utils.Model.teamImageUrl
 import com.example.ballball.utils.Model.teamNote
 import com.example.ballball.utils.Model.teamPeopleNumber
+import com.example.ballball.utils.Model.userImageUrl
 import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -114,10 +115,28 @@ class AllDetailsActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.e("Error", it.toString())
             }
+
+        StorageConnection.storageReference.getReference("Users").child(userUID).downloadUrl
+            .addOnSuccessListener {
+                userImageUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
     }
 
     private fun initObserve() {
         catchMatchObserve()
+        saveWaitMatchListNotificationObserve()
+    }
+
+    private fun saveWaitMatchListNotificationObserve() {
+        allDetailsViewModel.waitMatchListNotification.observe(this) {result ->
+            when (result) {
+                is AllDetailsViewModel.WaitMatchListNotificationResult.ResultOk -> {}
+                is AllDetailsViewModel.WaitMatchListNotificationResult.ResultError -> {}
+            }
+        }
     }
 
     private fun catchMatchObserve() {
@@ -170,6 +189,8 @@ class AllDetailsActivity : AppCompatActivity() {
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
                                 clientImageUrl!!, userUID)
+                            val timeUtils : Long = System.currentTimeMillis()
+                            allDetailsViewModel.waiMatchListNotification(teamConfirmUID!!, clientTeamName!!, userImageUrl!!, "waitMatch", matchDate!!, matchTime!!, timeUtils)
 //                            //Log
 //                            Log.e("userUID", userUID)
 //                            Log.e("matchID", matchID)

@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:layout_marginTop="8dp"
-            android:layout_toStartOf="@+id/user_avatar"
+            android:layout_toStartOf="@+id/chat_user_avatar"
             >
 
             <RelativeLayout
@@ -47,7 +47,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:text="13:18 18-08-2022"
                     android:textColor="#7A7A7A"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <View
                     android:id="@+id/dot"
@@ -68,7 +68,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:text="Frantic Saboteurs"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -81,7 +81,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="Cam on, toi van khoe"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
 

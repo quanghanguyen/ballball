@@ -15,12 +15,18 @@ import javax.inject.Inject
 class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository: WaitDetailsRepository) : ViewModel() {
 
     val cancelWaitMatch = MutableLiveData<CancelWaitMatch>()
+    val cancelWaitMatchListNotification = MutableLiveData<CancelWaitMatchListNotification>()
 
     sealed class CancelWaitMatch {
         object ResultOk : CancelWaitMatch()
         object ResultError : CancelWaitMatch()
         object NotificationOk : CancelWaitMatch()
         object NotificationError : CancelWaitMatch()
+    }
+
+    sealed class CancelWaitMatchListNotification {
+        object ResultOk : CancelWaitMatchListNotification()
+        object ResultError : CancelWaitMatchListNotification()
     }
 
     fun cancelWaitMatch(userUID: String, matchID: String, date: String, time: String, clientTeamName: String) {
@@ -37,6 +43,26 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
                 cancelWaitMatch.value = CancelWaitMatch.NotificationOk
             }, {
                 cancelWaitMatch.value = CancelWaitMatch.NotificationError
+            })
+        }
+    }
+
+    fun cancelWaitMatchListNotification(
+        clientUID : String,
+        clientTeamName: String,
+        clientImageUrl: String,
+        id : String,
+        date : String,
+        time: String,
+        timeUtils : Long
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            waitDetailsRepository.cancelWaitMatchListNotification(clientUID, clientTeamName, clientImageUrl, id, date, time, timeUtils, {
+                cancelWaitMatchListNotification.value = CancelWaitMatchListNotification.ResultOk
+            }, {
+                cancelWaitMatchListNotification.value = CancelWaitMatchListNotification.ResultError
             })
         }
     }

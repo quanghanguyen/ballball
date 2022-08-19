@@ -13,6 +13,8 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
     val denyConfirmMatch = MutableLiveData<DenyConfirmMatch>()
     val acceptMatch = MutableLiveData<AcceptMatch>()
     val saveUpComingClient = MutableLiveData<UpComingClientResult>()
+    val denyRequestListNotification = MutableLiveData<DenyRequestListNotification>()
+    val confirmRequestListNotification = MutableLiveData<ConfirmRequestListNotification>()
 
     sealed class DenyConfirmMatch {
         object ResultOk : DenyConfirmMatch()
@@ -35,6 +37,16 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
     sealed class UpComingClientResult {
         object SaveUpComingClientOk: UpComingClientResult()
         object SaveUpComingClientError: UpComingClientResult()
+    }
+
+    sealed class DenyRequestListNotification {
+        object ResultOk: DenyRequestListNotification()
+        object ResultError: DenyRequestListNotification()
+    }
+
+    sealed class ConfirmRequestListNotification {
+        object ResultOk : ConfirmRequestListNotification()
+        object ResultError : ConfirmRequestListNotification()
     }
 
     fun denyConfirmMatch(
@@ -144,4 +156,44 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
                 })
             }
         }
+
+    fun denyRequestListNotification(
+        clientUID : String,
+        clientTeamName: String,
+        clientImageUrl: String,
+        id : String,
+        date : String,
+        time: String,
+        timeUtils : Long
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.denyRequestListNotifications(clientUID, clientTeamName, clientImageUrl, id, date, time, timeUtils, {
+                denyRequestListNotification.value = DenyRequestListNotification.ResultOk
+            }, {
+                denyRequestListNotification.value = DenyRequestListNotification.ResultError
+            })
+        }
     }
+
+    fun confirmRequestListNotification(
+        clientUID : String,
+        clientTeamName: String,
+        clientImageUrl: String,
+        id : String,
+        date : String,
+        time: String,
+        timeUtils : Long
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.acceptRequestListNotification(clientUID, clientTeamName, clientImageUrl, id, date, time, timeUtils, {
+                confirmRequestListNotification.value = ConfirmRequestListNotification.ResultOk
+            }, {
+                confirmRequestListNotification.value = ConfirmRequestListNotification.ResultError
+            })
+        }
+    }
+}

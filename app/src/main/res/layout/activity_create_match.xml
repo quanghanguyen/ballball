@@ -154,7 +154,7 @@
                         android:layout_height="8dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/dot" />
+                        android:src="@drawable/dot_green" />
 
                     <TextView
                         android:id="@+id/time"

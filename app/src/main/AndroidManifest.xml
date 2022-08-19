@@ -22,6 +22,9 @@
         android:theme="@style/Theme.BallBall"
         tools:targetApi="31">
         <activity
+            android:name=".listnotification.ListNotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".main.chat.details.ChatDetailsActivity"
             android:exported="false" />
         <activity

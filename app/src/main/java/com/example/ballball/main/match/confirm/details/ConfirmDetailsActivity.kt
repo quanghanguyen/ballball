@@ -56,6 +56,8 @@ import com.example.ballball.utils.Model.teamName
 import com.example.ballball.utils.Model.teamNote
 import com.example.ballball.utils.Model.teamPeopleNumber
 import com.example.ballball.utils.Model.teamPhone
+import com.example.ballball.utils.Model.userImageUrl
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -108,6 +110,14 @@ class ConfirmDetailsActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 clientPhone = it.child("userPhone").value.toString()
             }
+
+        StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
+            .addOnSuccessListener {
+                userImageUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
     }
 
     private fun phoneCall() {
@@ -127,6 +137,26 @@ class ConfirmDetailsActivity : AppCompatActivity() {
         denyConfirmMatchObserve()
         acceptMatchObserve()
         saveUpComingClientObserve()
+        denyRequestListNotification()
+        acceptRequestListNotification()
+    }
+
+    private fun acceptRequestListNotification() {
+        confirmDetailsViewModel.confirmRequestListNotification.observe(this) {result ->
+            when (result) {
+                is ConfirmDetailsViewModel.ConfirmRequestListNotification.ResultOk -> {}
+                is ConfirmDetailsViewModel.ConfirmRequestListNotification.ResultError -> {}
+            }
+        }
+    }
+
+    private fun denyRequestListNotification() {
+        confirmDetailsViewModel.denyRequestListNotification.observe(this) {result ->
+            when (result) {
+                is ConfirmDetailsViewModel.DenyRequestListNotification.ResultOk -> {}
+                is ConfirmDetailsViewModel.DenyRequestListNotification.ResultError -> {}
+            }
+        }
     }
 
     private fun saveUpComingClientObserve() {
@@ -190,6 +220,10 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                         matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
                         lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, userUID)
                 }
+
+                val timeUtils : Long = System.currentTimeMillis()
+                confirmDetailsViewModel.confirmRequestListNotification(confirmUID!!, teamName!!, userImageUrl!!, "acceptRequest", matchDate!!, matchTime!!, timeUtils)
+
                 dialog.dismiss()
             }
             signOutDialogBinding.no.setOnClickListener {
@@ -236,6 +270,9 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 if (userUID != null) {
                     confirmDetailsViewModel.denyConfirmMatch(userUID, matchID!!, confirmUID!!, confirmUID!!,
                         matchDate!!, matchTime!!, teamName!!)
+
+                    val timeUtils : Long = System.currentTimeMillis()
+                    confirmDetailsViewModel.denyRequestListNotification(confirmUID!!, teamName!!, userImageUrl!!, "denyRequest", matchDate!!, matchTime!!, timeUtils)
                 }
                 dialog.dismiss()
             }

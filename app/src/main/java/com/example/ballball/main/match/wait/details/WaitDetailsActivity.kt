@@ -33,6 +33,7 @@ import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.clientTeamName
+import com.example.ballball.utils.Model.clientUID
 import com.example.ballball.utils.Model.currentAddress
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
@@ -44,6 +45,8 @@ import com.example.ballball.utils.Model.matchID
 import com.example.ballball.utils.Model.matchTime
 import com.example.ballball.utils.Model.teamName
 import com.example.ballball.utils.Model.teamPhone
+import com.example.ballball.utils.Model.userImageUrl
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -105,12 +108,30 @@ class WaitDetailsActivity : AppCompatActivity() {
 
     private fun initObserve() {
         cancelWaitRequestObserve()
+        cancelWaitListNotificationObserve()
+    }
+
+    private fun cancelWaitListNotificationObserve() {
+        waitDetailsViewModel.cancelWaitMatchListNotification.observe(this) {result ->
+            when (result) {
+                is WaitDetailsViewModel.CancelWaitMatchListNotification.ResultOk -> {}
+                is WaitDetailsViewModel.CancelWaitMatchListNotification.ResultError -> {}
+            }
+        }
     }
 
     private fun handleVariables() {
         FirebaseDatabase.getInstance().getReference("Teams").child(userUID!!).get()
             .addOnSuccessListener {
                 clientTeamName = it.child("teamName").value.toString()
+            }
+
+        StorageConnection.storageReference.getReference("Users").child(userUID).downloadUrl
+            .addOnSuccessListener {
+                userImageUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
             }
     }
 
@@ -152,6 +173,10 @@ class WaitDetailsActivity : AppCompatActivity() {
             signOutDialogBinding.yes.setOnClickListener {
                 if (userUID != null) {
                     waitDetailsViewModel.cancelWaitMatch(userUID, matchID!!, matchDate!!, matchTime!!, clientTeamName!!)
+
+                    val timeUtils : Long = System.currentTimeMillis()
+                    waitDetailsViewModel.cancelWaitMatchListNotification(clientUID!!, clientTeamName!!, userImageUrl!!, "cancelWaitMatch",
+                    matchDate!!, matchTime!!, timeUtils)
                 }
                 dialog.dismiss()
             }
@@ -190,6 +215,7 @@ class WaitDetailsActivity : AppCompatActivity() {
                 matchDate = data?.date
                 matchTime = data?.time
                 teamPhone = data?.teamPhone
+                clientUID = data?.userUID
 
                 destinationLat = data?.lat
                 destinationLong = data?.long

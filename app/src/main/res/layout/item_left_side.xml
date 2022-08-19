@@ -45,8 +45,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:text="Frenzy Shooters"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    />
+                    android:textSize="16sp" />
 
                 <View
                     android:id="@+id/dot"
@@ -56,8 +55,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@+id/chat_team_name"
                     android:background="@drawable/dot"
-                    android:backgroundTint="#7A7A7A"
-                    />
+                    android:backgroundTint="#7A7A7A" />
 
                 <TextView
                     android:id="@+id/chat_time"
@@ -67,7 +65,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:text="13:18 18-08-2022"
                     android:textColor="#7A7A7A"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_toEndOf="@id/dot"
                     android:layout_marginStart="8dp"
                     />
@@ -83,7 +81,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="Xin chao, ban co khoe khong?"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 />
 
         </RelativeLayout>
