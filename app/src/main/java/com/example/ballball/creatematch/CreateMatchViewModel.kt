@@ -26,7 +26,7 @@ class CreateMatchViewModel @Inject constructor(
 
     sealed class LoadTeamInfo {
         object Loading : LoadTeamInfo()
-        class LoadImageOk(val image : Bitmap) : LoadTeamInfo()
+        class LoadImageOk(val teamImageUrl : String) : LoadTeamInfo()
         object LoadImageError : LoadTeamInfo()
         class LoadInfoOk(val teamLocation : String, val teamPeopleNumber : String) : LoadTeamInfo()
         object LoadInfoError : LoadTeamInfo()
@@ -47,13 +47,15 @@ class CreateMatchViewModel @Inject constructor(
 
     fun loadTeamInfo (
         userUID : String,
-        localFile : File
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            teamInformationRepository.loadTeamImage(userUID, localFile, {
-                loadTeamInfo.value = LoadTeamInfo.LoadImageOk(it)
+            teamInformationRepository.loadTeamInfo(userUID, {
+                if (it.exists()) {
+                    val teamImageUrl = it.child("teamImageUrl").value.toString()
+                    loadTeamInfo.value = LoadTeamInfo.LoadImageOk(teamImageUrl)
+                }
             }, {
                 loadTeamInfo.value = LoadTeamInfo.LoadImageError
             })

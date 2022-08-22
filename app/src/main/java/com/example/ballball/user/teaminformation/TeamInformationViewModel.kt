@@ -24,9 +24,10 @@ class TeamInformationViewModel @Inject constructor(
 
     sealed class LoadTeamInfo {
         object Loading : LoadTeamInfo()
-        class LoadImageOk(val image : Bitmap) : LoadTeamInfo()
-        object LoadImageError : LoadTeamInfo()
-        class LoadInfoOk(val teamName : String, val teamLocation : String, val teamPeopleNumber : String, val teamNote : String) : LoadTeamInfo()
+//        class LoadImageOk(val image : Bitmap) : LoadTeamInfo()
+//        object LoadImageError : LoadTeamInfo()
+        class LoadInfoOk(val teamName : String, val teamLocation : String,
+                         val teamPeopleNumber : String, val teamNote : String, val teamImageUrl : String) : LoadTeamInfo()
         object LoadInfoError : LoadTeamInfo()
     }
 
@@ -42,23 +43,24 @@ class TeamInformationViewModel @Inject constructor(
 
     fun loadTeamInfo (
         userUID : String,
-        localFile : File
+//        localFile : File
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            teamInformationRepository.loadTeamImage(userUID, localFile, {
-                loadTeamInfo.value = LoadTeamInfo.LoadImageOk(it)
-            }, {
-                loadTeamInfo.value = LoadTeamInfo.LoadImageError
-            })
+//            teamInformationRepository.loadTeamImage(userUID, localFile, {
+//                loadTeamInfo.value = LoadTeamInfo.LoadImageOk(it)
+//            }, {
+//                loadTeamInfo.value = LoadTeamInfo.LoadImageError
+//            })
             teamInformationRepository.loadTeamInfo(userUID, {
                 if (it.exists()) {
                     val teamName = it.child("teamName").value.toString()
                     val teamLocation = it.child("teamLocation").value.toString()
                     val teamPeopleNumber = it.child("teamPeopleNumber").value.toString()
                     val teamNote = it.child("teamNote").value.toString()
-                    loadTeamInfo.value = LoadTeamInfo.LoadInfoOk(teamName, teamLocation, teamPeopleNumber, teamNote)
+                    val teamImageUrl = it.child("teamImageUrl").value.toString()
+                    loadTeamInfo.value = LoadTeamInfo.LoadInfoOk(teamName, teamLocation, teamPeopleNumber, teamNote, teamImageUrl)
                 }
             }, {
                 loadTeamInfo.value = LoadTeamInfo.LoadInfoError

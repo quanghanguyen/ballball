@@ -26,4 +26,27 @@ class MainRepository @Inject constructor(private val firebaseDatabase: FirebaseD
                 onFail(it.message.orEmpty())
             }
         }
+
+    fun updateTeam(
+        userUID: String,
+        teamImageUrl : String,
+        onSuccess: (String) -> Unit,
+        onFail: (String) -> Unit
+    ) {
+        val updateTeams = mapOf(
+            "teamImageUrl" to teamImageUrl
+        )
+
+        firebaseDatabase.getReference("Teams").child(userUID).updateChildren(updateTeams)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
     }

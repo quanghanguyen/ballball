@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityTeamInformationBinding
 import com.example.ballball.databinding.LayoutBottomSheetLocationBinding
@@ -32,7 +33,7 @@ class TeamInformationActivity : AppCompatActivity() {
     private lateinit var teamInformationBinding: ActivityTeamInformationBinding
     private val teamInformationViewModel: TeamInformationViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private val localFile = File.createTempFile("tempImage", "jpg")
+//    private val localFile = File.createTempFile("tempImage", "jpg")
     private lateinit var layoutBottomSheetLocationBinding: LayoutBottomSheetLocationBinding
     private lateinit var layoutBottomSheetPeopleNumberBinding: LayoutBottomSheetPeopleNumberBinding
     private lateinit var imgUri : Uri
@@ -44,7 +45,7 @@ class TeamInformationActivity : AppCompatActivity() {
         initEvents()
         initObserve()
         if (userUID != null) {
-            teamInformationViewModel.loadTeamInfo(userUID, localFile)
+            teamInformationViewModel.loadTeamInfo(userUID)
         }
     }
 
@@ -86,16 +87,20 @@ class TeamInformationActivity : AppCompatActivity() {
                 is TeamInformationViewModel.LoadTeamInfo.Loading -> {
                     teamInformationBinding.progressBar.visibility = View.VISIBLE
                 }
-                is TeamInformationViewModel.LoadTeamInfo.LoadImageOk -> {
-                    teamInformationBinding.teamImage.setImageBitmap(result.image)
-                }
+//                is TeamInformationViewModel.LoadTeamInfo.LoadImageOk -> {
+//                    teamInformationBinding.teamImage.setImageBitmap(result.image)
+//                }
                 is TeamInformationViewModel.LoadTeamInfo.LoadInfoOk -> {
                     teamInformationBinding.teamName.setText(result.teamName)
                     teamInformationBinding.location.text = result.teamLocation
                     teamInformationBinding.peopleNumber.text = result.teamPeopleNumber
                     teamInformationBinding.note.setText(result.teamNote)
+                    Glide.with(teamInformationBinding.teamImage)
+                        .load(result.teamImageUrl)
+                        .centerCrop()
+                        .into(teamInformationBinding.teamImage)
                 }
-                is TeamInformationViewModel.LoadTeamInfo.LoadImageError -> {}
+//                is TeamInformationViewModel.LoadTeamInfo.LoadImageError -> {}
                 is TeamInformationViewModel.LoadTeamInfo.LoadInfoError -> {}
             }
         }

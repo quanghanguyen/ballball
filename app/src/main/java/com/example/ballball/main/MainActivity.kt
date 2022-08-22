@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationAccessDialogBinding: LocationAccessDialogBinding
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private var userAvatarUrl : String? = null
+    private var teamAvatarUrl : String? = null
     private var teamName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +96,15 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 userAvatarUrl = it.toString()
                 mainViewModel.updateUser(userUID, userAvatarUrl!!)
-                Log.e("URL", userAvatarUrl.toString())
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
+
+        StorageConnection.storageReference.getReference("Teams").child(userUID).downloadUrl
+            .addOnSuccessListener {
+                teamAvatarUrl = it.toString()
+                mainViewModel.updateTeams(userUID, teamAvatarUrl!!)
             }
             .addOnFailureListener {
                 Log.e("Error", it.toString())
@@ -124,19 +133,8 @@ class MainActivity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-//                        Log.e("Latitude", list[0].latitude.toString())
-//                        Log.e("Longtitude", list[0].longitude.toString())
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
-//                        val myLocation = GeoLocation(currentLat!!, currentLong!!)
-//                        val hash = GeoFireUtils.getGeoHashForLocation(myLocation)
-//                        val khoaHocLocation = GeoLocation(16.45868048048192, 107.59229846267155)
-//                        val distance = GeoFireUtils.getDistanceBetween(myLocation, khoaHocLocation)
-//                        val geoHash = fromGeohashString("w6ut8u41g4")
-//                        val lat = geoHash.originatingPoint.latitude
-//                        val long = geoHash.originatingPoint.longitude
-//                        Log.e("LAT", lat.toString())
-//                        Log.e("LONG", long.toString())
                     }
                 }
             } else {

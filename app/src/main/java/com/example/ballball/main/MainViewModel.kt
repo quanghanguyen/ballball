@@ -12,10 +12,16 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val mainRepository : MainRepository) : ViewModel() {
     val updateUsers = MutableLiveData<UpdateUsers>()
+    val updateTeams = MutableLiveData<UpdateTeams>()
 
     sealed class UpdateUsers {
         object ResultOk : UpdateUsers()
         object ResultError : UpdateUsers()
+    }
+
+    sealed class UpdateTeams {
+        object ResultOk : UpdateTeams()
+        object ResultError : UpdateTeams()
     }
 
     fun updateUser(
@@ -29,6 +35,21 @@ class MainViewModel @Inject constructor(private val mainRepository : MainReposit
                 updateUsers.value = UpdateUsers.ResultOk
             }, {
                 updateUsers.value = UpdateUsers.ResultError
+            })
+        }
+    }
+
+    fun updateTeams(
+        userUID: String,
+        teamImageUrl : String
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            mainRepository.updateTeam(userUID, teamImageUrl, {
+                updateTeams.value = UpdateTeams.ResultOk
+            }, {
+                updateTeams.value = UpdateTeams.ResultError
             })
         }
     }

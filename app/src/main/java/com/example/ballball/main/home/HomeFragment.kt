@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.adapter.HomePagerAdapter
 import com.example.ballball.databinding.FragmentHomeBinding
@@ -60,6 +61,7 @@ class HomeFragment : Fragment() {
                     homeBinding.userAvatar.setImageBitmap(result.image)
                 }
                 is HomeViewModel.LoadAvatar.ResultError -> {}
+                else -> {}
             }
         }
     }

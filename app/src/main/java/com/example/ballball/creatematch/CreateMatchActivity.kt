@@ -13,6 +13,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.*
 import com.example.ballball.utils.*
@@ -29,7 +30,6 @@ class CreateMatchActivity : AppCompatActivity() {
     private lateinit var createMatchBinding: ActivityCreateMatchBinding
     private val createMatchViewModel : CreateMatchViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private val localFile = File.createTempFile("tempImage", "jpg")
     private lateinit var layoutBottomSheetLocationBinding: LayoutBottomSheetLocationBinding
     private lateinit var createMatchSuccessDialogBinding: CreateMatchSuccessDialogBinding
     private lateinit var createMatchDialogBinding: CreateMatchDialogBinding
@@ -51,7 +51,7 @@ class CreateMatchActivity : AppCompatActivity() {
         initEvents()
         initObserves()
         if (userUID != null) {
-            createMatchViewModel.loadTeamInfo(userUID, localFile)
+            createMatchViewModel.loadTeamInfo(userUID)
         }
     }
 
@@ -331,7 +331,7 @@ class CreateMatchActivity : AppCompatActivity() {
                     createMatchBinding.progressBar.visibility = View.VISIBLE
                 }
                 is CreateMatchViewModel.LoadTeamInfo.LoadImageOk -> {
-                    createMatchBinding.teamImage.setImageBitmap(result.image)
+                    Glide.with(createMatchBinding.teamImage).load(result.teamImageUrl).centerCrop().into(createMatchBinding.teamImage)
                 }
                 is CreateMatchViewModel.LoadTeamInfo.LoadInfoOk -> {
                     createMatchBinding.pitchLocation.text = result.teamLocation
