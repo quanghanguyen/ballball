@@ -66,8 +66,8 @@
         android:id="@+id/line_2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#EAEAEA"
         android:layout_below="@+id/title_layout"
+        android:background="#EAEAEA"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -75,23 +75,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_layout"
-        android:layout_marginTop="1dp"
-        />
+        android:layout_marginTop="1dp" />
 
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/image_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        >
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/notification_image"
             android:layout_centerHorizontal="true"
-            />
+            android:src="@drawable/notification_image" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,7 +105,5 @@
             />
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>

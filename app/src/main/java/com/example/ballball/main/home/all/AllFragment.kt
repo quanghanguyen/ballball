@@ -38,7 +38,12 @@ class AllFragment : Fragment() {
         allViewModel.loadAllList.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is AllViewModel.LoadAllList.ResultOk -> {
-                    allAdapter.addNewData(result.list)
+                    if (result.list.isEmpty()) {
+                        allFragmentBinding.recyclerView.visibility = View.GONE
+                        allFragmentBinding.imageLayout.visibility = View.GONE
+                    } else {
+                        allAdapter.addNewData(result.list)
+                    }
                 }
                 is AllViewModel.LoadAllList.ResultError -> {
                     Toast.makeText(context, result.errorMessage, Toast.LENGTH_SHORT).show()

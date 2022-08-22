@@ -17,8 +17,10 @@ import com.example.ballball.utils.Animation
 import com.example.ballball.loadingdialog.LoadingDialog
 import com.example.ballball.main.MainViewModel
 import com.example.ballball.utils.MessageConnection
+import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.avatarUrl
 import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.Model.userImageUrl
 import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -64,6 +66,15 @@ class TeamActivity : AppCompatActivity() {
                     deviceToken = task.result
                 }
             })
+
+//        StorageConnection.storageReference.getReference("Users").child(userUid!!).downloadUrl
+//            .addOnSuccessListener {
+//                userImageUrl = it.toString()
+//                Log.e("UserIMG", userImageUrl.toString())
+//            }
+//            .addOnFailureListener {
+//                Log.e("Error", it.toString())
+//            }
         }
 
     private fun next() {
@@ -79,6 +90,7 @@ class TeamActivity : AppCompatActivity() {
                     teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
                         teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
                         teamBinding.note.text.toString(), deviceToken!!)
+
                     teamViewModel.updateUsers(userUid, teamBinding.teamName.text.toString())
                 }
             } else {

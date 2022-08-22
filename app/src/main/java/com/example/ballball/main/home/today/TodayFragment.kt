@@ -38,7 +38,12 @@ class TodayFragment : Fragment() {
         todayViewModel.loadTodayList.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is TodayViewModel.LoadTodayList.ResultOk -> {
-                    todayAdapter.addNewData(result.list)
+                    if (result.list.isEmpty()) {
+                        todayBinding.recyclerView.visibility = View.GONE
+                        todayBinding.recyclerView.visibility = View.VISIBLE
+                    } else {
+                        todayAdapter.addNewData(result.list)
+                    }
                 }
                 is TodayViewModel.LoadTodayList.ResultError -> {
                     Toast.makeText(context, result.errorMessage, Toast.LENGTH_SHORT).show()

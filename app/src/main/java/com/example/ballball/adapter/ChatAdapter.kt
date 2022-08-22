@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.util.GlideSuppliers
 import com.example.ballball.`interface`.OnIconClickListerner
 import com.example.ballball.databinding.ItemsChatBinding
 import com.example.ballball.model.UsersModel
@@ -31,6 +33,8 @@ class ChatAdapter @Inject constructor(private var chatList : ArrayList<UsersMode
         fun bind(list : UsersModel) {
             with(itemsChatBinding) {
                 teamName.text = list.teamName
+                Glide.with(userAvatar).load(list.avatarUrl).centerCrop().into(userAvatar)
+
                 items.setOnClickListener {
                     listerner.onIconClick(list)
                 }

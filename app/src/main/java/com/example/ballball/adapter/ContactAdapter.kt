@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ballball.`interface`.OnIconClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.ItemsContactBinding
@@ -28,6 +29,7 @@ class ContactAdapter @Inject constructor(private var contactList : ArrayList<Use
                 with(itemsContactBinding) {
                     teamName.text = list.teamName
                     userName.text = list.userName
+                    Glide.with(userAvatar).load(list.avatarUrl).centerCrop().into(userAvatar)
 
                     call.setOnClickListener {
                         listerner.onIconClick(list)

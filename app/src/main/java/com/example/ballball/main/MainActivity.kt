@@ -51,6 +51,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
+    private val mainViewModel : MainViewModel by viewModels()
     private lateinit var navController: NavController
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 0
@@ -67,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
         initObserves()
-
     }
 
     private fun initObserves() {
@@ -75,6 +75,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserObserve() {
+        mainViewModel.updateUsers.observe(this) {result ->
+            when (result) {
+                is MainViewModel.UpdateUsers.ResultOk -> {}
+                is MainViewModel.UpdateUsers.ResultError -> {}
+            }
+        }
     }
 
     private fun initEvents() {
@@ -88,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
             .addOnSuccessListener {
                 userAvatarUrl = it.toString()
+                mainViewModel.updateUser(userUID, userAvatarUrl!!)
                 Log.e("URL", userAvatarUrl.toString())
             }
             .addOnFailureListener {

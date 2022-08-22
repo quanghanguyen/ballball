@@ -39,6 +39,10 @@ class TomorrowFragment : Fragment() {
         tomorrowViewModel.loadTomorrowList.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is TomorrowViewModel.LoadTomorrowList.ResultOk -> {
+                    if (result.list.isEmpty()) {
+                        tomorrowBinding.recyclerView.visibility = View.GONE
+                        tomorrowBinding.imageLayout.visibility = View.VISIBLE
+                    }
                     tomorrowAdapter.addNewData(result.list)
                 }
                 is TomorrowViewModel.LoadTomorrowList.ResultError -> {

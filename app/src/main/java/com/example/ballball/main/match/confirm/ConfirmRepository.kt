@@ -39,6 +39,9 @@ class ConfirmRepository @Inject constructor(private val firebaseDatabase: Fireba
                         }
                     }
                     onSuccess(listRequest)
+                } else {
+                    val listRequest = ArrayList<CreateMatchModel>()
+                    onSuccess(listRequest)
                 }
             }
 

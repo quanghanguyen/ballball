@@ -49,21 +49,20 @@ class NearMeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
-        initEvents()
         initObserve()
         nearMeViewModel.loadNearMeList(currentLat!!, currentLong!!)
         Log.e("currentLat", currentLat.toString())
         Log.e("currentLong", currentLong.toString())
     }
 
-    private fun initEvents() {
-        //
-    }
-
     private fun initObserve() {
         nearMeViewModel.loadNearMe.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is NearMeViewModel.LoadNearMeResult.ResultOk -> {
+                    if (result.list.isEmpty()) {
+                        nearMeBinding.nearMeRecyclerView.visibility = View.GONE
+                        nearMeBinding.imageLayout.visibility = View.VISIBLE
+                    }
                     nearMeAdapter.addNewData(result.list)
                 }
                 is NearMeViewModel.LoadNearMeResult.ResultError -> {}

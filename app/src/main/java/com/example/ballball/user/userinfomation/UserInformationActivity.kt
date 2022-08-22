@@ -18,6 +18,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityUserInformationBinding
 import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
@@ -52,7 +53,7 @@ class UserInformationActivity : AppCompatActivity() {
         initEvents()
         initObserve()
         if (userUID != null) {
-            userInformationViewModel.loadUserInfo(userUID, localFile)
+            userInformationViewModel.loadUserInfo(userUID)
         }
     }
 
@@ -194,14 +195,11 @@ class UserInformationActivity : AppCompatActivity() {
                 is UserInformationViewModel.LoadUserData.Loading -> {
                     userInformationBinding.progressBar.visibility = View.VISIBLE
                 }
-                is UserInformationViewModel.LoadUserData.LoadAvatarOk -> {
-                    userInformationBinding.profilePicture.setImageBitmap(result.image)
-                }
                 is UserInformationViewModel.LoadUserData.LoadNameAndPhoneOk -> {
                     userInformationBinding.userName.text = result.userName
                     userInformationBinding.userPhoneNumber.text = result.userPhone
+                    Glide.with(userInformationBinding.profilePicture).load(result.avatarUrl).centerCrop().into(userInformationBinding.profilePicture)
                 }
-                is UserInformationViewModel.LoadUserData.LoadAvatarError -> {}
                 is UserInformationViewModel.LoadUserData.LoadNameAndPhoneError -> {}
             }
         }

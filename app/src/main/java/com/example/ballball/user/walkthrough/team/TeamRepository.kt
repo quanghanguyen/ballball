@@ -74,5 +74,5 @@ class TeamRepository @Inject constructor (
             .addOnFailureListener {
                 onFail(it.message.orEmpty())
             }
-    }
+        }
     }

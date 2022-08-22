@@ -1,5 +1,6 @@
 package com.example.ballball.main.match.newcreate
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.example.ballball.R
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.adapter.NewCreateAdapter
+import com.example.ballball.creatematch.CreateMatchActivity
 import com.example.ballball.databinding.FragmentNewCreateBinding
 import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.main.match.newcreate.details.NewCreateDetailsActivity
@@ -30,9 +32,20 @@ class NewCreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
+        initEvents()
         initObserve()
         if (userUID != null) {
             newCreateViewModel.loadNewCreate(userUID)
+        }
+    }
+
+    private fun initEvents() {
+        createMatch()
+    }
+
+    private fun createMatch() {
+        newCreateBinding.button.setOnClickListener {
+            startActivity(Intent(context, CreateMatchActivity::class.java))
         }
     }
 
@@ -44,7 +57,13 @@ class NewCreateFragment : Fragment() {
         newCreateViewModel.loadNewCreate.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is NewCreateViewModel.LoadNewCreate.ResultOk -> {
-                    newCreateAdapter.addNewData(result.list)
+                    if (result.list.isNullOrEmpty()) {
+                        newCreateBinding.recyclerView.visibility = View.VISIBLE
+                        newCreateBinding.button.visibility = View.VISIBLE
+                        newCreateBinding.recyclerView.visibility = View.GONE
+                    } else {
+                        newCreateAdapter.addNewData(result.list)
+                    }
                 }
                 is NewCreateViewModel.LoadNewCreate.ResultError -> {}
             }

@@ -13,7 +13,11 @@ import com.example.ballball.databinding.FragmentConFirmBinding
 import com.example.ballball.main.match.confirm.details.ConfirmDetailsActivity
 import com.example.ballball.main.match.wait.details.WaitDetailsActivity
 import com.example.ballball.model.CreateMatchModel
+import com.example.ballball.utils.DatabaseConnection
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +41,12 @@ class ConFirmFragment : Fragment() {
         confirmViewModel.loadConfirm.observe(viewLifecycleOwner) {result ->
             when (result) {
                 is ConfirmViewModel.LoadConfirmResult.ResultOk -> {
-                    confirmAdapter.addNewData(result.list)
+                    if (result.list.isEmpty()) {
+                        conFirmBinding.imageLayout.visibility = View.VISIBLE
+                        conFirmBinding.recyclerView.visibility = View.GONE
+                    } else {
+                        confirmAdapter.addNewData(result.list)
+                    }
                 }
                 is ConfirmViewModel.LoadConfirmResult.ResultError -> {}
             }

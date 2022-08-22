@@ -39,6 +39,9 @@ class NewCreateRepository @Inject constructor(private val firebaseDatabase: Fire
                         }
                     }
                     onSuccess(listRequest)
+                } else {
+                    val listRequest = ArrayList<CreateMatchModel>()
+                    onSuccess(listRequest)
                 }
             }
 

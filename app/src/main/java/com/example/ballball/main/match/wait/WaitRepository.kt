@@ -39,6 +39,9 @@ class WaitRepository @Inject constructor(private val firebaseDatabase: FirebaseD
                         }
                     }
                     onSuccess(listRequest)
+                } else {
+                    val listRequest = ArrayList<CreateMatchModel>()
+                    onSuccess(listRequest)
                 }
             }
 

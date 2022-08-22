@@ -43,6 +43,9 @@ class TodayRepository @Inject constructor(private val firebaseDatabase: Firebase
                         }
                     }
                     onSuccess(listRequest)
+                } else {
+                    val listRequest = ArrayList<CreateMatchModel>()
+                    onSuccess(listRequest)
                 }
             }
 

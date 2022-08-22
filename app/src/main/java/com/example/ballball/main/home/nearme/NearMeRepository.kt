@@ -39,6 +39,9 @@ class NearMeRepository @Inject constructor(private val firebaseDatabase: Firebas
                         }
                     }
                     onSuccess(listNearMe)
+                } else {
+                    val listNearMe = ArrayList<CreateMatchModel>()
+                    onSuccess(listNearMe)
                 }
             }
 

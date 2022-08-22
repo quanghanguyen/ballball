@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserInformationViewModel @Inject constructor(
-    private val homeRepository : HomeRepository,
     private val userInformationRepository : UserInformationRepository,
     private val avatarRepository: AvatarRepository
     ) : ViewModel() {
@@ -27,9 +26,7 @@ class UserInformationViewModel @Inject constructor(
 
     sealed class LoadUserData {
         object Loading : LoadUserData()
-        class LoadAvatarOk(val image: Bitmap) : LoadUserData()
-        object LoadAvatarError : LoadUserData()
-        class LoadNameAndPhoneOk(val userName : String, val userPhone : String) : LoadUserData()
+        class LoadNameAndPhoneOk(val userName : String, val userPhone : String, val avatarUrl : String) : LoadUserData()
         object LoadNameAndPhoneError : LoadUserData()
     }
 
@@ -40,17 +37,7 @@ class UserInformationViewModel @Inject constructor(
 
     fun loadUserInfo(
         userUID: String,
-        localFile: File
     ) {
-        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
-            throwable.printStackTrace()
-        }) {
-            homeRepository.loadAvatar(userUID, localFile, {
-                loadUserInfo.value = LoadUserData.LoadAvatarOk(it)
-            }, {
-                loadUserInfo.value = LoadUserData.LoadAvatarError
-            })
-        }
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
@@ -58,7 +45,8 @@ class UserInformationViewModel @Inject constructor(
                 if (it.exists()) {
                     val userName = it.child("userName").value.toString()
                     val userPhone = it.child("userPhone").value.toString()
-                    loadUserInfo.value = LoadUserData.LoadNameAndPhoneOk(userName, userPhone)
+                    val avatarUrl = it.child("avatarUrl").value.toString()
+                    loadUserInfo.value = LoadUserData.LoadNameAndPhoneOk(userName, userPhone, avatarUrl)
                 }
             }, {
                 loadUserInfo.value = LoadUserData.LoadNameAndPhoneError
