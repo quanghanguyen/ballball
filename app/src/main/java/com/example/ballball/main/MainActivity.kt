@@ -23,16 +23,23 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import ch.hsr.geohash.GeoHash.fromGeohashString
 import com.example.ballball.R
 import com.example.ballball.creatematch.CreateMatchActivity
 import com.example.ballball.databinding.ActivityMainBinding
 import com.example.ballball.databinding.LocationAccessDialogBinding
+import com.example.ballball.main.home.nearme.NearMeFragment
 import com.example.ballball.user.walkthrough.team.TeamViewModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.MessageConnection.firebaseMessaging
 import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.currentLat
+import com.example.ballball.utils.Model.currentLong
 import com.example.ballball.utils.Model.teamName
 import com.example.ballball.utils.StorageConnection
+import com.firebase.geofire.GeoFireUtils
+import com.firebase.geofire.GeoLocation
+import com.firebase.geofire.core.GeoHash
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +51,6 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
-    private val mainViewModel : MainViewModel by viewModels()
     private lateinit var navController: NavController
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 0
@@ -61,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
         initObserves()
+
     }
 
     private fun initObserves() {
@@ -91,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 teamName = it.child("teamName").value.toString()
             }
-    }
+        }
 
     private fun createMatch() {
         mainBinding.fab.setOnClickListener {
@@ -110,8 +117,19 @@ class MainActivity : AppCompatActivity() {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                        Log.e("Latitude", list[0].latitude.toString())
-                        Log.e("Latitude", list[0].longitude.toString())
+//                        Log.e("Latitude", list[0].latitude.toString())
+//                        Log.e("Longtitude", list[0].longitude.toString())
+                        currentLat = list[0].latitude
+                        currentLong = list[0].longitude
+//                        val myLocation = GeoLocation(currentLat!!, currentLong!!)
+//                        val hash = GeoFireUtils.getGeoHashForLocation(myLocation)
+//                        val khoaHocLocation = GeoLocation(16.45868048048192, 107.59229846267155)
+//                        val distance = GeoFireUtils.getDistanceBetween(myLocation, khoaHocLocation)
+//                        val geoHash = fromGeohashString("w6ut8u41g4")
+//                        val lat = geoHash.originatingPoint.latitude
+//                        val long = geoHash.originatingPoint.longitude
+//                        Log.e("LAT", lat.toString())
+//                        Log.e("LONG", long.toString())
                     }
                 }
             } else {

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
@@ -34,6 +35,15 @@ class ListNotificationActivity : AppCompatActivity() {
         if (userUID != null) {
             listNotificationViewModel.loadListNotification(userUID)
         }
+
+//        if (listNotificationAdapter.itemCount == 0) {
+//            listNotificationBinding.line2.visibility = View.GONE
+//            listNotificationBinding.recyclerView.visibility = View.GONE
+//            listNotificationBinding.imageLayout.visibility = View.VISIBLE
+//        }
+//
+//        val itemCount = listNotificationAdapter.itemCount
+//        Log.e("Item Count", itemCount.toString())
     }
 
     private fun initList() {
@@ -45,14 +55,28 @@ class ListNotificationActivity : AppCompatActivity() {
             listNotificationAdapter.setNotificationOnClickListerner(object :
             NotificationOnClickListerner{
                 override fun OnClick(data: ListNotificationModel) {
-                    listNotificationBinding.recyclerView.setBackgroundColor(resources.getColor(R.color.white))
+                    ////
                 }
             })
         }
     }
 
     private fun initObserve() {
-        listNotificationViewModel.loadListNotification.observe(this) {result ->
+        loadListObserve()
+        markReadObserve()
+    }
+
+    private fun markReadObserve() {
+        listNotificationViewModel.markRead.observe(this) { result ->
+            when (result) {
+                is ListNotificationViewModel.MarkReadResult.ResultOk -> {}
+                is ListNotificationViewModel.MarkReadResult.ResultError -> {}
+            }
+        }
+    }
+
+    private fun loadListObserve() {
+        listNotificationViewModel.loadListNotification.observe(this) { result ->
             when (result) {
                 is ListNotificationViewModel.LoadListNotificationResult.ResultOk -> {
                     listNotificationAdapter.addNewData(result.list)
@@ -64,6 +88,15 @@ class ListNotificationActivity : AppCompatActivity() {
 
     private fun initEvents() {
         back()
+        markRead()
+    }
+
+    private fun markRead() {
+        listNotificationBinding.markRead.setOnClickListener {
+            if (userUID != null) {
+                listNotificationViewModel.markRead(userUID)
+            }
+        }
     }
 
     private fun back() {

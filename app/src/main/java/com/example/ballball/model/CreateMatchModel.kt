@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CreateMatchModel (
+data class CreateMatchModel(
     @SerializedName("userUID")
     val userUID : String = "",
     @SerializedName("matchID")
@@ -44,6 +44,8 @@ data class CreateMatchModel (
     val confirmUID : String = "",
     @SerializedName("clientUID")
     val clientUID : String = "",
+    @SerializedName("geoHash")
+    val geoHash : String = "",
 //    @SerializedName("clientPhone")
 //    val clientPhone: String = "",
     @SerializedName("clientUid1")

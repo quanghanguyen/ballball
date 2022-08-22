@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class MatchPagerAdapter @Inject constructor(fm: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fm, lifecycle) {
     override fun getItemCount(): Int {
-        return 5
+        return 4
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -22,17 +22,17 @@ class MatchPagerAdapter @Inject constructor(fm: FragmentManager, lifecycle: Life
                 UpComingFragment()
             }
             1 -> {
-                NewCreateFragment()
+                ConFirmFragment()
             }
             2 -> {
                 WaitFragment()
             }
             3 -> {
-                ConFirmFragment()
+                NewCreateFragment()
             }
-            4 -> {
-                HistoryFragment()
-            }
+//            4 -> {
+//                HistoryFragment()
+//            }
             else -> {
                 Fragment()
             }

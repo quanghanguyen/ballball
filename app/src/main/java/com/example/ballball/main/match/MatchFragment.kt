@@ -30,17 +30,17 @@ class MatchFragment : Fragment() {
                     tab.text = "Sắp đá"
                 }
                 1 -> {
-                    tab.text = "Mới tạo"
+                    tab.text = "Xác nhận"
                 }
                 2 -> {
                     tab.text = "Đã yêu cầu"
                 }
                 3 -> {
-                    tab.text = "Xác nhận"
+                    tab.text = "Mới tạo"
                 }
-                4 -> {
-                    tab.text = "Lịch sử"
-                }
+//                4 -> {
+//                    tab.text = "Lịch sử"
+//                }
             }
         }.attach()
     }

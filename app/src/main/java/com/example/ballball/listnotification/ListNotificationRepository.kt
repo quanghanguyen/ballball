@@ -32,4 +32,22 @@ class ListNotificationRepository @Inject constructor(private val firebaseDatabas
             }
         })
     }
-}
+
+    fun markRead(
+        userUID: String,
+        onSuccess: (String) -> Unit,
+        onFail: (String) -> Unit
+    ) {
+        firebaseDatabase.getReference("listNotifications").child(userUID).removeValue()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.toString())
+            }
+        }
+    }

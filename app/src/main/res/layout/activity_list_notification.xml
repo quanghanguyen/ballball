@@ -32,6 +32,7 @@
             />
         
         <RelativeLayout
+            android:id="@+id/mark_read"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -39,16 +40,15 @@
             android:layout_marginEnd="16dp"
             android:background="?android:attr/selectableItemBackground"
             >
-            
+
             <TextView
                 android:id="@+id/read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đánh dấu đã đọc"
-                android:textSize="12sp"
-                android:textColor="#7A7A7A"
                 android:fontFamily="@font/inter_medium"
-                />
+                android:text="Đánh dấu đã đọc"
+                android:textColor="#7A7A7A"
+                android:textSize="12sp" />
             
             <ImageView
                 android:layout_width="12dp"

@@ -53,6 +53,8 @@ class ListNotificationAdapter @Inject constructor(private var notificationList :
 
                 items.setOnClickListener {
                     listerner.OnClick(list)
+
+
                 }
             }
         }

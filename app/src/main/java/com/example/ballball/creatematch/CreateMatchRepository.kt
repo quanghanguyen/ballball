@@ -21,11 +21,13 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
         locationAddress: String,
         lat: Double,
         long: Double,
+        geoHash: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val requestData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
-            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long)
+            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, 0, "", "",
+        "", "", geoHash)
         firebaseDatabase.getReference("Request_Match").child(matchID).setValue(requestData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

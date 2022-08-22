@@ -41,6 +41,7 @@ class CreateMatchActivity : AppCompatActivity() {
     private var locationAddress : String? = null
     private var lat : Double? = null
     private var long : Double? = null
+    private var geoHash : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -163,7 +164,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 createMatchViewModel.saveRequest(userUID, matchID!!,
                     deviceToken!!, teamName!!, phone!!, matchDate!!, time, location, note,
                     teamPeopleNumber, teamImageUrl!!,
-                    locationAddress!!, lat!!, long!!)
+                    locationAddress!!, lat!!, long!!, geoHash!!)
                 //save request match notifications
                 createMatchViewModel.notification(matchID, teamName!!)
                 //save new create match
@@ -247,6 +248,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.khoaHocAddress
                 lat = LocationAddress.khoaHocLat
                 long = LocationAddress.khoaHocLong
+                geoHash = LocationAddress.khoaHocHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -255,6 +257,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.monacoAddress
                 lat = LocationAddress.monacoLat
                 long = LocationAddress.monacoLong
+                geoHash = LocationAddress.monacoHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -263,6 +266,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.lamHoangAddress
                 lat = LocationAddress.lamHoangLat
                 long = LocationAddress.lamHoangLong
+                geoHash = LocationAddress.lamHoangHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -271,6 +275,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.anCuuAddress
                 lat = LocationAddress.anCuuLat
                 long = LocationAddress.anCuuLong
+                geoHash = LocationAddress.anCuuHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -279,6 +284,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.luatAddress
                 lat = LocationAddress.luatLat
                 long = LocationAddress.luatLong
+                geoHash = LocationAddress.luatHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -287,6 +293,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.uyenPhuongAddress
                 lat = LocationAddress.uyenPhuongLat
                 long = LocationAddress.uyenPhuongLong
+                geoHash = LocationAddress.uyenPhuongHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -295,6 +302,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.yDuocAddress
                 lat = LocationAddress.yDuocLat
                 long = LocationAddress.yDuocLong
+                geoHash = LocationAddress.yDuocHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -303,6 +311,7 @@ class CreateMatchActivity : AppCompatActivity() {
                 locationAddress = LocationAddress.xuanPhuAddress
                 lat = LocationAddress.xuanPhuLat
                 long = LocationAddress.xuanPhuLong
+                geoHash = LocationAddress.xuanPhuHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }

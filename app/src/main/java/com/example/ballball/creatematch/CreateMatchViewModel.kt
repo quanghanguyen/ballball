@@ -83,13 +83,14 @@ class CreateMatchViewModel @Inject constructor(
         teamImageUrl: String,
         locationAddress: String,
         lat: Double,
-        long: Double
+        long: Double,
+        geoHash: String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             createMatchRepository.sendRequest(userUID, matchID, deviceToken, teamName, teamPhone,
-                date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long,{
+                date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long, geoHash, {
                 saveRequest.value = SaveRequest.ResultOk
             }, {
                 saveRequest.value = SaveRequest.ResultError(it)
