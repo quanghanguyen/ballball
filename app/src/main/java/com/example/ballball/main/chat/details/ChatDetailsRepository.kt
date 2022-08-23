@@ -63,4 +63,4 @@ class ChatDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
             }
         })
     }
-    }
+}

@@ -20,6 +20,10 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
     sealed class CancelWaitMatch {
         object ResultOk : CancelWaitMatch()
         object ResultError : CancelWaitMatch()
+        object DeleteConfirmOk : CancelWaitMatch()
+        object DeleteConfirmError : CancelWaitMatch()
+        object UpdateClickOk : CancelWaitMatch()
+        object UpdateClickError : CancelWaitMatch()
         object NotificationOk : CancelWaitMatch()
         object NotificationError : CancelWaitMatch()
     }
@@ -29,7 +33,15 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
         object ResultError : CancelWaitMatchListNotification()
     }
 
-    fun cancelWaitMatch(userUID: String, matchID: String, date: String, time: String, clientTeamName: String) {
+    fun cancelWaitMatch(
+        userUID: String,
+        matchID: String,
+        date: String,
+        time: String,
+        clientTeamName: String,
+        clientUID: String,
+        click : Int
+    ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
@@ -43,6 +55,26 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
                 cancelWaitMatch.value = CancelWaitMatch.NotificationOk
             }, {
                 cancelWaitMatch.value = CancelWaitMatch.NotificationError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            waitDetailsRepository.deleteConfirm(clientUID, matchID, {
+                cancelWaitMatch.value = CancelWaitMatch.DeleteConfirmOk
+            }, {
+                cancelWaitMatch.value = CancelWaitMatch.DeleteConfirmError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            waitDetailsRepository.deleteClick(click, matchID, {
+                cancelWaitMatch.value = CancelWaitMatch.UpdateClickOk
+            }, {
+                cancelWaitMatch.value = CancelWaitMatch.UpdateClickError
             })
         }
     }

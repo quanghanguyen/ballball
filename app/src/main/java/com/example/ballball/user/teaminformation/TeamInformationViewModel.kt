@@ -24,8 +24,6 @@ class TeamInformationViewModel @Inject constructor(
 
     sealed class LoadTeamInfo {
         object Loading : LoadTeamInfo()
-//        class LoadImageOk(val image : Bitmap) : LoadTeamInfo()
-//        object LoadImageError : LoadTeamInfo()
         class LoadInfoOk(val teamName : String, val teamLocation : String,
                          val teamPeopleNumber : String, val teamNote : String, val teamImageUrl : String) : LoadTeamInfo()
         object LoadInfoError : LoadTeamInfo()
@@ -43,16 +41,10 @@ class TeamInformationViewModel @Inject constructor(
 
     fun loadTeamInfo (
         userUID : String,
-//        localFile : File
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-//            teamInformationRepository.loadTeamImage(userUID, localFile, {
-//                loadTeamInfo.value = LoadTeamInfo.LoadImageOk(it)
-//            }, {
-//                loadTeamInfo.value = LoadTeamInfo.LoadImageError
-//            })
             teamInformationRepository.loadTeamInfo(userUID, {
                 if (it.exists()) {
                     val teamName = it.child("teamName").value.toString()

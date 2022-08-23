@@ -184,11 +184,11 @@ class AllDetailsActivity : AppCompatActivity() {
                 matchID?.let { matchID ->
                     if (userUID != null) {
                         click?.let { click ->
-                            allDetailsViewModel.handleCatchMatch(userUID, teamConfirmUID!!, teamConfirmUID!!,
+                            allDetailsViewModel.handleCatchMatch(userUID, userUID, teamConfirmUID!!,
                                 matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
-                                clientImageUrl!!, userUID)
+                                clientImageUrl!!, userUID, teamConfirmUID!!)
                             val timeUtils : Long = System.currentTimeMillis()
                             allDetailsViewModel.waiMatchListNotification(teamConfirmUID!!, clientTeamName!!, userImageUrl!!, "waitMatch", matchDate!!, matchTime!!, timeUtils)
 //                            //Log

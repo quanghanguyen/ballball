@@ -35,7 +35,7 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         uID: String, userUID : String, waitUID: String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientUID : String, clientImageUrl: String, teamWaitUID : String,
+        clientTeamName : String, clientUID : String, clientImageUrl: String, teamWaitUID : String, confirmUID: String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
@@ -52,7 +52,7 @@ class AllDetailsViewModel @Inject constructor(private val allDetailsRepository: 
         }) {
             allDetailsRepository.waitMatch(uID, userUID, matchID, deviceToken, teamName, teamPhone, date, time, location,
                 note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName, clientImageUrl,
-                {
+                confirmUID, {
                     catchMatch.value = CatchMatch.WaitMatchOk
                 }, {
                     catchMatch.value = CatchMatch.WaitMatchError

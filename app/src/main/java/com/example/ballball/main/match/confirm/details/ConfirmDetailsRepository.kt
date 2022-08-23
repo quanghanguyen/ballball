@@ -51,25 +51,6 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
             }
         }
 
-    fun deleteConfirmMatch(
-        userUID: String,
-        matchID: String,
-        onSuccess : (String) -> Unit,
-        onFail : (String) -> Unit
-    ) {
-        firebaseDatabase.getReference("confirmRequest").child(userUID).child(matchID).removeValue()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    onSuccess(it.toString())
-                } else {
-                    onFail(it.exception?.message.orEmpty())
-                }
-            }
-            .addOnFailureListener {
-                onFail(it.message.orEmpty())
-            }
-        }
-
     fun upComingMatchClient(
         confirmUID : String, userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
@@ -103,6 +84,62 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         onFail: (String) -> Unit
     ) {
         firebaseDatabase.getReference("waitRequest").child(confirmUID).child(matchID).removeValue()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+
+    fun deleteConfirmMatch(
+        userUID: String,
+        matchID: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        firebaseDatabase.getReference("confirmRequest").child(userUID).child(matchID).removeValue()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+    }
+
+    fun deleteMatch(
+        matchID : String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        firebaseDatabase.getReference("Request_Match").child(matchID).removeValue()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+
+    fun deleteNewCreate(
+        userUID: String,
+        matchID: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).removeValue()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     onSuccess(it.toString())

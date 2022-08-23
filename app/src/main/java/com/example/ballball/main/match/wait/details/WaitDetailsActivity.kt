@@ -34,6 +34,7 @@ import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.clientTeamName
 import com.example.ballball.utils.Model.clientUID
+import com.example.ballball.utils.Model.confirmUID
 import com.example.ballball.utils.Model.currentAddress
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
@@ -64,6 +65,7 @@ class WaitDetailsActivity : AppCompatActivity() {
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val permissionId = 5
+    private var currentClick : Int? = null
 
     companion object {
         private const val KEY_DATA = "request_data"
@@ -133,6 +135,11 @@ class WaitDetailsActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Log.e("Error", it.toString())
             }
+
+        FirebaseDatabase.getInstance().getReference("Request_Match").child(matchID!!).get()
+            .addOnSuccessListener {
+                currentClick = it.child("click").value.toString().toInt()
+            }
     }
 
     private fun cancelWaitRequestObserve() {
@@ -156,6 +163,10 @@ class WaitDetailsActivity : AppCompatActivity() {
                 is WaitDetailsViewModel.CancelWaitMatch.ResultError -> {}
                 is WaitDetailsViewModel.CancelWaitMatch.NotificationOk -> {}
                 is WaitDetailsViewModel.CancelWaitMatch.NotificationError -> {}
+                is WaitDetailsViewModel.CancelWaitMatch.DeleteConfirmOk -> {}
+                is WaitDetailsViewModel.CancelWaitMatch.DeleteConfirmError -> {}
+                is WaitDetailsViewModel.CancelWaitMatch.UpdateClickOk -> {}
+                is WaitDetailsViewModel.CancelWaitMatch.UpdateClickError -> {}
             }
         }
     }
@@ -172,7 +183,8 @@ class WaitDetailsActivity : AppCompatActivity() {
             signOutDialogBinding.content.text = "Bạn có muốn hủy yêu cầu bắt trận với $teamName không?"
             signOutDialogBinding.yes.setOnClickListener {
                 if (userUID != null) {
-                    waitDetailsViewModel.cancelWaitMatch(userUID, matchID!!, matchDate!!, matchTime!!, clientTeamName!!)
+                    val updatedClick = currentClick?.minus(1)
+                    waitDetailsViewModel.cancelWaitMatch(userUID, matchID!!, matchDate!!, matchTime!!, clientTeamName!!, confirmUID!!, updatedClick!!)
 
                     val timeUtils : Long = System.currentTimeMillis()
                     waitDetailsViewModel.cancelWaitMatchListNotification(clientUID!!, clientTeamName!!, userImageUrl!!, "cancelWaitMatch",
@@ -203,6 +215,12 @@ class WaitDetailsActivity : AppCompatActivity() {
                 }
                 teamName.text = data?.teamName
                 Glide.with(teamImage).load(data?.teamImageUrl).centerCrop().into(teamImage)
+                if (data?.click  == 1) {
+                    clickLayout.visibility = View.GONE
+                } else {
+                    val click = data?.click?.minus(1)
+                    clickNumber.text = click.toString()
+                }
                 clickNumber.text = data?.click.toString()
                 date.text = data?.date
                 time.text = data?.time
@@ -216,6 +234,7 @@ class WaitDetailsActivity : AppCompatActivity() {
                 matchTime = data?.time
                 teamPhone = data?.teamPhone
                 clientUID = data?.userUID
+                confirmUID = data?.confirmUID
 
                 destinationLat = data?.lat
                 destinationLong = data?.long

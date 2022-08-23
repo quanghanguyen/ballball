@@ -195,6 +195,10 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 is ConfirmDetailsViewModel.AcceptMatch.AcceptMatchNotificationError -> {}
                 is ConfirmDetailsViewModel.AcceptMatch.DenyMatchNotificationOk -> {}
                 is ConfirmDetailsViewModel.AcceptMatch.DenyMatchNotificationError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteMatchOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteMatchError -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteNewCreateOk -> {}
+                is ConfirmDetailsViewModel.AcceptMatch.DeleteNewCreateError -> {}
             }
         }
     }

@@ -33,7 +33,6 @@ class TeamInformationActivity : AppCompatActivity() {
     private lateinit var teamInformationBinding: ActivityTeamInformationBinding
     private val teamInformationViewModel: TeamInformationViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-//    private val localFile = File.createTempFile("tempImage", "jpg")
     private lateinit var layoutBottomSheetLocationBinding: LayoutBottomSheetLocationBinding
     private lateinit var layoutBottomSheetPeopleNumberBinding: LayoutBottomSheetPeopleNumberBinding
     private lateinit var imgUri : Uri
@@ -87,9 +86,6 @@ class TeamInformationActivity : AppCompatActivity() {
                 is TeamInformationViewModel.LoadTeamInfo.Loading -> {
                     teamInformationBinding.progressBar.visibility = View.VISIBLE
                 }
-//                is TeamInformationViewModel.LoadTeamInfo.LoadImageOk -> {
-//                    teamInformationBinding.teamImage.setImageBitmap(result.image)
-//                }
                 is TeamInformationViewModel.LoadTeamInfo.LoadInfoOk -> {
                     teamInformationBinding.teamName.setText(result.teamName)
                     teamInformationBinding.location.text = result.teamLocation
@@ -100,7 +96,6 @@ class TeamInformationActivity : AppCompatActivity() {
                         .centerCrop()
                         .into(teamInformationBinding.teamImage)
                 }
-//                is TeamInformationViewModel.LoadTeamInfo.LoadImageError -> {}
                 is TeamInformationViewModel.LoadTeamInfo.LoadInfoError -> {}
             }
         }

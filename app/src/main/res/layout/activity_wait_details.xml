@@ -67,15 +67,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/team_image_layout"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/alert_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/alert_icon"
-                />
+                android:src="@drawable/alert_icon" />
 
             <TextView
                 android:id="@+id/_text"
@@ -85,7 +83,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/alert_icon"
                 android:fontFamily="@font/inter_medium"
-                android:text="Trận này đang có"
+                android:text="Trận này cũng đang có"
                 android:textColor="#FF4A4A"
                 android:textSize="12sp" />
 
@@ -108,7 +106,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/click_number"
                 android:fontFamily="@font/inter_medium"
-                android:text="người gửi yêu cầu"
+                android:text="người khác gửi yêu cầu"
                 android:textColor="#FF4A4A"
                 android:textSize="12sp" />
 

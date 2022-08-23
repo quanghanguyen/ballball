@@ -9,24 +9,7 @@ import java.io.File
 import javax.inject.Inject
 
 class TeamInformationRepository @Inject constructor(
-//    private val firebaseStorage: FirebaseStorage,
     private val firebaseDatabase: FirebaseDatabase) {
-
-//    fun loadTeamImage(
-//        userUID : String,
-//        localFile : File,
-//        onSuccess : (Bitmap) -> Unit,
-//        onFail : (Exception) -> Unit
-//    ) {
-//        firebaseStorage.getReference("Teams").child(userUID).getFile(localFile)
-//            .addOnSuccessListener {
-//                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-//                onSuccess(bitmap)
-//            }
-//            .addOnFailureListener{
-//                onFail(it)
-//            }
-//        }
 
     fun loadTeamInfo(
         userUID : String,

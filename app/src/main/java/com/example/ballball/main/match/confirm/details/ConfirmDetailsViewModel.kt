@@ -28,6 +28,10 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         object SaveUpComingError : AcceptMatch()
         object DeleteWaitOk: AcceptMatch()
         object DeleteWaitError: AcceptMatch()
+        object DeleteMatchOk: AcceptMatch()
+        object DeleteMatchError: AcceptMatch()
+        object DeleteNewCreateOk: AcceptMatch()
+        object DeleteNewCreateError: AcceptMatch()
         object AcceptMatchNotificationOk: AcceptMatch()
         object AcceptMatchNotificationError: AcceptMatch()
         object DenyMatchNotificationOk: AcceptMatch()
@@ -124,6 +128,26 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
                 acceptMatch.value = AcceptMatch.DeleteWaitOk
             }, {
                 acceptMatch.value = AcceptMatch.DeleteWaitError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.deleteMatch(matchID, {
+                acceptMatch.value = AcceptMatch.DeleteMatchOk
+            }, {
+                acceptMatch.value = AcceptMatch.DeleteMatchError
+            })
+        }
+
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            confirmDetailsRepository.deleteNewCreate(userUID, matchID, {
+                acceptMatch.value = AcceptMatch.DeleteNewCreateOk
+            }, {
+                acceptMatch.value = AcceptMatch.DeleteNewCreateError
             })
         }
 
