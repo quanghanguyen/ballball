@@ -105,7 +105,14 @@ class ContactFragment : Fragment() {
 
     private fun loadContactObserve() {
         contactViewModel.loadContactList.observe(viewLifecycleOwner) {result ->
+            with(contactBinding) {
+                progressBar.visibility = View.GONE
+                mainLayout.visibility = View.VISIBLE
+            }
             when (result) {
+                is ContactViewModel.LoadContactList.Loading -> {
+                    contactBinding.progressBar.visibility = View.VISIBLE
+                }
                 is ContactViewModel.LoadContactList.ResultOk -> {
                     contactAdapter.addNewData(result.list)
                 }

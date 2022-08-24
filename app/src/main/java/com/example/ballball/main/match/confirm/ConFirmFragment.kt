@@ -39,11 +39,19 @@ class ConFirmFragment : Fragment() {
 
     private fun initObserve() {
         confirmViewModel.loadConfirm.observe(viewLifecycleOwner) {result ->
+            with(conFirmBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is ConfirmViewModel.LoadConfirmResult.Loading -> {
+                    conFirmBinding.progressBar.visibility = View.VISIBLE
+                }
                 is ConfirmViewModel.LoadConfirmResult.ResultOk -> {
                     if (result.list.isEmpty()) {
                         conFirmBinding.imageLayout.visibility = View.VISIBLE
                         conFirmBinding.recyclerView.visibility = View.GONE
+                        conFirmBinding.progressBar.visibility = View.GONE
                     } else {
                         confirmAdapter.addNewData(result.list)
                     }

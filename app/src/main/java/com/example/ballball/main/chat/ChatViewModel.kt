@@ -15,6 +15,7 @@ class ChatViewModel @Inject constructor(private val chatRepository: ChatReposito
     val loadChatList = MutableLiveData<LoadChatList>()
 
     sealed class LoadChatList {
+        object Loading : LoadChatList()
         class ResultOk(val list : ArrayList<UsersModel>) : LoadChatList()
         object ResultError : LoadChatList()
     }

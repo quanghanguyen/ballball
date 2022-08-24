@@ -36,11 +36,19 @@ class AllFragment : Fragment() {
 
     private fun initObserve() {
         allViewModel.loadAllList.observe(viewLifecycleOwner) {result ->
+            with(allFragmentBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is AllViewModel.LoadAllList.Loading -> {
+                    allFragmentBinding.progressBar.visibility = View.VISIBLE
+                }
                 is AllViewModel.LoadAllList.ResultOk -> {
                     if (result.list.isEmpty()) {
                         allFragmentBinding.recyclerView.visibility = View.GONE
-                        allFragmentBinding.imageLayout.visibility = View.GONE
+                        allFragmentBinding.imageLayout.visibility = View.VISIBLE
+                        allFragmentBinding.progressBar.visibility = View.GONE
                     } else {
                         allAdapter.addNewData(result.list)
                     }

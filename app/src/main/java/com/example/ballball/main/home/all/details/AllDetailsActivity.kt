@@ -189,25 +189,9 @@ class AllDetailsActivity : AppCompatActivity() {
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
                                 clientImageUrl!!, userUID, teamConfirmUID!!)
+
                             val timeUtils : Long = System.currentTimeMillis()
                             allDetailsViewModel.waiMatchListNotification(teamConfirmUID!!, clientTeamName!!, userImageUrl!!, "waitMatch", matchDate!!, matchTime!!, timeUtils)
-//                            //Log
-//                            Log.e("userUID", userUID)
-//                            Log.e("matchID", matchID)
-//                            Log.e("deviceToken", deviceToken!!)
-//                            Log.e("name", name!!)
-//                            Log.e("phoneNumber", phoneNumber!!)
-//                            Log.e("matchDate", matchDate!!)
-//                            Log.e("matchTime", matchTime!!)
-//                            Log.e("matchLocation", matchLocation!!)
-//                            Log.e("teamNote", teamNote!!)
-//                            Log.e("teamPeopleNumber", teamPeopleNumber!!)
-//                            Log.e("teamImageUrl", teamImageUrl!!)
-//                            Log.e("destinationAddress", destinationAddress!!)
-//                            Log.e("destinationLat", destinationLat!!.toString())
-//                            Log.e("destinationLong", destinationLong!!.toString())
-//                            Log.e("click", click.toString())
-//                            Log.e("clientTeamName", clientTeamName!!)
                         }
                     }
                 }

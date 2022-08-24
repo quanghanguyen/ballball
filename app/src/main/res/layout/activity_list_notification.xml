@@ -8,10 +8,19 @@
     android:background="@color/white"
     >
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        />
+
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <ImageView
             android:id="@+id/back"
@@ -66,16 +75,15 @@
         android:id="@+id/line_2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/title_layout"
         android:background="#EAEAEA"
+        android:layout_below="@+id/title_layout"
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_layout"
-        android:layout_marginTop="1dp" />
+        android:layout_below="@+id/line_2" />
 
     <RelativeLayout
         android:visibility="gone"

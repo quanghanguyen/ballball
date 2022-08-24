@@ -15,6 +15,7 @@ class NearMeViewModel @Inject constructor(private val nearMeRepository: NearMeRe
     val loadNearMe = MutableLiveData<LoadNearMeResult>()
 
     sealed class LoadNearMeResult {
+        object Loading : LoadNearMeResult()
         class ResultOk(val list: ArrayList<CreateMatchModel>) : LoadNearMeResult()
         object ResultError : LoadNearMeResult()
     }

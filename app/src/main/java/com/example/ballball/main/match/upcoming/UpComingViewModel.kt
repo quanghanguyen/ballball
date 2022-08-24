@@ -16,6 +16,7 @@ class UpComingViewModel @Inject constructor(private val upComingRepository: UpCo
     val loadUpComing = MutableLiveData<LoadUpComingResult>()
 
     sealed class LoadUpComingResult {
+        object Loading : LoadUpComingResult()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadUpComingResult()
         object ResultError : LoadUpComingResult()
     }

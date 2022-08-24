@@ -74,9 +74,23 @@ class ListNotificationActivity : AppCompatActivity() {
 
     private fun loadListObserve() {
         listNotificationViewModel.loadListNotification.observe(this) { result ->
+            with(listNotificationBinding) {
+                progressBar.visibility = View.GONE
+                line2.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is ListNotificationViewModel.LoadListNotificationResult.Loading -> {
+                    listNotificationBinding.progressBar.visibility = View.VISIBLE
+                }
                 is ListNotificationViewModel.LoadListNotificationResult.ResultOk -> {
-                    listNotificationAdapter.addNewData(result.list)
+                    if (result.list.isEmpty()) {
+                        listNotificationBinding.recyclerView.visibility = View.GONE
+                        listNotificationBinding.imageLayout.visibility = View.VISIBLE
+                        listNotificationBinding.progressBar.visibility = View.GONE
+                    } else {
+                        listNotificationAdapter.addNewData(result.list)
+                    }
                 }
                 is ListNotificationViewModel.LoadListNotificationResult.ResultError -> {}
             }

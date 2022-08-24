@@ -209,9 +209,7 @@ class CreateMatchActivity : AppCompatActivity() {
                     }
                     dialog.show()
                 }
-                is CreateMatchViewModel.SaveRequest.ResultError -> {
-                    Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()
-                }
+                is CreateMatchViewModel.SaveRequest.ResultError -> {}
             }
         }
     }

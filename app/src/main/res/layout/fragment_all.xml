@@ -7,6 +7,14 @@
     android:background="@color/white"
     >
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -26,7 +34,8 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/empty_match" />
+            android:src="@drawable/empty_match"
+            />
 
         <TextView
             android:layout_width="wrap_content"

@@ -8,6 +8,14 @@
     android:background="@color/white"
     >
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary"
+        />
+
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
@@ -28,19 +36,28 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/search_bar"
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/title_layout"
-        android:src="@drawable/search_bar_icon"
-        />
+        >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_bar"
-        android:layout_marginTop="8dp" />
+        <ImageView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/search_bar_icon"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_bar"
+            android:layout_marginTop="8dp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

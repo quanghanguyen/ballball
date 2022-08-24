@@ -43,12 +43,19 @@ class WaitFragment : Fragment() {
 
     private fun loadWaitObserve() {
         waitViewModel.loadWait.observe(viewLifecycleOwner) {result ->
+            with(waitBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is WaitViewModel.LoadWaitResult.Loading -> {
+                    waitBinding.progressBar.visibility = View.VISIBLE
+                }
                 is WaitViewModel.LoadWaitResult.ResultOk -> {
-                    Log.e("SIZE", result.list.size.toString())
                     if (result.list.isEmpty()) {
                         waitBinding.imageLayout.visibility = View.VISIBLE
                         waitBinding.recyclerView.visibility = View.GONE
+                        waitBinding.progressBar.visibility = View.GONE
                     } else {
                         waitAdapter.addNewData(result.list)
                     }

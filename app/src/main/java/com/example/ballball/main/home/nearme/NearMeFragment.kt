@@ -1,43 +1,22 @@
 package com.example.ballball.main.home.nearme
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.NearMeAdapter
 import com.example.ballball.databinding.FragmentNearMeBinding
-import com.example.ballball.databinding.LocationAccessDialogBinding
 import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class NearMeFragment : Fragment() {
@@ -57,13 +36,23 @@ class NearMeFragment : Fragment() {
 
     private fun initObserve() {
         nearMeViewModel.loadNearMe.observe(viewLifecycleOwner) {result ->
+            with(nearMeBinding) {
+                progressBar.visibility = View.GONE
+                nearMeRecyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is NearMeViewModel.LoadNearMeResult.Loading -> {
+                    nearMeBinding.progressBar.visibility = View.VISIBLE
+                }
                 is NearMeViewModel.LoadNearMeResult.ResultOk -> {
+                    Log.e("SIZE", result.list.size.toString())
                     if (result.list.isEmpty()) {
                         nearMeBinding.nearMeRecyclerView.visibility = View.GONE
                         nearMeBinding.imageLayout.visibility = View.VISIBLE
+                        nearMeBinding.progressBar.visibility = View.GONE
+                    } else {
+                        nearMeAdapter.addNewData(result.list)
                     }
-                    nearMeAdapter.addNewData(result.list)
                 }
                 is NearMeViewModel.LoadNearMeResult.ResultError -> {}
             }

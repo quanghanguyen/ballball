@@ -1,16 +1,12 @@
 package com.example.ballball.creatematch
 
-import android.graphics.Bitmap
-import android.service.autofill.SaveRequest
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ballball.user.teaminformation.TeamInformationRepository
-import com.example.ballball.user.walkthrough.team.TeamRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,7 +30,7 @@ class CreateMatchViewModel @Inject constructor(
     sealed class SaveRequest {
         object Loading : SaveRequest()
         object ResultOk : SaveRequest()
-        class ResultError(val errorMessage : String) : SaveRequest()
+        object ResultError : SaveRequest()
     }
     sealed class NotificationResult {
         object ResultOk : NotificationResult()
@@ -95,7 +91,7 @@ class CreateMatchViewModel @Inject constructor(
                 date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long, geoHash, {
                 saveRequest.value = SaveRequest.ResultOk
             }, {
-                saveRequest.value = SaveRequest.ResultError(it)
+                saveRequest.value = SaveRequest.ResultError
             })
         }
     }
@@ -108,9 +104,9 @@ class CreateMatchViewModel @Inject constructor(
             throwable.printStackTrace()
         }) {
             createMatchRepository.notification(matchID, teamName,{
-                    saveRequest.value = SaveRequest.ResultOk
+                notification.value = NotificationResult.ResultOk
                 }, {
-                    saveRequest.value = SaveRequest.ResultError(it)
+                notification.value = NotificationResult.ResultError
                 })
             }
         }

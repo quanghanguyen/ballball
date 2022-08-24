@@ -1,27 +1,26 @@
 package com.example.ballball.user.walkthrough.team
 
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityTeamBinding
 import com.example.ballball.databinding.LayoutBottomSheetLocationBinding
 import com.example.ballball.databinding.LayoutBottomSheetPeopleNumberBinding
+import com.example.ballball.databinding.LoadingDialogBinding
 import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
-import com.example.ballball.loadingdialog.LoadingDialog
-import com.example.ballball.main.MainViewModel
 import com.example.ballball.utils.MessageConnection
-import com.example.ballball.utils.Model
-import com.example.ballball.utils.Model.avatarUrl
 import com.example.ballball.utils.Model.deviceToken
-import com.example.ballball.utils.Model.userImageUrl
-import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -35,14 +34,12 @@ class TeamActivity : AppCompatActivity() {
     private lateinit var layoutBottomSheetPeopleNumberBinding: LayoutBottomSheetPeopleNumberBinding
     private val teamViewModel : TeamViewModel by viewModels()
     private lateinit var imgUri : Uri
-    private lateinit var loadingDialog: LoadingDialog
     private val userUid = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         teamBinding = ActivityTeamBinding.inflate(layoutInflater)
         setContentView(teamBinding.root)
-        loadingDialog = LoadingDialog()
         initEvents()
         initObserve()
     }
@@ -66,15 +63,6 @@ class TeamActivity : AppCompatActivity() {
                     deviceToken = task.result
                 }
             })
-
-//        StorageConnection.storageReference.getReference("Users").child(userUid!!).downloadUrl
-//            .addOnSuccessListener {
-//                userImageUrl = it.toString()
-//                Log.e("UserIMG", userImageUrl.toString())
-//            }
-//            .addOnFailureListener {
-//                Log.e("Error", it.toString())
-//            }
         }
 
     private fun next() {
@@ -150,11 +138,7 @@ class TeamActivity : AppCompatActivity() {
 
     private fun saveTeamImageObserve() {
         teamViewModel.saveTeamsImage.observe(this) {result ->
-            loadingDialog.dismissProgressDialog()
             when (result) {
-                is TeamViewModel.SaveTeamsImage.Loading -> {
-                    loadingDialog.loadingProgressDialog(this)
-                }
                 is TeamViewModel.SaveTeamsImage.ResultOk -> {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()

@@ -16,6 +16,7 @@ class ListNotificationViewModel @Inject constructor(private val listNotification
     val markRead = MutableLiveData<MarkReadResult>()
 
     sealed class LoadListNotificationResult {
+        object Loading : LoadListNotificationResult()
         class ResultOk(val list : ArrayList<ListNotificationModel>) : LoadListNotificationResult()
         object ResultError : LoadListNotificationResult()
     }

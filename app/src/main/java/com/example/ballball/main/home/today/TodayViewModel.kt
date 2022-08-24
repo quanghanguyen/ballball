@@ -15,6 +15,7 @@ class TodayViewModel @Inject constructor(private val todayRepository: TodayRepos
     val loadTodayList = MutableLiveData<LoadTodayList>()
 
     sealed class LoadTodayList {
+        object Loading : LoadTodayList()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadTodayList()
         class ResultError(val errorMessage : String) : LoadTodayList()
     }

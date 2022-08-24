@@ -15,6 +15,7 @@ class WaitViewModel @Inject constructor(private val waitRepository: WaitReposito
     val loadWait = MutableLiveData<LoadWaitResult>()
 
     sealed class LoadWaitResult {
+        object Loading : LoadWaitResult()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadWaitResult()
         object ResultError : LoadWaitResult()
     }

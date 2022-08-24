@@ -84,4 +84,5 @@ dependencies {
     implementation 'com.sendbird.sdk:sendbird-android-sdk:3.0.150'
     implementation 'com.firebase:geofire-android-common:3.1.0'
     implementation("ch.hsr:geohash:1.4.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

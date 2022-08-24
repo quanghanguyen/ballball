@@ -14,7 +14,9 @@ import javax.inject.Inject
 class NewCreateViewModel @Inject constructor(private val newCreateRepository: NewCreateRepository) : ViewModel() {
 
     val loadNewCreate = MutableLiveData<LoadNewCreate>()
+
     sealed class LoadNewCreate{
+        object Loading : LoadNewCreate()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadNewCreate()
         object ResultError : LoadNewCreate()
     }

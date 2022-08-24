@@ -18,6 +18,7 @@ class ContactViewModel @Inject constructor(private val contactRepository: Contac
     val loadNewContactList = MutableLiveData<LoadNewContactList>()
 
     sealed class LoadContactList {
+        object Loading : LoadContactList()
         class ResultOk(val list : ArrayList<UsersModel>) : LoadContactList()
         object ResultError : LoadContactList()
     }

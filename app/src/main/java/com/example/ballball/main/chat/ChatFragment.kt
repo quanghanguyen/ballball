@@ -36,7 +36,14 @@ class ChatFragment : Fragment() {
 
     private fun initObserve() {
         chatViewModel.loadChatList.observe(viewLifecycleOwner) {result ->
+            with(chatBinding){
+                progressBar.visibility = View.GONE
+                mainLayout.visibility = View.VISIBLE
+            }
             when (result) {
+                is ChatViewModel.LoadChatList.Loading -> {
+                    chatBinding.progressBar.visibility = View.VISIBLE
+                }
                 is ChatViewModel.LoadChatList.ResultOk -> {
                     chatAdapter.addNewData(result.list)
                 }

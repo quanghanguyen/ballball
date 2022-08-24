@@ -38,7 +38,9 @@
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/notification_background">
+            android:background="@drawable/notification_background"
+            android:elevation="4dp"
+            >
 
             <ImageView
                 android:id="@+id/notification"
@@ -46,8 +48,7 @@
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/notification"
-                />
+                android:src="@drawable/notification" />
 
         </RelativeLayout>
 

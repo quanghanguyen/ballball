@@ -14,6 +14,7 @@ class AllViewModel @Inject constructor(private val allRepository: AllRepository)
     val loadAllList = MutableLiveData<LoadAllList>()
 
     sealed class LoadAllList {
+        object Loading : LoadAllList()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadAllList()
         class ResultError(val errorMessage : String) : LoadAllList()
     }

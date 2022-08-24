@@ -22,6 +22,7 @@ import com.example.ballball.main.match.upcoming.details.UpComingDetailsActivity
 import com.example.ballball.main.match.wait.WaitViewModel
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.DatabaseConnection
+import com.example.ballball.utils.Model
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -47,11 +48,19 @@ class UpComingFragment : Fragment() {
 
     private fun initObserve() {
         upComingViewModel.loadUpComing.observe(viewLifecycleOwner) {result ->
+            with(upComingBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is UpComingViewModel.LoadUpComingResult.Loading -> {
+                    upComingBinding.progressBar.visibility = View.VISIBLE
+                }
                 is UpComingViewModel.LoadUpComingResult.ResultOk -> {
                     if (result.list.isEmpty()) {
                         upComingBinding.imageLayout.visibility = View.VISIBLE
                         upComingBinding.recyclerView.visibility = View.GONE
+                        upComingBinding.progressBar.visibility = View.GONE
                     } else {
                         upComingAdapter.addNewData(result.list)
                     }

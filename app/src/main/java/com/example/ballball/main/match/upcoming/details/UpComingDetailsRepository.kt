@@ -13,16 +13,16 @@ class UpComingDetailsRepository @Inject constructor(private val firebaseDatabase
         onFail : (String) -> Unit
     ) {
         firebaseDatabase.getReference("upComingMatch").child(userUID).child(matchID).removeValue()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    onSuccess(it.toString())
-                } else {
-                    onFail(it.exception?.message.orEmpty())
-                }
-            }
-            .addOnFailureListener {
-                onFail(it.message.toString())
-            }
+//            .addOnCompleteListener {
+//                if (it.isSuccessful) {
+//                    onSuccess(it.toString())
+//                } else {
+//                    onFail(it.exception?.message.orEmpty())
+//                }
+//            }
+//            .addOnFailureListener {
+//                onFail(it.message.toString())
+//            }
 
         firebaseDatabase.getReference("upComingMatch").child(clientUID).child(matchID).removeValue()
             .addOnCompleteListener {

@@ -55,12 +55,20 @@ class NewCreateFragment : Fragment() {
 
     private fun loadNewCreateObserve() {
         newCreateViewModel.loadNewCreate.observe(viewLifecycleOwner) {result ->
+            with(newCreateBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is NewCreateViewModel.LoadNewCreate.Loading -> {
+                    newCreateBinding.progressBar.visibility = View.VISIBLE
+                }
                 is NewCreateViewModel.LoadNewCreate.ResultOk -> {
-                    if (result.list.isNullOrEmpty()) {
-                        newCreateBinding.recyclerView.visibility = View.VISIBLE
+                    if (result.list.isEmpty()) {
+                        newCreateBinding.imageLayout.visibility = View.VISIBLE
                         newCreateBinding.button.visibility = View.VISIBLE
                         newCreateBinding.recyclerView.visibility = View.GONE
+                        newCreateBinding.progressBar.visibility = View.GONE
                     } else {
                         newCreateAdapter.addNewData(result.list)
                     }

@@ -11,11 +11,9 @@ import com.example.ballball.main.MainActivity
 import com.example.ballball.user.walkthrough.name.NameActivity
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.AuthConnection.auth
+import com.example.ballball.utils.DatabaseConnection
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.*
 import java.util.concurrent.TimeUnit
 
 class SignInVerifyActivity : AppCompatActivity() {
@@ -56,6 +54,11 @@ class SignInVerifyActivity : AppCompatActivity() {
             }
         }
         tryOtherPhoneNumber()
+        handleVariables()
+    }
+
+    private fun handleVariables() {
+
     }
 
     private fun resend(phoneNumber : String) {
@@ -106,11 +109,20 @@ class SignInVerifyActivity : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, NameActivity::class.java)
-                intent.putExtra("phoneNumber", phoneNumber)
-                startActivity(intent)
-                finish()
-                Animation.animateSlideLeft(this)
+                val userUID = FirebaseAuth.getInstance().currentUser?.uid
+                DatabaseConnection.databaseReference.getReference("Teams").child(userUID!!).get()
+                    .addOnSuccessListener {
+                        if (it.exists()) {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            Animation.animateSlideLeft(this)
+                        } else {
+                            val intent = Intent(applicationContext, NameActivity::class.java)
+                            intent.putExtra("phoneNumber", phoneNumber)
+                            startActivity(intent)
+                            finish()
+                            Animation.animateSlideLeft(this)
+                        }
+                    }
             } else {
                 if (task.exception is FirebaseAuthInvalidCredentialsException) {
                     Toast.makeText(this,"Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show()

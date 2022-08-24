@@ -37,13 +37,22 @@ class TomorrowFragment : Fragment() {
 
     private fun initObserve() {
         tomorrowViewModel.loadTomorrowList.observe(viewLifecycleOwner) {result ->
+            with(tomorrowBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is TomorrowViewModel.LoadTomorrowList.Loading -> {
+                    tomorrowBinding.progressBar.visibility = View.VISIBLE
+                }
                 is TomorrowViewModel.LoadTomorrowList.ResultOk -> {
                     if (result.list.isEmpty()) {
                         tomorrowBinding.recyclerView.visibility = View.GONE
                         tomorrowBinding.imageLayout.visibility = View.VISIBLE
+                        tomorrowBinding.progressBar.visibility = View.GONE
+                    } else {
+                        tomorrowAdapter.addNewData(result.list)
                     }
-                    tomorrowAdapter.addNewData(result.list)
                 }
                 is TomorrowViewModel.LoadTomorrowList.ResultError -> {
                     Toast.makeText(context, result.errorMessage, Toast.LENGTH_SHORT).show()

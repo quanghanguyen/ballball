@@ -15,6 +15,7 @@ class TomorrowViewModel @Inject constructor(private val tomorrowRepository: Tomo
     val loadTomorrowList = MutableLiveData<LoadTomorrowList>()
 
     sealed class LoadTomorrowList {
+        object Loading: LoadTomorrowList()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadTomorrowList()
         class ResultError(val errorMessage : String) : LoadTomorrowList()
     }

@@ -1,6 +1,7 @@
 package com.example.ballball.main.home.today
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +37,19 @@ class TodayFragment : Fragment() {
 
     private fun initObserve() {
         todayViewModel.loadTodayList.observe(viewLifecycleOwner) {result ->
+            with(todayBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is TodayViewModel.LoadTodayList.Loading -> {
+                    todayBinding.progressBar.visibility = View.VISIBLE
+                }
                 is TodayViewModel.LoadTodayList.ResultOk -> {
                     if (result.list.isEmpty()) {
                         todayBinding.recyclerView.visibility = View.GONE
-                        todayBinding.recyclerView.visibility = View.VISIBLE
+                        todayBinding.progressBar.visibility = View.GONE
+                        todayBinding.imageLayout.visibility = View.VISIBLE
                     } else {
                         todayAdapter.addNewData(result.list)
                     }

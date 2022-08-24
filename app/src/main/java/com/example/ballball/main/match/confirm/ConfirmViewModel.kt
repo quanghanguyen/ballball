@@ -15,6 +15,7 @@ class ConfirmViewModel @Inject constructor(private val confirmRepository: Confir
     val loadConfirm = MutableLiveData<LoadConfirmResult>()
 
     sealed class LoadConfirmResult {
+        object Loading : LoadConfirmResult()
         class ResultOk(val list : ArrayList<CreateMatchModel>) : LoadConfirmResult()
         object ResultError : LoadConfirmResult()
     }
