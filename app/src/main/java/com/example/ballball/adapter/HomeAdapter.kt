@@ -1,5 +1,6 @@
 package com.example.ballball.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
+import com.example.ballball.model.UsersModel
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor(private var requestList : ArrayList<CreateMatchModel>)
@@ -21,6 +23,12 @@ class HomeAdapter @Inject constructor(private var requestList : ArrayList<Create
 
     fun addNewData(list: ArrayList<CreateMatchModel>) {
         requestList = list
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addFilterList(filterList : ArrayList<CreateMatchModel>) {
+        requestList = filterList
         notifyDataSetChanged()
     }
 

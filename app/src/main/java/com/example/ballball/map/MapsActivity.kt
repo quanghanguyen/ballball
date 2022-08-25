@@ -20,6 +20,7 @@ import com.example.ballball.R
 import com.example.ballball.databinding.ActivityMapsBinding
 import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
 import com.example.ballball.databinding.MapNavigationDialogBinding
+import com.example.ballball.utils.Animation
 import com.example.ballball.utils.LocationAddress.anCuuAddress
 import com.example.ballball.utils.LocationAddress.anCuuLat
 import com.example.ballball.utils.LocationAddress.anCuuLong
@@ -122,6 +123,19 @@ class MapsActivity :
             GetDirection(urll).execute()
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))
         }
+
+        initEvents()
+    }
+
+    private fun initEvents() {
+        back()
+    }
+
+    private fun back() {
+        binding.back.setOnClickListener {
+            finish()
+            Animation.animateSlideRight(this)
+        }
     }
 
     private fun setWindowFlag(bits: Int, on: Boolean) {
@@ -201,6 +215,7 @@ class MapsActivity :
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15f))
 
         enableMyLocation()
+        map.uiSettings.isMyLocationButtonEnabled = false
         map.setOnMyLocationButtonClickListener(this)
         map.setOnMyLocationClickListener(this)
         map.setOnMarkerClickListener(this)
@@ -249,7 +264,6 @@ class MapsActivity :
             mapBottomSheetDialogBinding.duration.text = "$duration Phút"
         }
         mapBottomSheetDialogBinding.distance.text = "$meter Km"
-
 
         navigationDialog.show()
         return true

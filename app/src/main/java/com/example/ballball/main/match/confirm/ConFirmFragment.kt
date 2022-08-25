@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ballball.R
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.ConfirmAdapter
 import com.example.ballball.databinding.FragmentConFirmBinding
@@ -71,6 +72,7 @@ class ConFirmFragment : Fragment() {
                 OnItemClickListerner {
                 override fun onItemClick(requestData: CreateMatchModel) {
                     ConfirmDetailsActivity.startDetails(context, requestData)
+                    activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
                     }
                 }
             )

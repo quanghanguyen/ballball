@@ -1,5 +1,6 @@
 package com.example.ballball.main.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,8 +13,11 @@ import com.example.ballball.R
 import com.example.ballball.adapter.HomePagerAdapter
 import com.example.ballball.databinding.FragmentHomeBinding
 import com.example.ballball.listnotification.ListNotificationActivity
+import com.example.ballball.search.SearchActivity
 import com.example.ballball.user.userinfomation.UserInformationActivity
 import com.example.ballball.utils.Animation
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +31,7 @@ class HomeFragment : Fragment() {
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private val localFile = File.createTempFile("tempImage", "jpg")
 
+    @SuppressLint("UnsafeOptInUsageError")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
@@ -35,22 +40,36 @@ class HomeFragment : Fragment() {
         if (userUID != null) {
             homeViewModel.loadAvatar(userUID, localFile)
         }
+
+//        val badgeDrawable = BadgeDrawable.create(requireContext())
+//        badgeDrawable.isVisible = true
+//        BadgeUtils.attachBadgeDrawable(badgeDrawable, homeBinding.notificationLayout)
     }
 
     private fun initEvents() {
         goUserInfo()
         goListNotification()
+        search()
+    }
+
+    private fun search() {
+        homeBinding.searchBar.setOnClickListener {
+            startActivity(Intent(context, SearchActivity::class.java))
+            activity?.overridePendingTransition(R.anim.animate_fade_enter, R.anim.animate_fade_exit)
+        }
     }
 
     private fun goListNotification() {
         homeBinding.notification.setOnClickListener {
             startActivity(Intent(context, ListNotificationActivity::class.java))
+            activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
         }
     }
 
     private fun goUserInfo() {
         homeBinding.userAvatar.setOnClickListener {
             startActivity(Intent(context, UserInformationActivity::class.java))
+            activity?.overridePendingTransition(R.anim.animate_slide_in_left, R.anim.animate_slide_out_right)
         }
     }
 

@@ -101,7 +101,7 @@ class UserInformationActivity : AppCompatActivity() {
     private fun back() {
         userInformationBinding.back.setOnClickListener {
             finish()
-            Animation.animateSlideRight(this)
+            Animation.animateSlideLeft(this)
         }
     }
 

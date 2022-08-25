@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:src="@drawable/blank_avatar"
-        app:civ_border_color="#7A7A7A"
+        app:civ_border_color="#C6C6C6"
         app:civ_border_width="2dp" />
 
     <ImageView

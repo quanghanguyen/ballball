@@ -152,6 +152,7 @@ class TeamInformationActivity : AppCompatActivity() {
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, 0)
+            Animation.animateSlideLeft(this)
         }
     }
 

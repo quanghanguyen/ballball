@@ -348,7 +348,7 @@ class CreateMatchActivity : AppCompatActivity() {
     private fun back() {
         createMatchBinding.back.setOnClickListener {
             finish()
-            Animation.animateInAndOut(this)
+            Animation.animateSlideRight(this)
         }
     }
 }

@@ -80,6 +80,7 @@ class UpComingFragment : Fragment() {
                 OnItemClickListerner {
                 override fun onItemClick(requestData: CreateMatchModel) {
                     UpComingDetailsActivity.startDetails(context, requestData)
+                    activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
                     }
                 }
             )

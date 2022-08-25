@@ -26,6 +26,12 @@ class NewContactAdapter @Inject constructor(private var newContactList : ArrayLi
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addFilterList(filterList : ArrayList<NewContactModel>) {
+        newContactList = filterList
+        notifyDataSetChanged()
+    }
+
     class MyViewHolder(
         private val itemsAddContactBinding: ItemsAddContactBinding,
         private val listerner: OnNewContactClickListerner

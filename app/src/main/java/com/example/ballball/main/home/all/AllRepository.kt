@@ -9,6 +9,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
@@ -28,18 +30,21 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
                    val listRequest = ArrayList<CreateMatchModel>()
                    for (requestSnapshot in snapshot.children) {
                        requestSnapshot.getValue(CreateMatchModel::class.java)?.let {list ->
-                           val current = LocalDate.now()
-                           val matchTime = list.date
-                           val formatter = DateTimeFormatter.ofPattern("d/M/yyyy", Locale.ENGLISH)
-                           val date = LocalDate.parse(matchTime, formatter)
-                           when {
-                               userUID != list.userUID &&
-                                       userUID != list.clientUID1 &&
-                                       userUID != list.clientUID2 &&
-                                       userUID != list.clientUID3 &&
-                               date >= current -> {
+                           val currentDate = LocalDate.now()
+                           val currentTime = LocalTime.now()
+                           val matchDate = list.date
+                           val matchTime = list.time
+                           val dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy", Locale.ENGLISH)
+                           val timeFormatter = DateTimeFormatter.ofPattern("HH:m", Locale.ENGLISH)
+                           val date = LocalDate.parse(matchDate, dateFormatter)
+                           val time = LocalTime.parse(matchTime, timeFormatter)
+
+                           if (userUID != list.userUID &&
+                               userUID != list.clientUID1 &&
+                               userUID != list.clientUID2 &&
+                               userUID != list.clientUID3 &&
+                               date >= currentDate) {
                                    listRequest.add(0, list)
-                               }
                            }
                        }
                    }

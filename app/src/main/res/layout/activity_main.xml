@@ -47,9 +47,10 @@
             app:itemRippleColor="@color/white"
             app:itemTextColor="@drawable/bottom_nav_color"
             app:menu="@menu/bottom_nav_menu"
-            app:itemIconSize="28sp"
+            app:itemIconSize="32sp"
             app:labelVisibilityMode="labeled"
             android:fitsSystemWindows="true"
+            app:itemIconPadding="14dp"
             />
     </com.google.android.material.bottomappbar.BottomAppBar>
 

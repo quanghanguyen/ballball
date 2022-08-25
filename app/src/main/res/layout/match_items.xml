@@ -19,29 +19,29 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            >
 
             <ImageView
                 android:id="@+id/team_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/team_image"
                 android:scaleType="centerCrop"
-                />
+                android:src="@drawable/team_image" />
 
             <TextView
                 android:id="@+id/new_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mới tạo"
-                android:textColor="@color/white"
-                android:background="@drawable/wait_confirm_background"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:paddingHorizontal="12dp"
+                android:background="@drawable/wait_confirm_background"
                 android:fontFamily="@font/inter_medium"
-                android:textSize="12sp"
-                />
+                android:paddingHorizontal="12dp"
+                android:text="Mới tạo"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/wait_confirm"
@@ -55,7 +55,31 @@
                 android:paddingHorizontal="12dp"
                 android:text="Chưa xác nhận"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                />
+
+            <ImageView
+                android:id="@+id/highlight_icon_1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/hightligh_icon"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                />
+
+            <ImageView
+                android:id="@+id/highlight_icon_2"
+                android:visibility="gone"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/hightligh_icon_2"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                />
 
             <TextView
                 android:id="@+id/team_name"

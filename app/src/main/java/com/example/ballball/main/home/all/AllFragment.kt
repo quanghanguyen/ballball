@@ -70,6 +70,7 @@ class AllFragment : Fragment() {
                 OnItemClickListerner {
                 override fun onItemClick(requestData: CreateMatchModel) {
                     AllDetailsActivity.startDetails(context, requestData)
+                    activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
                     }
                 }
             )

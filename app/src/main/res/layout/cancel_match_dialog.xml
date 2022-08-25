@@ -31,17 +31,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/title"
             android:layout_marginTop="12dp"
-            android:padding="16dp">
+            android:padding="16dp"
+            >
 
             <RadioButton
                 android:id="@+id/radio_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#7A7A7A"
                 android:fontFamily="@font/inter_medium"
                 android:text="Thời gian không phù hợp"
                 android:textColor="#7A7A7A"
                 android:textSize="16sp"
+                android:theme="@style/MyRadioButton"
                 />
 
             <RadioButton
@@ -49,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:buttonTint="#7A7A7A"
+                android:theme="@style/MyRadioButton"
                 android:fontFamily="@font/inter_medium"
                 android:text="Đã bắt trận với đội khác"
                 android:textColor="#7A7A7A"
@@ -61,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:buttonTint="#7A7A7A"
+                android:theme="@style/MyRadioButton"
                 android:fontFamily="@font/inter_medium"
                 android:text="Đội không đủ người"
                 android:textColor="#7A7A7A"
@@ -73,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:buttonTint="#7A7A7A"
+                android:theme="@style/MyRadioButton"
                 android:fontFamily="@font/inter_medium"
                 android:text="Khác..."
                 android:textColor="#7A7A7A"

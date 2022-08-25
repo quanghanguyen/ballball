@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.ballball.`interface`.OnChatClickListerner
 import com.example.ballball.`interface`.OnIconClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.ItemsContactBinding
@@ -15,14 +16,20 @@ class ContactAdapter @Inject constructor(private var contactList : ArrayList<Use
     : RecyclerView.Adapter<ContactAdapter.MyViewHolder>() {
 
     private lateinit var listerner: OnIconClickListerner
+    private lateinit var chatListerner : OnChatClickListerner
 
     fun setOnIconClickListerner(listerner: OnIconClickListerner) {
         this.listerner = listerner
     }
 
+    fun setOnChatClickListerner(listerner: OnChatClickListerner) {
+        this.chatListerner = listerner
+    }
+
     class MyViewHolder(
         private val itemsContactBinding : ItemsContactBinding,
-        private val listerner: OnIconClickListerner
+        private val listerner: OnIconClickListerner,
+        private val chatListerner: OnChatClickListerner
         )
         : RecyclerView.ViewHolder(itemsContactBinding.root) {
             fun bind(list : UsersModel) {
@@ -34,6 +41,9 @@ class ContactAdapter @Inject constructor(private var contactList : ArrayList<Use
                     call.setOnClickListener {
                         listerner.onIconClick(list)
                     }
+                    chat.setOnClickListener {
+                        chatListerner.onChatClick(list)
+                    }
                 }
             }
         }
@@ -44,9 +54,15 @@ class ContactAdapter @Inject constructor(private var contactList : ArrayList<Use
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addFilterList(filterList : ArrayList<UsersModel>) {
+        contactList = filterList
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val items = ItemsContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(items, listerner)
+        return MyViewHolder(items, listerner, chatListerner)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

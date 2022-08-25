@@ -12,6 +12,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -19,6 +20,7 @@ import android.util.Log
 import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -45,6 +47,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 @AndroidEntryPoint
@@ -61,6 +66,8 @@ class MainActivity : AppCompatActivity() {
     private var teamAvatarUrl : String? = null
     private var teamName : String? = null
 
+    @SuppressLint("SimpleDateFormat")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -69,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
         initObserves()
+
+        Log.e("Current", LocalDateTime.now().toString())
     }
 
     private fun initObserves() {
@@ -119,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     private fun createMatch() {
         mainBinding.fab.setOnClickListener {
             startActivity(Intent(this, CreateMatchActivity::class.java))
-            Animation.animateInAndOut(this)
+            Animation.animateSlideLeft(this)
         }
     }
 
@@ -212,5 +221,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
         navController = navHostFragment.navController
         setupWithNavController(mainBinding.bottomNavigation, navController)
+
+        val badge = mainBinding.bottomNavigation.getOrCreateBadge(R.id.chatFragment)
+        badge.isVisible = true
     }
 }

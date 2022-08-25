@@ -147,7 +147,6 @@ class UpComingDetailsActivity : AppCompatActivity() {
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             cancelMatchDialogBinding.yes.setOnClickListener {
                 val id : Int = cancelMatchDialogBinding.radioGroup.checkedRadioButtonId
-                Log.e("ID", id.toString())
                 if (id != -1) {
                     val radio : RadioButton = cancelMatchDialogBinding.root.findViewById(id)
                     val radioText = radio.text.toString()

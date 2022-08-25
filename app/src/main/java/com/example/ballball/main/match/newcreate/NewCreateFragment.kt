@@ -88,6 +88,7 @@ class NewCreateFragment : Fragment() {
                 OnItemClickListerner {
                 override fun onItemClick(requestData: CreateMatchModel) {
                     NewCreateDetailsActivity.startDetails(context, requestData)
+                    activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
                     }
                 }
             )

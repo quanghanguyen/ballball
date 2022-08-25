@@ -1,10 +1,12 @@
 package com.example.ballball.main.chat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
@@ -13,9 +15,14 @@ import com.example.ballball.adapter.ChatAdapter
 import com.example.ballball.databinding.FragmentChatBinding
 import com.example.ballball.main.chat.details.ChatDetailsActivity
 import com.example.ballball.model.UsersModel
+import com.example.ballball.utils.DatabaseConnection
 import com.google.firebase.auth.FirebaseAuth
-import com.sendbird.uikit.fragments.ChannelListFragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ChatFragment : Fragment() {
@@ -46,10 +53,53 @@ class ChatFragment : Fragment() {
                 }
                 is ChatViewModel.LoadChatList.ResultOk -> {
                     chatAdapter.addNewData(result.list)
+                    initSearch()
                 }
                 is ChatViewModel.LoadChatList.ResultError -> {}
             }
         }
+    }
+
+    private fun initSearch() {
+        chatBinding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filter(s.toString())
+            }
+        })
+    }
+
+    private fun filter(text: String) {
+        DatabaseConnection.databaseReference.getReference("Users").addValueEventListener(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val filteredList = ArrayList<UsersModel>()
+                    for (requestSnapshot in snapshot.children) {
+                        requestSnapshot.getValue(UsersModel::class.java)?.let {list ->
+                            when {
+                                list.teamName.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))
+                                        && userUID != list.userUid -> {
+                                    filteredList.add(0, list)
+                                }
+                            }
+                        }
+                    }
+                    chatAdapter.addFilterList(filteredList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //
+            }
+        })
     }
 
     private fun initList() {
@@ -62,6 +112,7 @@ class ChatFragment : Fragment() {
             OnIconClickListerner {
                 override fun onIconClick(requestData: UsersModel) {
                     ChatDetailsActivity.startDetails(context, requestData)
+                    activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
                 }
             })
         }

@@ -30,8 +30,10 @@ import com.example.ballball.databinding.FragmentAllBinding
 import com.example.ballball.databinding.SignOutDialogBinding
 import com.example.ballball.databinding.SuccessDialogBinding
 import com.example.ballball.login.phone.login.SignInActivity
+import com.example.ballball.main.chat.details.ChatDetailsActivity
 import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
+import com.example.ballball.model.UsersModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model.clientImageUrl
 import com.example.ballball.utils.Model.clientPhone
@@ -99,6 +101,7 @@ class AllDetailsActivity : AppCompatActivity() {
         openMap()
         back()
         phoneCall()
+        chat()
         catchMatch()
     }
 
@@ -214,6 +217,13 @@ class AllDetailsActivity : AppCompatActivity() {
                 startActivity(intent)
                 Animation.animateSlideLeft(this)
             }
+        }
+    }
+
+    private fun chat() {
+        allDetailsBinding.openChat.setOnClickListener {
+            val data = UsersModel()
+            ChatDetailsActivity.startDetails(this, data)
         }
     }
 

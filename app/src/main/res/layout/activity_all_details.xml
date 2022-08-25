@@ -359,6 +359,7 @@
             android:layout_marginTop="16dp">
 
             <RelativeLayout
+                android:id="@+id/open_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackgroundBorderless">
@@ -384,8 +385,7 @@
                         android:fontFamily="@font/inter_medium"
                         android:text="Nhắn tin"
                         android:textColor="#363636"
-                        android:textSize="16sp"
-                        />
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
 
@@ -411,16 +411,14 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    >
+                    android:layout_centerInParent="true">
 
                     <ImageView
                         android:id="@+id/phone_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/phone_icon"
                         android:layout_centerVertical="true"
-                        />
+                        android:src="@drawable/phone_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"

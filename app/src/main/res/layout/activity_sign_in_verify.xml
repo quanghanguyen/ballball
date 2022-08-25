@@ -46,6 +46,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:cursorVisible="true"
+        android:inputType="number"
         android:textColor="@color/black"
         app:cursorColor="@color/colorPrimary"
         app:cursorWidth="2dp"
@@ -53,7 +54,7 @@
         app:itemRadius="8dp"
         app:itemSpacing="12dp"
         app:lineColor="#363636"
-        android:inputType="number"
+        android:elevation="4dp"
         />
 
     <Button

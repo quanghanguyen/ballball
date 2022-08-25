@@ -26,6 +26,12 @@ class ChatAdapter @Inject constructor(private var chatList : ArrayList<UsersMode
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addFilterList(filterList : ArrayList<UsersModel>) {
+        chatList = filterList
+        notifyDataSetChanged()
+    }
+
     class MyViewHolder(
         private val itemsChatBinding: ItemsChatBinding,
         private val listerner: OnIconClickListerner
@@ -34,7 +40,6 @@ class ChatAdapter @Inject constructor(private var chatList : ArrayList<UsersMode
             with(itemsChatBinding) {
                 teamName.text = list.teamName
                 Glide.with(userAvatar).load(list.avatarUrl).centerCrop().into(userAvatar)
-
                 items.setOnClickListener {
                     listerner.onIconClick(list)
                 }

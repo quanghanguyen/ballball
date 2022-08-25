@@ -35,18 +35,34 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
+
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_layout"
         >
 
-        <ImageView
+        <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/search_bar_icon" />
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/search_background"
+            android:drawableStart="@drawable/search_icon"
+            android:drawableEnd="@drawable/search_filter_icon"
+            android:drawablePadding="12dp"
+            android:elevation="4dp"
+            android:fontFamily="@font/inter_medium"
+            android:hint="Nhập để tìm kiếm"
+            android:inputType="text"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textColor="#7A7A7A"
+            android:textColorHint="#C7C7C7"
+            android:textSize="12sp"
+            tools:ignore="RtlSymmetry" />
 
         <RelativeLayout
             android:id="@+id/add_contact"
@@ -54,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_bar"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
             android:background="?android:attr/selectableItemBackground"
             >
 
