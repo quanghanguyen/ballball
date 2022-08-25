@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.ConfirmAdapter
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.adapter.UpComingAdapter
 import com.example.ballball.creatematch.CreateMatchActivity
 import com.example.ballball.databinding.FragmentUpComingBinding
+import com.example.ballball.main.home.all.AllViewModel
 import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.main.match.confirm.details.ConfirmDetailsActivity
 import com.example.ballball.main.match.upcoming.details.UpComingDetailsActivity
@@ -47,6 +50,22 @@ class UpComingFragment : Fragment() {
     }
 
     private fun initObserve() {
+        loadListObserve()
+        highlightObserve()
+    }
+
+    private fun highlightObserve() {
+        upComingViewModel.highLight.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is UpComingViewModel.HighLightResult.NotHighLightOk -> {}
+                is UpComingViewModel.HighLightResult.NotHighLightError -> {}
+                is UpComingViewModel.HighLightResult.HighLightError -> {}
+                is UpComingViewModel.HighLightResult.HighLightOk -> {}
+            }
+        }
+    }
+
+    private fun loadListObserve() {
         upComingViewModel.loadUpComing.observe(viewLifecycleOwner) {result ->
             with(upComingBinding) {
                 progressBar.visibility = View.GONE
@@ -84,6 +103,20 @@ class UpComingFragment : Fragment() {
                     }
                 }
             )
+
+            upComingAdapter.setOnHighLightClickListerner(object :
+                HighLightOnClickListerner {
+                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
+                    upComingViewModel.handleHighLight(userUID!!, requestData.matchID)
+                }
+            })
+
+            upComingAdapter.setOnNotHighLightClickListerner(object :
+                NotHighLightOnClickListerner {
+                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
+                    upComingViewModel.handleNotHighLight(userUID!!, requestData.matchID)
+                }
+            })
         }
     }
 

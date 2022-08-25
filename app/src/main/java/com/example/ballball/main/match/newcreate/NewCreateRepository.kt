@@ -50,4 +50,50 @@ class NewCreateRepository @Inject constructor(private val firebaseDatabase: Fire
             }
         })
     }
+
+    fun highlight(
+        userUID : String,
+        matchID : String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val highlight = mapOf(
+            "highlight" to 1
+        )
+
+        firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).updateChildren(highlight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+    }
+
+    fun notHighLight(
+        userUID : String,
+        matchID: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val notHighLight = mapOf(
+            "highlight" to 0
+        )
+
+        firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).updateChildren(notHighLight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+    }
 }

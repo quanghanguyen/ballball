@@ -9,11 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.adapter.WaitAdapter
 import com.example.ballball.databinding.FragmentWaitBinding
 import com.example.ballball.main.home.all.details.AllDetailsActivity
+import com.example.ballball.main.match.upcoming.UpComingViewModel
 import com.example.ballball.main.match.wait.details.WaitDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +42,18 @@ class WaitFragment : Fragment() {
 
     private fun initObserve() {
         loadWaitObserve()
+        highlightObserve()
+    }
+
+    private fun highlightObserve() {
+        waitViewModel.highLight.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is WaitViewModel.HighLightResult.NotHighLightOk -> {}
+                is WaitViewModel.HighLightResult.NotHighLightError -> {}
+                is WaitViewModel.HighLightResult.HighLightError -> {}
+                is WaitViewModel.HighLightResult.HighLightOk -> {}
+            }
+        }
     }
 
     private fun loadWaitObserve() {
@@ -79,6 +94,20 @@ class WaitFragment : Fragment() {
                     }
                 }
             )
+
+            waitAdapter.setOnHighLightClickListerner(object :
+                HighLightOnClickListerner {
+                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
+                    waitViewModel.handleHighLight(userUID!!, requestData.matchID)
+                }
+            })
+
+            waitAdapter.setOnNotHighLightClickListerner(object :
+                NotHighLightOnClickListerner {
+                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
+                    waitViewModel.handleNotHighLight(userUID!!, requestData.matchID)
+                }
+            })
         }
     }
 

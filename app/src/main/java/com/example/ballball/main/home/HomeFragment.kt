@@ -40,10 +40,6 @@ class HomeFragment : Fragment() {
         if (userUID != null) {
             homeViewModel.loadAvatar(userUID, localFile)
         }
-
-//        val badgeDrawable = BadgeDrawable.create(requireContext())
-//        badgeDrawable.isVisible = true
-//        BadgeUtils.attachBadgeDrawable(badgeDrawable, homeBinding.notificationLayout)
     }
 
     private fun initEvents() {

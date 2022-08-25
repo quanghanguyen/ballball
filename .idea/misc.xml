@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/add_items_contact.xml" value="0.119" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/back_background.xml" value="0.112" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/badge_background.xml" value="0.1635" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/bg_circle.xml" value="0.1155" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/bottom_nav_color.xml" value="0.117" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/drawable/bottomsheet_background.xml" value="0.1155" />
@@ -40,7 +41,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout-v23/activity_on_boarding.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout-v28/activity_main.xml" value="0.15648148148148147" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_all_details.xml" value="0.264" />
-        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_avatar.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_avatar.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_chat_details.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_confirm_details.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_confirm_detals.xml" value="0.25416666666666665" />
@@ -57,7 +58,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_sign_in_verify.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_splash.xml" value="0.2" />
-        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_team.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_team.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_team_information.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_test.xml" value="0.2" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/activity_up_coming_details.xml" value="0.24010416666666667" />
@@ -74,7 +75,7 @@
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_con_firm.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_contact.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_history.xml" value="0.25416666666666665" />
-        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_match.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_near_me.xml" value="0.25416666666666665" />
         <entry key="..\:/learn_android/BallBall/app/src/main/res/layout/fragment_new_create.xml" value="0.25416666666666665" />

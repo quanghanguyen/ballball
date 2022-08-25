@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.databinding.FragmentAllBinding
@@ -35,6 +37,22 @@ class AllFragment : Fragment() {
     }
 
     private fun initObserve() {
+        loadListObserve()
+        highLightObserve()
+    }
+
+    private fun highLightObserve() {
+        allViewModel.highLight.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is AllViewModel.HighLightResult.NotHighLightOk -> {}
+                is AllViewModel.HighLightResult.NotHighLightError -> {}
+                is AllViewModel.HighLightResult.HighLightError -> {}
+                is AllViewModel.HighLightResult.HighLightOk -> {}
+            }
+        }
+    }
+
+    private fun loadListObserve() {
         allViewModel.loadAllList.observe(viewLifecycleOwner) {result ->
             with(allFragmentBinding) {
                 progressBar.visibility = View.GONE
@@ -74,6 +92,20 @@ class AllFragment : Fragment() {
                     }
                 }
             )
+
+//            allAdapter.setOnHighLightClickListerner(object :
+//                HighLightOnClickListerner{
+//                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
+//                    allViewModel.handleHighLight(requestData.matchID)
+//                }
+//            })
+//
+//            allAdapter.setOnNotHighLightClickListerner(object :
+//            NotHighLightOnClickListerner{
+//                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
+//                    allViewModel.handleNotHighLight(requestData.matchID)
+//                }
+//            })
         }
     }
 

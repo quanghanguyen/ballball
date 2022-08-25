@@ -357,6 +357,7 @@
             android:layout_marginTop="16dp">
 
             <RelativeLayout
+                android:id="@+id/open_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackgroundBorderless">
@@ -382,8 +383,7 @@
                         android:fontFamily="@font/inter_medium"
                         android:text="Nhắn tin"
                         android:textColor="#363636"
-                        android:textSize="16sp"
-                        />
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
 

@@ -37,23 +37,12 @@ class UpComingRepository @Inject constructor(private val firebaseDatabase: Fireb
                             val date = LocalDate.parse(matchDate, dateFormatter)
                             val time = LocalTime.parse(matchTime, timeFormatter)
 
-                            if (userUID != list.userUID &&
-                                userUID != list.clientUID1 &&
+                            if (userUID != list.clientUID1 &&
                                 userUID != list.clientUID2 &&
                                 userUID != list.clientUID3 &&
                                 date >= currentDate) {
                                     listRequest.add(0, list)
                             }
-
-//                            val current = LocalDate.now()
-//                            val matchTime = list.date
-//                            val formatter = DateTimeFormatter.ofPattern("d/M/yyyy", Locale.ENGLISH)
-//                            val date = LocalDate.parse(matchTime, formatter)
-//                            when {
-//                                date >= current -> {
-//                                    listRequest.add(0, list)
-//                                }
-//                            }
                         }
                     }
                     onSuccess(listRequest)
@@ -68,4 +57,50 @@ class UpComingRepository @Inject constructor(private val firebaseDatabase: Fireb
             }
         })
     }
-}
+
+    fun highlight(
+        userUID : String,
+        matchID : String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val highlight = mapOf(
+            "highlight" to 1
+        )
+
+        firebaseDatabase.getReference("upComingMatch").child(userUID).child(matchID).updateChildren(highlight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+    }
+
+    fun notHighLight(
+        userUID : String,
+        matchID: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val notHighLight = mapOf(
+            "highlight" to 0
+        )
+
+        firebaseDatabase.getReference("upComingMatch").child(userUID).child(matchID).updateChildren(notHighLight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+    }

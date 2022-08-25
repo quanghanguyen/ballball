@@ -53,5 +53,7 @@ data class CreateMatchModel(
     @SerializedName("clientUid2")
     var clientUID2 : String = "",
     @SerializedName("clientUid3")
-    var clientUID3 : String = ""
+    var clientUID3 : String = "",
+    @SerializedName("highlight")
+    var highlight : Int = 0
         ) : Parcelable

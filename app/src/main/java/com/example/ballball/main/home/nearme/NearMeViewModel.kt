@@ -21,13 +21,14 @@ class NearMeViewModel @Inject constructor(private val nearMeRepository: NearMeRe
     }
 
     fun loadNearMeList(
+        userUID : String,
         currentLat : Double,
         currentLong : Double
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            nearMeRepository.loadNearMe(currentLat, currentLong, {
+            nearMeRepository.loadNearMe(userUID, currentLat, currentLong, {
                 loadNearMe.value = LoadNearMeResult.ResultOk(it)
             }, {
                 loadNearMe.value = LoadNearMeResult.ResultError

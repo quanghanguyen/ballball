@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 class NearMeRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) {
     fun loadNearMe(
+        userUID : String,
         currentLat : Double,
         currentLong : Double,
         onSuccess : (ArrayList<CreateMatchModel>) -> Unit,
@@ -32,7 +33,7 @@ class NearMeRepository @Inject constructor(private val firebaseDatabase: Firebas
                             val myLocation = GeoLocation(currentLat, currentLong)
                             val distanceInM = GeoFireUtils.getDistanceBetween(myLocation, destinationLocation)
                             when {
-                                distanceInM <= radiusInM -> {
+                                distanceInM <= radiusInM &&  userUID != list.userUID -> {
                                     listNearMe.add(0, list)
                                 }
                             }

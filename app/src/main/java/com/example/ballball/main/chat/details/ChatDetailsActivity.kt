@@ -37,6 +37,8 @@ class ChatDetailsActivity : AppCompatActivity() {
     private val chatDetailsViewModel : ChatDetailsViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
     private lateinit var chatDetailsAdapter: ChatDetailsAdapter
+    private var intentReceiverId : String? = null
+    var thisTeamName : String? = null
 
     companion object {
         private const val KEY_DATA = "request_data"
@@ -56,7 +58,11 @@ class ChatDetailsActivity : AppCompatActivity() {
         initEvents()
         initObserves()
         if (userUID != null) {
-            chatDetailsViewModel.readMessage(userUID, receiverId!!)
+            if (receiverId.isNullOrEmpty()) {
+                chatDetailsViewModel.readMessage(userUID, intentReceiverId!!)
+            } else {
+                chatDetailsViewModel.readMessage(userUID, receiverId!!)
+            }
         }
     }
 
@@ -88,6 +94,7 @@ class ChatDetailsActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initEvents() {
         binding()
+        intentBinding()
         handleVariable()
         initListMessage()
         sendChat()
@@ -132,9 +139,21 @@ class ChatDetailsActivity : AppCompatActivity() {
         intent?.let { bundle ->
             val data = bundle.getParcelableExtra<UsersModel>(KEY_DATA)
             with(chatDetailsBinding) {
+                thisTeamName = data?.teamName
                 teamName.text = data?.teamName
                 receiverId = data?.userUid
             }
+        }
+    }
+
+    private fun intentBinding() {
+        val name = intent?.getStringExtra("teamName")
+        val userUid = intent?.getStringExtra("userUid")
+        if (name.isNullOrEmpty()) {
+            chatDetailsBinding.teamName.text = thisTeamName
+        } else {
+            chatDetailsBinding.teamName.text = name
+            intentReceiverId = userUid
         }
     }
 
@@ -146,8 +165,14 @@ class ChatDetailsActivity : AppCompatActivity() {
                 val formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy")
                 val formatted = current.format(formatter).toString()
                 if (userUID != null) {
-                    chatDetailsViewModel.saveChat(userUID, receiverId!!, chatDetailsBinding.message.text.toString(), formatted,
-                    teamImageUrl!!, teamName!!)
+                    if (receiverId == null) {
+                        chatDetailsViewModel.saveChat(userUID, intentReceiverId!!, chatDetailsBinding.message.text.toString(), formatted,
+                            teamImageUrl!!, teamName!!)
+                    }
+                    else {
+                        chatDetailsViewModel.saveChat(userUID, receiverId!!, chatDetailsBinding.message.text.toString(), formatted,
+                            teamImageUrl!!, teamName!!)
+                    }
                 }
                 chatDetailsBinding.message.text.clear()
             } else {

@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.ConfirmAdapter
 import com.example.ballball.databinding.FragmentConFirmBinding
 import com.example.ballball.main.match.confirm.details.ConfirmDetailsActivity
+import com.example.ballball.main.match.upcoming.UpComingViewModel
 import com.example.ballball.main.match.wait.details.WaitDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.DatabaseConnection
@@ -39,6 +42,22 @@ class ConFirmFragment : Fragment() {
     }
 
     private fun initObserve() {
+        loadListObserve()
+        highlightObserve()
+    }
+
+    private fun highlightObserve() {
+        confirmViewModel.highLight.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is ConfirmViewModel.HighLightResult.NotHighLightOk -> {}
+                is ConfirmViewModel.HighLightResult.NotHighLightError -> {}
+                is ConfirmViewModel.HighLightResult.HighLightError -> {}
+                is ConfirmViewModel.HighLightResult.HighLightOk -> {}
+            }
+        }
+    }
+
+    private fun loadListObserve() {
         confirmViewModel.loadConfirm.observe(viewLifecycleOwner) {result ->
             with(conFirmBinding) {
                 progressBar.visibility = View.GONE
@@ -76,6 +95,20 @@ class ConFirmFragment : Fragment() {
                     }
                 }
             )
+
+            confirmAdapter.setOnHighLightClickListerner(object :
+                HighLightOnClickListerner {
+                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
+                    confirmViewModel.handleHighLight(userUID!!, requestData.matchID)
+                }
+            })
+
+            confirmAdapter.setOnNotHighLightClickListerner(object :
+                NotHighLightOnClickListerner {
+                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
+                    confirmViewModel.handleNotHighLight(userUID!!, requestData.matchID)
+                }
+            })
         }
     }
 

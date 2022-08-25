@@ -37,25 +37,23 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Tiếp tục"
             android:layout_below="@+id/title"
-            android:textColor="#7A7A7A"
-            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/inter_semibold"
-            />
+            android:text="Tiếp tục"
+            android:textColor="#7A7A7A"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/watch_match"
             style="@style/Button"
             android:layout_below="@+id/next"
             android:layout_centerHorizontal="true"
-            android:textSize="16sp"
-            android:text="Xem trận"
-            android:background="@drawable/button_shape"
             android:layout_marginTop="12dp"
-            />
+            android:background="@drawable/button_shape"
+            android:text="Xem trận"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

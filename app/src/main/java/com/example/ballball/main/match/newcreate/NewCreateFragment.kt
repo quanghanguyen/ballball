@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ballball.R
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.adapter.HomeAdapter
 import com.example.ballball.adapter.NewCreateAdapter
@@ -18,6 +20,7 @@ import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.main.match.newcreate.details.NewCreateDetailsActivity
 import com.example.ballball.main.match.upcoming.UpComingViewModel
 import com.example.ballball.model.CreateMatchModel
+import com.example.ballball.utils.Animation
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,11 +49,24 @@ class NewCreateFragment : Fragment() {
     private fun createMatch() {
         newCreateBinding.button.setOnClickListener {
             startActivity(Intent(context, CreateMatchActivity::class.java))
+            activity?.overridePendingTransition(R.anim.animate_slide_left_enter, R.anim.animate_slide_left_exit)
         }
     }
 
     private fun initObserve() {
         loadNewCreateObserve()
+        highlightObserve()
+    }
+
+    private fun highlightObserve() {
+        newCreateViewModel.highLight.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is NewCreateViewModel.HighLightResult.NotHighLightOk -> {}
+                is NewCreateViewModel.HighLightResult.NotHighLightError -> {}
+                is NewCreateViewModel.HighLightResult.HighLightError -> {}
+                is NewCreateViewModel.HighLightResult.HighLightOk -> {}
+            }
+        }
     }
 
     private fun loadNewCreateObserve() {
@@ -92,6 +108,20 @@ class NewCreateFragment : Fragment() {
                     }
                 }
             )
+
+            newCreateAdapter.setOnHighLightClickListerner(object :
+                HighLightOnClickListerner {
+                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
+                    newCreateViewModel.handleHighLight(userUID!!, requestData.matchID)
+                }
+            })
+
+            newCreateAdapter.setOnNotHighLightClickListerner(object :
+                NotHighLightOnClickListerner {
+                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
+                    newCreateViewModel.handleNotHighLight(userUID!!, requestData.matchID)
+                }
+            })
         }
     }
 

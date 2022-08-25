@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
@@ -14,9 +16,19 @@ import javax.inject.Inject
 class WaitAdapter @Inject constructor(private var waitList: ArrayList<CreateMatchModel>)
     : RecyclerView.Adapter<WaitAdapter.MyViewHolder>() {
     private lateinit var listerner: OnItemClickListerner
+    private lateinit var highLightListerner : HighLightOnClickListerner
+    private lateinit var notHighLightListerner : NotHighLightOnClickListerner
 
     fun setOnItemClickListerner(listerner: OnItemClickListerner) {
         this.listerner = listerner
+    }
+
+    fun setOnHighLightClickListerner(listerner: HighLightOnClickListerner) {
+        this.highLightListerner = listerner
+    }
+
+    fun setOnNotHighLightClickListerner(listerner: NotHighLightOnClickListerner) {
+        this.notHighLightListerner = listerner
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -27,7 +39,9 @@ class WaitAdapter @Inject constructor(private var waitList: ArrayList<CreateMatc
 
     class MyViewHolder (
         private val matchItemsBinding: MatchItemsBinding,
-        private val listerner: OnItemClickListerner
+        private val listerner: OnItemClickListerner,
+        private val highLightListerner : HighLightOnClickListerner,
+        private val notHighLightListerner : NotHighLightOnClickListerner
     ) : RecyclerView.ViewHolder(matchItemsBinding.root) {
         fun bind(list : CreateMatchModel) {
             with(matchItemsBinding) {
@@ -41,8 +55,23 @@ class WaitAdapter @Inject constructor(private var waitList: ArrayList<CreateMatc
                 waitConfirm.visibility = View.GONE
                 newCreate.visibility = View.GONE
 
+                if (list.highlight == 1) {
+                    highlightIcon2.visibility = View.VISIBLE
+                }
+                if (list.highlight == 0) {
+                    highlightIcon2.visibility = View.GONE
+                }
+
                 items.setOnClickListener {
                     listerner.onItemClick(list)
+                }
+
+                highlightIcon1.setOnClickListener {
+                    highLightListerner.onHighLightClickListerner(list)
+                }
+
+                highlightIcon2.setOnClickListener {
+                    notHighLightListerner.onNotHighLightClickListerner(list)
                 }
             }
         }
@@ -50,7 +79,7 @@ class WaitAdapter @Inject constructor(private var waitList: ArrayList<CreateMatc
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val items = MatchItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(items, listerner)
+        return MyViewHolder(items, listerner, highLightListerner, notHighLightListerner)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

@@ -16,6 +16,7 @@ import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,12 +25,15 @@ class NearMeFragment : Fragment() {
     private lateinit var nearMeBinding: FragmentNearMeBinding
     private lateinit var nearMeAdapter: NearMeAdapter
     private val nearMeViewModel : NearMeViewModel by viewModels()
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
         initObserve()
-        nearMeViewModel.loadNearMeList(currentLat!!, currentLong!!)
+        if (userUID != null) {
+            nearMeViewModel.loadNearMeList(userUID, currentLat!!, currentLong!!)
+        }
         Log.e("currentLat", currentLat.toString())
         Log.e("currentLong", currentLong.toString())
     }

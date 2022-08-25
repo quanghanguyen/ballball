@@ -222,8 +222,11 @@ class AllDetailsActivity : AppCompatActivity() {
 
     private fun chat() {
         allDetailsBinding.openChat.setOnClickListener {
-            val data = UsersModel()
-            ChatDetailsActivity.startDetails(this, data)
+            val intent = Intent(this, ChatDetailsActivity::class.java)
+            intent.putExtra("teamName", name)
+            intent.putExtra("userUid", teamConfirmUID)
+            startActivity(intent)
+            Animation.animateSlideLeft(this)
         }
     }
 

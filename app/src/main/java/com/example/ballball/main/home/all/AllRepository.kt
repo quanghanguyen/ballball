@@ -60,4 +60,48 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
             }
         })
     }
-}
+
+    fun highlight(
+        matchID : String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val highlight = mapOf(
+            "highlight" to 1
+        )
+
+        firebaseDatabase.getReference("Request_Match").child(matchID).updateChildren(highlight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+
+    fun notHighLight(
+        matchID: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
+    ) {
+        val notHighLight = mapOf(
+            "highlight" to 0
+        )
+
+        firebaseDatabase.getReference("Request_Match").child(matchID).updateChildren(notHighLight)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+    }

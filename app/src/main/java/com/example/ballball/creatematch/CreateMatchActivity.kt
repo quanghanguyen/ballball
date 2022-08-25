@@ -205,7 +205,12 @@ class CreateMatchActivity : AppCompatActivity() {
                     createMatchSuccessDialogBinding.next.setOnClickListener {
                         dialog.dismiss()
                         finish()
-                        Animation.animateInAndOut(this)
+                        Animation.animateSlideRight(this)
+                    }
+                    createMatchSuccessDialogBinding.watchMatch.setOnClickListener {
+                        dialog.dismiss()
+                        finish()
+                        Animation.animateSlideRight(this)
                     }
                     dialog.show()
                 }

@@ -17,7 +17,6 @@
         />
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -49,8 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:src="@drawable/blank_avatar"
-        app:civ_border_color="#C6C6C6"
-        app:civ_border_width="2dp" />
+        />
 
     <ImageView
         android:visibility="gone"

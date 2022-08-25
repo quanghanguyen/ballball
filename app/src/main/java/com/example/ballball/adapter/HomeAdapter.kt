@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.ballball.`interface`.HighLightOnClickListerner
+import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
@@ -16,10 +18,20 @@ class HomeAdapter @Inject constructor(private var requestList : ArrayList<Create
     : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     private lateinit var listerner: OnItemClickListerner
+//    private lateinit var highLightListerner : HighLightOnClickListerner
+//    private lateinit var notHighLightListerner : NotHighLightOnClickListerner
 
     fun setOnItemClickListerner(listerner: OnItemClickListerner) {
         this.listerner = listerner
     }
+
+//    fun setOnHighLightClickListerner(listerner: HighLightOnClickListerner) {
+//        this.highLightListerner = listerner
+//    }
+//
+//    fun setOnNotHighLightClickListerner(listerner: NotHighLightOnClickListerner) {
+//        this.notHighLightListerner = listerner
+//    }
 
     fun addNewData(list: ArrayList<CreateMatchModel>) {
         requestList = list
@@ -34,7 +46,9 @@ class HomeAdapter @Inject constructor(private var requestList : ArrayList<Create
 
     class MyViewHolder (
         private val matchItemsBinding: MatchItemsBinding,
-        private val listerner: OnItemClickListerner
+        private val listerner: OnItemClickListerner,
+//        private val highLightListerner : HighLightOnClickListerner,
+//        private val notHighLightListerner : NotHighLightOnClickListerner
             ) : RecyclerView.ViewHolder(matchItemsBinding.root) {
                 fun bind(list : CreateMatchModel) {
                     with(matchItemsBinding) {
@@ -47,9 +61,33 @@ class HomeAdapter @Inject constructor(private var requestList : ArrayList<Create
                         Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
                         newCreate.visibility = View.GONE
                         waitConfirm.visibility = View.GONE
+                        if (list.highlight == 1) {
+                            highlightIcon2.visibility = View.VISIBLE
+                        }
+                        if (list.highlight == 0) {
+                            highlightIcon2.visibility = View.GONE
+                        }
 
                         items.setOnClickListener {
                             listerner.onItemClick(list)
+                        }
+
+//                        highlightIcon1.setOnClickListener {
+//                            highLightListerner.onHighLightClickListerner(list)
+//                        }
+//
+//                        highlightIcon2.setOnClickListener {
+//                            notHighLightListerner.onNotHighLightClickListerner(list)
+//                        }
+
+                        highlightIcon1.setOnClickListener {
+                            highlightIcon1.visibility = View.GONE
+                            highlightIcon2.visibility = View.VISIBLE
+                        }
+
+                        highlightIcon2.setOnClickListener {
+                            highlightIcon2.visibility = View.GONE
+                            highlightIcon1.visibility = View.VISIBLE
                         }
                     }
                 }

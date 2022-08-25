@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.*
+import com.example.ballball.main.chat.details.ChatDetailsActivity
 import com.example.ballball.main.match.confirm.details.ConfirmDetailsActivity
 import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
@@ -88,6 +89,7 @@ class UpComingDetailsActivity : AppCompatActivity() {
         cancelMatch()
         openMap()
         phoneCall()
+        chat()
     }
 
     private fun handleVariable() {
@@ -120,6 +122,16 @@ class UpComingDetailsActivity : AppCompatActivity() {
                 startActivity(intent)
                 Animation.animateSlideLeft(this)
             }
+        }
+    }
+
+    private fun chat() {
+        upComingDetailsBinding.openChat.setOnClickListener {
+            val intent = Intent(this, ChatDetailsActivity::class.java)
+            intent.putExtra("teamName", clientTeamName)
+            intent.putExtra("userUid", clientUID)
+            startActivity(intent)
+            Animation.animateSlideLeft(this)
         }
     }
 

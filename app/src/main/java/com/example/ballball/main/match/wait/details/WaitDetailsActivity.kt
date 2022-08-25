@@ -28,6 +28,7 @@ import com.example.ballball.R
 import com.example.ballball.databinding.ActivityWaitDetailsBinding
 import com.example.ballball.databinding.SignOutDialogBinding
 import com.example.ballball.databinding.SuccessDialogBinding
+import com.example.ballball.main.chat.details.ChatDetailsActivity
 import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
@@ -93,6 +94,17 @@ class WaitDetailsActivity : AppCompatActivity() {
         handleVariables()
         openMap()
         phoneCall()
+        chat()
+    }
+
+    private fun chat() {
+        waitDetailsBinding.openChat.setOnClickListener {
+            val intent = Intent(this, ChatDetailsActivity::class.java)
+            intent.putExtra("teamName", clientTeamName)
+            intent.putExtra("userUid", clientUID)
+            startActivity(intent)
+            Animation.animateSlideLeft(this)
+        }
     }
 
     private fun phoneCall() {
