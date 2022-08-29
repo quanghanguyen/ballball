@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize">
+        >
 
         <fragment
             android:id="@+id/main_container"
@@ -20,6 +20,7 @@
             app:defaultNavHost="true"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/nav_graph"
+
             />
 
     </FrameLayout>
@@ -29,10 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/white"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:fabAlignmentMode="center"
+        app:fabCradleMargin="12dp"
+        app:fabCradleRoundedCornerRadius="20dp"
+        app:fabCradleVerticalOffset="0dp"
+        app:elevation="8dp"
+        android:backgroundTint="@color/white"
         >
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,21 +52,23 @@
             app:itemRippleColor="@color/white"
             app:itemTextColor="@drawable/bottom_nav_color"
             app:menu="@menu/bottom_nav_menu"
-            app:itemIconSize="32sp"
+            app:itemIconSize="24sp"
             app:labelVisibilityMode="labeled"
             android:fitsSystemWindows="true"
             app:itemIconPadding="14dp"
+            app:itemBackground="@drawable/bottom_navigation_items_background"
+            android:padding="8dp"
+
             />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:src="@drawable/ic_baseline_add_24"
+        android:src="@drawable/plus_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomBar"
         android:backgroundTint="@color/colorPrimary"
-        android:contentDescription="TODO"
         app:borderWidth="0dp"
         />
 

@@ -26,6 +26,7 @@ class TeamViewModel @Inject constructor(private val teamRepository: TeamReposito
     }
 
     sealed class SaveTeamsImage {
+        object Loading : SaveTeamsImage()
         object ResultOk : SaveTeamsImage()
         class ResultError(val errorMessage : String) : SaveTeamsImage()
     }

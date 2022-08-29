@@ -1,13 +1,20 @@
 package com.example.ballball.login.phone.login
 
+import android.app.Dialog
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivitySignInBinding
+import com.example.ballball.databinding.LoadingDialogBinding
 import com.example.ballball.login.phone.verify.SignInVerifyActivity
 import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
@@ -28,36 +35,12 @@ class SignInActivity : AppCompatActivity() {
     private var userPhoneNumber : String? = null
     lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var loadingDialogBinding: LoadingDialogBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signInBinding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(signInBinding.root)
-
-        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-                finish()
-                Animation.animateSlideLeft(this@SignInActivity)
-            }
-            override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(applicationContext, "Đã xảy ra lỗi", Toast.LENGTH_LONG).show()
-            }
-            override fun onCodeSent(
-                verificationId: String,
-                token: PhoneAuthProvider.ForceResendingToken
-            ) {
-                Log.d("TAG","onCodeSent:$verificationId")
-                storedVerificationId = verificationId
-                resendToken = token
-
-                val intent = Intent(applicationContext, SignInVerifyActivity::class.java)
-                intent.putExtra("storedVerificationId", storedVerificationId)
-                intent.putExtra("userPhoneNumber", userPhoneNumber)
-                startActivity(intent)
-                Animation.animateSlideLeft(this@SignInActivity)
-            }
-        }
         initEvents()
     }
 
@@ -81,9 +64,43 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
+        val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(loadingDialogBinding.root)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         signInBinding.send.setOnClickListener {
             phoneCheck()
+            dialog.show()
         }
+
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
+                Animation.animateSlideLeft(this@SignInActivity)
+            }
+            override fun onVerificationFailed(e: FirebaseException) {
+                Toast.makeText(applicationContext, "Đã xảy ra lỗi", Toast.LENGTH_LONG).show()
+            }
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                Log.d("TAG","onCodeSent:$verificationId")
+                storedVerificationId = verificationId
+                resendToken = token
+
+                val intent = Intent(applicationContext, SignInVerifyActivity::class.java)
+                intent.putExtra("storedVerificationId", storedVerificationId)
+                intent.putExtra("userPhoneNumber", userPhoneNumber)
+                dialog.dismiss()
+                startActivity(intent)
+                Animation.animateSlideLeft(this@SignInActivity)
+            }
+        }
+
     }
 
     private fun phoneCheck() {

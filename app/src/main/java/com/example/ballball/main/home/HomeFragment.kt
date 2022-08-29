@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun search() {
-        homeBinding.searchBar.setOnClickListener {
+        homeBinding.seach.setOnClickListener {
             startActivity(Intent(context, SearchActivity::class.java))
             activity?.overridePendingTransition(R.anim.animate_fade_enter, R.anim.animate_fade_exit)
         }

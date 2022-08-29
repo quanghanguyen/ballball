@@ -24,4 +24,36 @@ class TeamInformationRepository @Inject constructor(
                 onFail(it)
             }
         }
+
+    fun updateTeamInfo(
+        teamUid : String,
+        teamName: String,
+        teamLocation: String,
+        teamPeopleNumber: String,
+        teamNote: String,
+        deviceToken : String,
+        onSuccess: (String) -> Unit,
+        onFail: (String) -> Unit
+    ) {
+        val updateTeams = mapOf(
+            "teamUid" to teamUid,
+            "teamName" to teamName,
+            "teamLocation" to teamLocation,
+            "teamNote" to teamNote,
+            "teamPeopleNumber" to teamPeopleNumber,
+            "deviceToken" to deviceToken
+        )
+
+        firebaseDatabase.getReference("Teams").child(teamUid).updateChildren(updateTeams)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
     }

@@ -110,10 +110,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_below="@+id/title"
-            android:layout_marginTop="8dp"
-            />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/title_2"
@@ -132,8 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_2"
-            android:layout_marginTop="8dp"
-            />
+            android:layout_marginTop="8dp" />
 
     </RelativeLayout>
 

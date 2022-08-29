@@ -33,6 +33,7 @@ import com.example.ballball.utils.StorageConnection
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 @AndroidEntryPoint
@@ -41,7 +42,6 @@ class UserInformationActivity : AppCompatActivity() {
     private lateinit var userInformationBinding: ActivityUserInformationBinding
     private val userInformationViewModel : UserInformationViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private val localFile = File.createTempFile("tempImage", "jpg")
     private lateinit var layoutBottomSheetDialogBinding: LayoutBottomSheetDialogBinding
     private lateinit var signOutDialogBinding: SignOutDialogBinding
     private lateinit var imgUri : Uri
@@ -105,8 +105,13 @@ class UserInformationActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideLeft(this)
+    }
+
     private fun editAvatar() {
-        userInformationBinding.editProfilePictureButton.setOnClickListener {
+        userInformationBinding.profilePicture.setOnClickListener {
             showBottomSheetDialog()
         }
     }
@@ -163,7 +168,11 @@ class UserInformationActivity : AppCompatActivity() {
         if (requestCode == 1 && resultCode == RESULT_OK)  {
             val bundle : Bundle? = data?.extras
             val finalPhoto : Bitmap = bundle?.get("data") as Bitmap
-            userInformationBinding.profilePicture.setImageBitmap(finalPhoto)
+            val bytes = ByteArrayOutputStream()
+            finalPhoto.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+            val path = MediaStore.Images.Media.insertImage(this.contentResolver, finalPhoto, "Title", null)
+            imgUri = Uri.parse(path)
+            userInformationBinding.profilePicture.setImageURI(imgUri)
         }
 
         if (this::imgUri.isInitialized) {
@@ -184,7 +193,6 @@ class UserInformationActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
                 titleLayout.visibility = View.VISIBLE
                 profilePicture.visibility = View.VISIBLE
-                editProfilePictureButton.visibility = View.VISIBLE
                 userName.visibility = View.VISIBLE
                 userPhoneNumber.visibility = View.VISIBLE
                 line.visibility = View.VISIBLE
@@ -208,7 +216,9 @@ class UserInformationActivity : AppCompatActivity() {
     private fun saveAvatarObserve() {
         userInformationViewModel.saveAvatar.observe(this) {result ->
             when (result) {
-                is UserInformationViewModel.SaveAvatar.ResultOk -> {}
+                is UserInformationViewModel.SaveAvatar.ResultOk -> {
+                    Toast.makeText(this, "Thay đổi ảnh đại diện thành công", Toast.LENGTH_SHORT).show()
+                }
                 is UserInformationViewModel.SaveAvatar.ResultError -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()
                 }

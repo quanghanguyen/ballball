@@ -16,7 +16,7 @@
             android:id="@+id/back"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/custom_borderless_ripple"
             android:src="@drawable/back" />
 
         <LinearLayout
@@ -72,17 +72,9 @@
             android:fontFamily="@font/inter_medium"
             android:text="Thêm ảnh đại diện để người khác có thể nhận ra bạn"
             android:textSize="16sp"
+            android:textColor="#363636"
             />
     </LinearLayout>
-
-<!--    <ImageView-->
-<!--        android:id="@+id/avatar"-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:layout_below="@+id/title_layout"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:background="?android:attr/selectableItemBackgroundBorderless"-->
-<!--        android:src="@drawable/add_photo_alternate" />-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_picture"
@@ -91,21 +83,24 @@
         android:layout_below="@+id/title_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:src="@drawable/blank_avatar"
-         />
+        android:background="@drawable/custom_borderless_ripple"
+        android:elevation="24dp"
+        android:src="@drawable/empty_avatar"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="4dp" />
 
-    <ImageView
-        android:id="@+id/edit_profile_picture_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignEnd="@+id/profile_picture"
-        android:layout_alignBottom="@+id/profile_picture"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/edit_avatar"
-        />
+<!--    <ImageView-->
+<!--        android:id="@+id/edit_profile_picture_button"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_alignEnd="@+id/profile_picture"-->
+<!--        android:layout_alignBottom="@+id/profile_picture"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--        android:src="@drawable/edit_avatar"-->
+<!--        />-->
 
     <ImageView
         android:id="@+id/next"
@@ -115,7 +110,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="80dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/custom_borderless_ripple"
         android:src="@drawable/next_icon" />
 
 </RelativeLayout>

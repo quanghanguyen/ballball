@@ -221,6 +221,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
         navController = navHostFragment.navController
         setupWithNavController(mainBinding.bottomNavigation, navController)
+        mainBinding.bottomNavigation.menu.getItem(2).isEnabled = false
 
         val badge = mainBinding.bottomNavigation.getOrCreateBadge(R.id.chatFragment)
         badge.isVisible = true

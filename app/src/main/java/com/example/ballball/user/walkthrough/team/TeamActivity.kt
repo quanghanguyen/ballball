@@ -1,8 +1,10 @@
 package com.example.ballball.user.walkthrough.team
 
+import android.Manifest
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -12,6 +14,7 @@ import android.util.Log
 import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityTeamBinding
 import com.example.ballball.databinding.LayoutBottomSheetLocationBinding
@@ -35,6 +38,7 @@ class TeamActivity : AppCompatActivity() {
     private val teamViewModel : TeamViewModel by viewModels()
     private lateinit var imgUri : Uri
     private val userUid = FirebaseAuth.getInstance().currentUser?.uid
+    private lateinit var loadingDialogBinding: LoadingDialogBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,23 +70,46 @@ class TeamActivity : AppCompatActivity() {
         }
 
     private fun next() {
-        teamBinding.next.setOnClickListener {
-            if (
-                this::imgUri.isInitialized
-                || teamBinding.teamName.text.isNotEmpty()
-                || teamBinding.location.text.isNotEmpty()
-                || teamBinding.peopleNumber.text.isNotEmpty()
-            ) {
-                if (userUid != null) {
-                    teamViewModel.saveTeamsImage(imgUri, userUid)
-                    teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
-                        teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
-                        teamBinding.note.text.toString(), deviceToken!!)
+        val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(loadingDialogBinding.root)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-                    teamViewModel.updateUsers(userUid, teamBinding.teamName.text.toString())
-                }
+        teamBinding.next.setOnClickListener {
+            dialog.show()
+            if (
+                teamBinding.teamName.text.isEmpty()
+                || teamBinding.location.text.isEmpty()
+                || teamBinding.peopleNumber.text.isEmpty()
+            ) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                if (this::imgUri.isInitialized) {
+                    if (userUid != null) {
+                        teamViewModel.saveTeamsImage(imgUri, userUid)
+
+                        teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
+                            teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
+                            teamBinding.note.text.toString(), deviceToken!!)
+
+                        teamViewModel.updateUsers(userUid, teamBinding.teamName.text.toString())
+                    }
+                }
+
+                if (!this::imgUri.isInitialized) {
+                    imgUri = Uri.parse("android.resource://$packageName/drawable/empty_team_image")
+                    if (userUid != null) {
+                        teamViewModel.saveTeamsImage(imgUri, userUid)
+
+                        teamViewModel.saveTeams(userUid, teamBinding.teamName.text.toString(),
+                            teamBinding.location.text.toString(), teamBinding.peopleNumber.text.toString(),
+                            teamBinding.note.text.toString(), deviceToken!!)
+
+                        teamViewModel.updateUsers(userUid, teamBinding.teamName.text.toString())
+                    }
+                }
             }
         }
     }
@@ -94,12 +121,21 @@ class TeamActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
+    }
+
     private fun selectTeamImage() {
-        teamBinding.addTeamImage.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, 0)
+        teamBinding.teamImage.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 100)
+            } else {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(intent, 0)
+            }
         }
     }
 
@@ -139,7 +175,9 @@ class TeamActivity : AppCompatActivity() {
     private fun saveTeamImageObserve() {
         teamViewModel.saveTeamsImage.observe(this) {result ->
             when (result) {
+                is TeamViewModel.SaveTeamsImage.Loading -> {}
                 is TeamViewModel.SaveTeamsImage.ResultOk -> {
+                    Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                     Animation.animateSlideLeft(this)

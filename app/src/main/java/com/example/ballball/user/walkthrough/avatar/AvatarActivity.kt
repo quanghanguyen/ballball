@@ -22,6 +22,7 @@ import com.example.ballball.utils.StorageConnection
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
 class AvatarActivity : AppCompatActivity() {
@@ -31,7 +32,6 @@ class AvatarActivity : AppCompatActivity() {
     private val avatarViewModel : AvatarViewModel by viewModels()
     private lateinit var imgUri : Uri
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private var userAvatarUrl : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +59,7 @@ class AvatarActivity : AppCompatActivity() {
     }
 
     private fun addAvatar() {
-        avatarBinding.editProfilePictureButton.setOnClickListener {
+        avatarBinding.profilePicture.setOnClickListener {
             showBottomSheetDialog()
         }
     }
@@ -70,7 +70,6 @@ class AvatarActivity : AppCompatActivity() {
         dialog.setContentView(layoutBottomSheetDialogBinding.root)
 
         layoutBottomSheetDialogBinding.takePhoto.setOnClickListener {
-
             if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 100)
             } else {
@@ -80,11 +79,16 @@ class AvatarActivity : AppCompatActivity() {
             }
         }
 
-        layoutBottomSheetDialogBinding.gallery.setOnClickListener{
-            selectAvatar()
-            dialog.dismiss()
-            Animation.animateFade(this)
+        layoutBottomSheetDialogBinding.gallery.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
+            } else {
+                selectAvatar()
+                dialog.dismiss()
+                Animation.animateFade(this)
+            }
         }
+
         dialog.show()
     }
 
@@ -113,10 +117,14 @@ class AvatarActivity : AppCompatActivity() {
             avatarBinding.profilePicture.setImageURI(imgUri)
         }
 
-        if (requestCode == 1 && resultCode == RESULT_OK)  {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             val bundle : Bundle? = data?.extras
             val finalPhoto : Bitmap = bundle?.get("data") as Bitmap
-            avatarBinding.profilePicture.setImageBitmap(finalPhoto)
+            val bytes = ByteArrayOutputStream()
+            finalPhoto.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+            val path = MediaStore.Images.Media.insertImage(this.contentResolver, finalPhoto, "Title", null)
+            imgUri = Uri.parse(path)
+            avatarBinding.profilePicture.setImageURI(imgUri)
         }
     }
 
@@ -129,7 +137,12 @@ class AvatarActivity : AppCompatActivity() {
                 startActivity(Intent(this, TeamActivity::class.java))
                 Animation.animateSlideLeft(this)
             } else {
-                Toast.makeText(this, "Vui lòng chọn ảnh đại diện", Toast.LENGTH_SHORT).show()
+                imgUri = Uri.parse("android.resource://$packageName/drawable/empty_avatar")
+                if (userUID != null) {
+                    avatarViewModel.saveAvatar(imgUri, userUID)
+                }
+                startActivity(Intent(this, TeamActivity::class.java))
+                Animation.animateSlideLeft(this)
             }
         }
     }
@@ -139,5 +152,10 @@ class AvatarActivity : AppCompatActivity() {
             finish()
             Animation.animateSlideRight(this)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
     }
 }

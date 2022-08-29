@@ -45,8 +45,13 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
+    }
+
     private fun initSearch() {
-        searchBinding.searchBar.addTextChangedListener(object : TextWatcher {
+        searchBinding.seach.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //
             }

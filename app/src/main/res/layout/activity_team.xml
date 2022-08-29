@@ -19,7 +19,7 @@
             android:id="@+id/back"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/custom_borderless_ripple"
             android:src="@drawable/back"
             />
 
@@ -65,7 +65,6 @@
             android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             >
 
             <TextView
@@ -83,16 +82,17 @@
                 android:id="@+id/team_image_layout"
                 android:layout_width="242dp"
                 android:layout_height="136dp"
-                android:layout_below="@+id/title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/team_image_background"
+                android:elevation="40dp"
+                android:layout_below="@+id/title"
                 >
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="0dp"
                     >
 
                     <ImageView
@@ -100,24 +100,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/add_photo_alternate"
+                        android:src="@drawable/empty_team_image"
+                        android:background="@drawable/custom_bordered_ripple"
                         />
+
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/add_team_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignEnd="@+id/team_image_layout"
-                android:layout_alignBottom="@+id/team_image_layout"
-                android:src="@drawable/add_a_photo"
-                android:layout_marginStart="40dp"
-                app:civ_border_color="#7A7A7A"
-                app:civ_border_width="1dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                />
 
             <TextView
                 android:id="@+id/_title"
@@ -125,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/team_image_layout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Ảnh đại diện"
                 android:textColor="@color/black"
@@ -137,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/_title"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 android:padding="28dp">
 
                 <TextView
@@ -165,6 +154,7 @@
                     android:textColor="#363636"
                     android:textColorHint="#7A7A7A"
                     android:textSize="12sp"
+                    android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
                     tools:ignore="RtlSymmetry" />
 
                 <TextView
@@ -192,7 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:background="@drawable/custom_borderless_ripple"
                         android:fontFamily="@font/inter_regular"
                         android:gravity="center_vertical"
                         android:hint="Chọn sân"
@@ -240,7 +230,9 @@
                         android:textColorHint="#7A7A7A"
                         android:textSize="12sp"
                         app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
-                        tools:ignore="RtlSymmetry" />
+                        tools:ignore="RtlSymmetry"
+                        android:background="@drawable/custom_borderless_ripple"
+                        />
 
                 </RelativeLayout>
 
@@ -272,7 +264,9 @@
                     android:textColor="#363636"
                     android:textColorHint="#7A7A7A"
                     android:textSize="12sp"
-                    tools:ignore="RtlSymmetry" />
+                    android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                    tools:ignore="RtlSymmetry"
+                    />
 
             </RelativeLayout>
 
@@ -285,7 +279,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="60dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/custom_borderless_ripple"
                 android:src="@drawable/next_icon" />
 
         </RelativeLayout>

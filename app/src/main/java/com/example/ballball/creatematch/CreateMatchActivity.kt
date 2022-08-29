@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import android.view.Window
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.ballball.R
@@ -23,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @AndroidEntryPoint
@@ -43,6 +47,7 @@ class CreateMatchActivity : AppCompatActivity() {
     private var long : Double? = null
     private var geoHash : String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createMatchBinding = ActivityCreateMatchBinding.inflate(layoutInflater)
@@ -55,10 +60,19 @@ class CreateMatchActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun handleVariables() {
         createMatchBinding.calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val currentMonth = month + 1
-            matchDate = "$dayOfMonth/$currentMonth/$year"
+            var currentMonth = month.plus(1).toString()
+            if (currentMonth.length == 1) {
+                currentMonth = "0$currentMonth"
+            }
+            var dayOfMonthString = dayOfMonth.toString()
+            if (dayOfMonthString.length == 1) {
+                dayOfMonthString = "0$dayOfMonthString"
+            }
+            matchDate = "$dayOfMonthString/$currentMonth/$year"
+            Log.e("DATE", matchDate.toString())
         }
 
         MessageConnection.firebaseMessaging.token.addOnCompleteListener(
@@ -225,9 +239,9 @@ class CreateMatchActivity : AppCompatActivity() {
             val hour = mCurrentTime.get(Calendar.HOUR_OF_DAY)
             val minute = mCurrentTime.get(Calendar.MINUTE)
 
-            TimePickerDialog(this, object : TimePickerDialog.OnTimeSetListener {
+            TimePickerDialog(this, R.style.MyTimePickerTheme, object : TimePickerDialog.OnTimeSetListener {
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                    createMatchBinding.time.text = String.format("%d:%d", hourOfDay, minute)
+                    createMatchBinding.time.text = String.format("%02d:%02d", hourOfDay, minute)
 //                    if (hourOfDay >= mCurrentTime.get(Calendar.HOUR_OF_DAY)
 //                        && minute > mCurrentTime.get(Calendar.MINUTE)
 //                    ) {
@@ -242,7 +256,7 @@ class CreateMatchActivity : AppCompatActivity() {
 
     private fun locationSelect() {
         createMatchBinding.locationLayout.setOnClickListener {
-            val locationDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialog)
+            val locationDialog = BottomSheetDialog(this)
             layoutBottomSheetLocationBinding = LayoutBottomSheetLocationBinding.inflate(layoutInflater)
             locationDialog.setContentView(layoutBottomSheetLocationBinding.root)
 

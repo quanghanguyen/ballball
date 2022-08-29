@@ -1,7 +1,9 @@
 package com.example.ballball.user.teaminformation
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.ActivityTeamInformationBinding
@@ -147,12 +150,16 @@ class TeamInformationActivity : AppCompatActivity() {
     }
 
     private fun selectTeamImage() {
-        teamInformationBinding.addTeamImage.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, 0)
-            Animation.animateSlideLeft(this)
+        teamInformationBinding.cardView.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
+            } else {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(intent, 0)
+                Animation.animateSlideLeft(this)
+            }
         }
     }
 
@@ -279,5 +286,10 @@ class TeamInformationActivity : AppCompatActivity() {
             finish()
             Animation.animateSlideRight(this)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
     }
 }
