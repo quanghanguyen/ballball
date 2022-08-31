@@ -97,14 +97,14 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID : String
+        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID : String, geoHash : String,
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             confirmDetailsRepository.upComingMatch(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click, clientTeamName,
-            clientImageUrl, confirmUID, clientUID, {
+            clientImageUrl, confirmUID, clientUID, geoHash, {
                     acceptMatch.value = AcceptMatch.SaveUpComingOk
                 }, {
                     acceptMatch.value = AcceptMatch.SaveUpComingError
@@ -166,14 +166,14 @@ class ConfirmDetailsViewModel @Inject constructor(private val confirmDetailsRepo
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID : String
+        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID : String, geoHash : String,
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             confirmDetailsRepository.upComingMatchClient(confirmUID, userUID, matchID, deviceToken, teamName, teamPhone, date,
                 time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-                clientTeamName, clientImageUrl, clientUID, {
+                clientTeamName, clientImageUrl, clientUID, geoHash, {
                     saveUpComingClient.value = UpComingClientResult.SaveUpComingClientOk
                 }, {
                     saveUpComingClient.value = UpComingClientResult.SaveUpComingClientError

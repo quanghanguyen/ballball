@@ -45,6 +45,7 @@ import com.example.ballball.utils.Model.destinationAddress
 import com.example.ballball.utils.Model.destinationLat
 import com.example.ballball.utils.Model.destinationLong
 import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.Model.geoHash
 import com.example.ballball.utils.Model.lat
 import com.example.ballball.utils.Model.locationAddress
 import com.example.ballball.utils.Model.long
@@ -229,12 +230,12 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 if (userUID != null) {
                     confirmDetailsViewModel.acceptMatch(userUID, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!,
                         matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
-                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, confirmUID!!)
+                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, confirmUID!!, geoHash!!)
                 }
                 if (userUID != null) {
                     confirmDetailsViewModel.saveUpComingClient(userUID, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!,
                         matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!,
-                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, userUID)
+                        lat!!, long!!, click!!, clientTeamName!!, clientImageUrl!!, confirmUID!!, userUID, geoHash!!)
                 }
 
                 val timeUtils : Long = System.currentTimeMillis()
@@ -345,6 +346,7 @@ class ConfirmDetailsActivity : AppCompatActivity() {
                 destinationLat = data?.lat
                 destinationLong = data?.long
                 destinationAddress = data?.locationAddress
+                geoHash = data?.geoHash
              }
         }
     }

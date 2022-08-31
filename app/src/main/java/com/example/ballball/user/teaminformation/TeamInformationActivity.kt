@@ -1,14 +1,18 @@
 package com.example.ballball.user.teaminformation
 
 import android.Manifest
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -17,6 +21,7 @@ import com.example.ballball.R
 import com.example.ballball.databinding.ActivityTeamInformationBinding
 import com.example.ballball.databinding.LayoutBottomSheetLocationBinding
 import com.example.ballball.databinding.LayoutBottomSheetPeopleNumberBinding
+import com.example.ballball.databinding.SuccessDialogBinding
 import com.example.ballball.main.MainActivity
 import com.example.ballball.user.userinfomation.UserInformationViewModel
 import com.example.ballball.user.walkthrough.team.TeamViewModel
@@ -39,6 +44,7 @@ class TeamInformationActivity : AppCompatActivity() {
     private lateinit var layoutBottomSheetLocationBinding: LayoutBottomSheetLocationBinding
     private lateinit var layoutBottomSheetPeopleNumberBinding: LayoutBottomSheetPeopleNumberBinding
     private lateinit var imgUri : Uri
+    private lateinit var successDialogBinding: SuccessDialogBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +114,7 @@ class TeamInformationActivity : AppCompatActivity() {
         teamInformationViewModel.saveTeams.observe(this) {result ->
             when (result) {
                 is TeamInformationViewModel.SaveTeams.ResultOk -> {
+                    //
                     finish()
                     Animation.animateSlideRight(this)
                 }
@@ -120,8 +127,17 @@ class TeamInformationActivity : AppCompatActivity() {
         teamInformationViewModel.saveTeamsImage.observe(this) {result ->
             when (result) {
                 is TeamInformationViewModel.SaveTeamsImage.ResultOk -> {
-                    finish()
-                    Animation.animateSlideLeft(this)
+                    val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    successDialogBinding = SuccessDialogBinding.inflate(layoutInflater)
+                    dialog.setContentView(successDialogBinding.root)
+                    dialog.setCancelable(false)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    successDialogBinding.text.text = "Lưu thông tin thành công"
+                    successDialogBinding.successLayout.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
                 }
                 is TeamInformationViewModel.SaveTeamsImage.ResultError -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()

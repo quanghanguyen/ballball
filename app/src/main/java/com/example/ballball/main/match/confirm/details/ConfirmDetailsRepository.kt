@@ -29,13 +29,13 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID: String,
+        clientTeamName : String, clientImageUrl : String, confirmUID: String, clientUID: String, geoHash : String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val upComingMatch = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl, confirmUID, clientUID)
+            clientTeamName, clientImageUrl, confirmUID, clientUID, geoHash)
 
         firebaseDatabase.getReference("upComingMatch").child(userUID).child(matchID).setValue(upComingMatch)
             .addOnCompleteListener {
@@ -55,13 +55,13 @@ class ConfirmDetailsRepository @Inject constructor(private val firebaseDatabase:
         confirmUID : String, userUID : String, matchID : String, deviceToken : String, teamName: String, teamPhone: String,
         date : String, time : String, location : String, note : String, teamPeopleNumber: String,
         teamImageUrl : String, locationAddress : String, lat : Double, long : Double, click : Int,
-        clientTeamName : String, clientImageUrl : String, clientUID: String,
+        clientTeamName : String, clientImageUrl : String, clientUID: String, geoHash: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val upComingMatchClient = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl, confirmUID, clientUID)
+            clientTeamName, clientImageUrl, confirmUID, clientUID, geoHash)
 
         firebaseDatabase.getReference("upComingMatch").child(confirmUID).child(matchID).setValue(upComingMatchClient)
             .addOnCompleteListener {

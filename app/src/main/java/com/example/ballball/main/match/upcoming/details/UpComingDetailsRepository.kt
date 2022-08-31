@@ -1,6 +1,7 @@
 package com.example.ballball.main.match.upcoming.details
 
 import com.example.ballball.model.CancelUpComingModel
+import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
@@ -26,11 +27,42 @@ class UpComingDetailsRepository @Inject constructor(private val firebaseDatabase
             }
         }
 
-    fun restoreMatch(
-
+    fun restoreMatch (
+        userUID : String,
+        matchID : String,
+        deviceToken : String,
+        teamName : String,
+        teamPhone : String,
+        date : String,
+        time : String,
+        location : String,
+        note : String,
+        teamPeopleNumber : String,
+        teamImageUrl : String,
+        locationAddress: String,
+        lat: Double,
+        long: Double,
+        geoHash: String,
+        onSuccess : (String) -> Unit,
+        onFail : (String) -> Unit
     ) {
+        val requestData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
+            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, 0, "", "",
+            "", "", geoHash)
 
-    }
+        firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).setValue(requestData)
+        firebaseDatabase.getReference("Request_Match").child(matchID).setValue(requestData)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
 
     fun cancelMatchNotification (
         clientUID: String,

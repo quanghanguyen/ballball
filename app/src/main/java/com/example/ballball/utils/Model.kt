@@ -30,4 +30,6 @@ object Model {
     var avatarUrl : String? = null
     var receiverId : String? = null
     var userImageUrl : String? = null
+    var geoHash : String? = null
+    var uid : String? = null
 }

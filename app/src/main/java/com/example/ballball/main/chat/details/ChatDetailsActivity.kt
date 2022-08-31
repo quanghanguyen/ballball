@@ -73,13 +73,13 @@ class ChatDetailsActivity : AppCompatActivity() {
 
     private fun readMessageObserve() {
         chatDetailsViewModel.readMessageResult.observe(this) {result ->
-            with(chatDetailsBinding) {
-                progressBar.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-            }
+//            with(chatDetailsBinding) {
+//                progressBar.visibility = View.GONE
+//                recyclerView.visibility = View.VISIBLE
+//            }
             when (result) {
                 is ChatDetailsViewModel.ReadMessageResult.Loading -> {
-                    chatDetailsBinding.progressBar.visibility = View.VISIBLE
+//                    chatDetailsBinding.progressBar.visibility = View.VISIBLE
                 }
                 is ChatDetailsViewModel.ReadMessageResult.ResultOk -> {
                     chatDetailsAdapter.addNewData(result.list)

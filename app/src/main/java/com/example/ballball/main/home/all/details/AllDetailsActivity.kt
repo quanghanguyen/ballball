@@ -44,6 +44,7 @@ import com.example.ballball.utils.Model.destinationAddress
 import com.example.ballball.utils.Model.destinationLat
 import com.example.ballball.utils.Model.destinationLong
 import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.Model.geoHash
 import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchLocation
 import com.example.ballball.utils.Model.matchTime
@@ -191,7 +192,7 @@ class AllDetailsActivity : AppCompatActivity() {
                                 matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
-                                clientImageUrl!!, userUID, teamConfirmUID!!)
+                                clientImageUrl!!, userUID, teamConfirmUID!!, geoHash!!)
 
                             val timeUtils : Long = System.currentTimeMillis()
                             allDetailsViewModel.waiMatchListNotification(teamConfirmUID!!, clientTeamName!!, userImageUrl!!, "waitMatch", matchDate!!, matchTime!!, timeUtils)
@@ -274,6 +275,7 @@ class AllDetailsActivity : AppCompatActivity() {
                 teamImageUrl = data?.teamImageUrl
                 matchLocation = data?.location
                 teamConfirmUID = data?.userUID
+                geoHash = data?.geoHash
             }
         }
     }

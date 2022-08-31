@@ -23,6 +23,7 @@ import com.example.ballball.R
 import com.example.ballball.databinding.ActivityUserInformationBinding
 import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
 import com.example.ballball.databinding.SignOutDialogBinding
+import com.example.ballball.databinding.SuccessDialogBinding
 import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.onboarding.activity.OnBoardingActivity2
 import com.example.ballball.user.teaminformation.TeamInformationActivity
@@ -45,6 +46,7 @@ class UserInformationActivity : AppCompatActivity() {
     private lateinit var layoutBottomSheetDialogBinding: LayoutBottomSheetDialogBinding
     private lateinit var signOutDialogBinding: SignOutDialogBinding
     private lateinit var imgUri : Uri
+    private lateinit var successDialogBinding: SuccessDialogBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,10 +134,14 @@ class UserInformationActivity : AppCompatActivity() {
             }
         }
 
-        layoutBottomSheetDialogBinding.gallery.setOnClickListener{
-            selectAvatar()
-            dialog.dismiss()
-            Animation.animateFade(this)
+        layoutBottomSheetDialogBinding.gallery.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
+            } else {
+                selectAvatar()
+                dialog.dismiss()
+                Animation.animateFade(this)
+            }
         }
         dialog.show()
     }
@@ -217,7 +223,17 @@ class UserInformationActivity : AppCompatActivity() {
         userInformationViewModel.saveAvatar.observe(this) {result ->
             when (result) {
                 is UserInformationViewModel.SaveAvatar.ResultOk -> {
-                    Toast.makeText(this, "Thay đổi ảnh đại diện thành công", Toast.LENGTH_SHORT).show()
+                    val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    successDialogBinding = SuccessDialogBinding.inflate(layoutInflater)
+                    dialog.setContentView(successDialogBinding.root)
+                    dialog.setCancelable(false)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    successDialogBinding.text.text = "Thay đổi ảnh đại diện thành công"
+                    successDialogBinding.successLayout.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
                 }
                 is UserInformationViewModel.SaveAvatar.ResultError -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()

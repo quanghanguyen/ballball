@@ -39,10 +39,21 @@ import com.example.ballball.utils.Model.clientUID
 import com.example.ballball.utils.Model.destinationAddress
 import com.example.ballball.utils.Model.destinationLat
 import com.example.ballball.utils.Model.destinationLong
+import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.Model.geoHash
+import com.example.ballball.utils.Model.lat
+import com.example.ballball.utils.Model.locationAddress
+import com.example.ballball.utils.Model.long
 import com.example.ballball.utils.Model.matchDate
 import com.example.ballball.utils.Model.matchID
+import com.example.ballball.utils.Model.matchLocation
 import com.example.ballball.utils.Model.matchTime
+import com.example.ballball.utils.Model.teamImageUrl
 import com.example.ballball.utils.Model.teamName
+import com.example.ballball.utils.Model.teamNote
+import com.example.ballball.utils.Model.teamPeopleNumber
+import com.example.ballball.utils.Model.teamPhone
+import com.example.ballball.utils.Model.uid
 import com.example.ballball.utils.Model.userImageUrl
 import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -138,6 +149,16 @@ class UpComingDetailsActivity : AppCompatActivity() {
     private fun initObserve() {
         cancelUpComingMatchObserve()
         cancelUpComingListNotification()
+        restoreMatchObserve()
+    }
+
+    private fun restoreMatchObserve() {
+        upComingDetailsViewModel.restoreMatch.observe(this) {result ->
+            when (result) {
+                is UpComingDetailsViewModel.RestoreMatch.ResultOk -> {}
+                is UpComingDetailsViewModel.RestoreMatch.ResultError -> {}
+            }
+        }
     }
 
     private fun cancelUpComingListNotification() {
@@ -165,6 +186,9 @@ class UpComingDetailsActivity : AppCompatActivity() {
                     if (userUID != null) {
                         upComingDetailsViewModel.cancelUpComingMatch(clientUID!!, userUID, matchID!!, matchDate!!, matchTime!!,
                         teamName!!, radioText)
+
+                        upComingDetailsViewModel.restoreMatch(uid!!, matchID!!, deviceToken!!, teamName!!, teamPhone!!, matchDate!!, matchTime!!,
+                            matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!, locationAddress!!, lat!!, long!!, geoHash!!)
                     }
                     val timeUtils : Long = System.currentTimeMillis()
                     upComingDetailsViewModel.cancelUpComingListNotification(clientUID!!, teamName!!, userImageUrl!!, "cancelUpComing", matchDate!!, matchTime!!, radioText, timeUtils)
@@ -237,18 +261,18 @@ class UpComingDetailsActivity : AppCompatActivity() {
                 }
 
                 matchID = data?.matchID
-                Model.deviceToken = data?.deviceToken
+                deviceToken = data?.deviceToken
                 Model.teamName = data?.teamName
-                Model.teamPhone = data?.teamPhone
+                teamPhone = data?.teamPhone
                 matchDate = data?.date
                 matchTime = data?.time
-                Model.matchLocation = data?.location
-                Model.teamNote = data?.note
-                Model.teamPeopleNumber = data?.teamPeopleNumber
-                Model.teamImageUrl = data?.teamImageUrl
+                matchLocation = data?.location
+                teamNote = data?.note
+                teamPeopleNumber = data?.teamPeopleNumber
+                teamImageUrl = data?.teamImageUrl
                 Model.locationAddress = data?.locationAddress
-                Model.lat = data?.lat
-                Model.long = data?.long
+                lat = data?.lat
+                long = data?.long
                 Model.click = data?.click
                 clientTeamName = data?.clientTeamName
                 Model.clientImageUrl = data?.clientImageUrl
@@ -256,6 +280,8 @@ class UpComingDetailsActivity : AppCompatActivity() {
                 destinationLat = data?.lat
                 destinationLong = data?.long
                 destinationAddress = data?.locationAddress
+                uid = data?.userUID
+                geoHash = data?.geoHash
             }
         }
     }

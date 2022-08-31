@@ -14,6 +14,7 @@ class UpComingDetailsViewModel @Inject constructor(private val upComingDetailsRe
 
     val cancelUpComing = MutableLiveData<CancelUpComing>()
     val cancelUpComingListNotification = MutableLiveData<CancelUpComingListNotification>()
+    val restoreMatch = MutableLiveData<RestoreMatch>()
 
     sealed class CancelUpComing {
         object ResultOk : CancelUpComing()
@@ -25,6 +26,11 @@ class UpComingDetailsViewModel @Inject constructor(private val upComingDetailsRe
     sealed class CancelUpComingListNotification {
         object ResultOk : CancelUpComingListNotification()
         object ResultError : CancelUpComingListNotification()
+    }
+
+    sealed class RestoreMatch {
+        object ResultOk : RestoreMatch()
+        object ResultError : RestoreMatch()
     }
 
     fun cancelUpComingMatch(
@@ -56,6 +62,35 @@ class UpComingDetailsViewModel @Inject constructor(private val upComingDetailsRe
             })
         }
     }
+
+    fun restoreMatch(
+        userUID : String,
+        matchID : String,
+        deviceToken : String,
+        teamName : String,
+        teamPhone : String,
+        date : String,
+        time : String,
+        location : String,
+        note : String,
+        teamPeopleNumber : String,
+        teamImageUrl : String,
+        locationAddress: String,
+        lat: Double,
+        long: Double,
+        geoHash: String
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            upComingDetailsRepository.restoreMatch(userUID, matchID, deviceToken, teamName, teamPhone, date, time, location, note,
+            teamPeopleNumber, teamImageUrl, locationAddress, lat, long, geoHash, {
+                restoreMatch.value = RestoreMatch.ResultOk
+            }, {
+                restoreMatch.value = RestoreMatch.ResultError
+                })
+            }
+        }
 
     fun cancelUpComingListNotification(
         clientUID : String,
