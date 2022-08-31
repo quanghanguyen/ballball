@@ -10,14 +10,33 @@
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp"
+        >
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back" />
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:elevation="8dp"
+            android:background="@drawable/back_button_background"
+            >
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/team_name"
@@ -25,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/inter_bold"
-            android:text="Mortified Coercion"
+            android:text="Hungry Admirals FC"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -34,8 +53,6 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_below="@+id/title_layout"
         >
 
@@ -44,7 +61,11 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/team_image_background">
+            android:background="@drawable/team_image_background"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -56,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/add_photo_alternate" />
+                    android:src="@drawable/empty_team_image" />
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
@@ -68,14 +89,15 @@
             android:layout_below="@+id/team_image_layout"
             android:layout_marginTop="16dp"
             android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             >
 
             <ImageView
                 android:id="@+id/alert_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/alert_icon"
-                />
+                android:src="@drawable/alert_icon" />
 
             <TextView
                 android:id="@+id/_text"
@@ -119,9 +141,12 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_below="@+id/click_layout"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/match_infomation_background"
-            android:elevation="4dp">
+            android:elevation="8dp"
+            >
 
             <RelativeLayout
                 android:id="@+id/date_container"
@@ -288,7 +313,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/match_information"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            >
 
             <ImageView
                 android:id="@+id/location_icon"
@@ -313,7 +341,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="@drawable/custom_bordered_ripple">
 
                 <ImageView
                     android:id="@+id/navigation_icon"
@@ -342,14 +370,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/navigation_container"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/inter_medium"
             android:gravity="center"
             android:text="FJJ2+M47, Vỹ Dạ, Thành phố Huế, Thừa Thiên Huế, Việt Nam "
             android:textColor="#7A7A7A"
-            android:textSize="10sp"
-            android:layout_centerHorizontal="true"
-            />
+            android:textSize="10sp" />
 
         <RelativeLayout
             android:id="@+id/chat_layout"
@@ -357,13 +384,15 @@
             android:layout_height="50dp"
             android:background="@drawable/phone_background"
             android:layout_below="@+id/location_address"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="20dp"
+            >
 
             <RelativeLayout
                 android:id="@+id/open_chat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackgroundBorderless">
+                android:background="@drawable/custom_borderless_ripple">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -401,13 +430,14 @@
             android:layout_below="@+id/location_address"
             android:layout_marginTop="16dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             >
 
             <RelativeLayout
                 android:id="@+id/phone_call"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackgroundBorderless">
+                android:background="@drawable/custom_borderless_ripple">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -444,10 +474,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/chat_layout"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter_medium"
             android:text="Ghi chú"
             android:textColor="#363636"
             android:textSize="16sp"
-            android:fontFamily="@font/inter_medium"
+            android:layout_marginStart="20dp"
             />
 
         <RelativeLayout
@@ -456,7 +487,10 @@
             android:layout_height="48dp"
             android:layout_below="@+id/note_title"
             android:background="@drawable/textview_background"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            >
 
             <TextView
                 android:id="@+id/note"

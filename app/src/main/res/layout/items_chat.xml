@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/custom_bordered_ripple"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView

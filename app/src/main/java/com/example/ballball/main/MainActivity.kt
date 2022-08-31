@@ -76,8 +76,6 @@ class MainActivity : AppCompatActivity() {
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
         initObserves()
-
-        Log.e("Current", LocalDateTime.now().toString())
     }
 
     private fun initObserves() {
@@ -224,6 +222,6 @@ class MainActivity : AppCompatActivity() {
         mainBinding.bottomNavigation.menu.getItem(2).isEnabled = false
 
         val badge = mainBinding.bottomNavigation.getOrCreateBadge(R.id.chatFragment)
-        badge.isVisible = true
+        badge.isVisible = false
     }
 }

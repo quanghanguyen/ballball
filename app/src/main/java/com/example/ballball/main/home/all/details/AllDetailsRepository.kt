@@ -43,7 +43,7 @@ class AllDetailsRepository @Inject constructor(private val firebaseDatabase: Fir
     ) {
         val waitData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
             time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, click,
-            clientTeamName, clientImageUrl, confirmUID)
+            clientTeamName, clientImageUrl, confirmUID, "", "")
         firebaseDatabase.getReference("waitRequest").child(uID).child(matchID).setValue(waitData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

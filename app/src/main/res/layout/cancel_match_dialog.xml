@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="360dp"
-        android:background="@drawable/dialog_rounded"
+        android:background="@drawable/loading_dialog_rounded"
         >
 
         <TextView

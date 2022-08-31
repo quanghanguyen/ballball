@@ -10,16 +10,7 @@ class NewCreateDetailsRepository @Inject constructor(private val firebaseDatabas
         onFail : (String) -> Unit
     ) {
         firebaseDatabase.getReference("Request_Match").child(matchID).removeValue()
-//            .addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    onSuccess(it.toString())
-//                } else {
-//                    onFail(it.exception?.message.orEmpty())
-//                }
-//            }
-//            .addOnFailureListener {
-//                onFail(it.message.orEmpty())
-//            }
+
 
         firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).removeValue()
             .addOnCompleteListener {

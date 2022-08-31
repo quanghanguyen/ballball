@@ -98,12 +98,13 @@ class CreateMatchViewModel @Inject constructor(
 
     fun notification(
         matchID: String,
-        teamName: String
+        teamName: String,
+        userUID: String
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
-            createMatchRepository.notification(matchID, teamName,{
+            createMatchRepository.notification(matchID, teamName, userUID, {
                 notification.value = NotificationResult.ResultOk
                 }, {
                 notification.value = NotificationResult.ResultError
@@ -125,13 +126,15 @@ class CreateMatchViewModel @Inject constructor(
         teamImageUrl: String,
         locationAddress: String,
         lat: Double,
-        long: Double
+        long: Double,
+        geoHash: String
+
     ) {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }) {
             createMatchRepository.saveNewCreate(userUID, matchID, deviceToken, teamName, teamPhone,
-                date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long,{
+                date, time, location, note, teamPeopleNumber, teamImageUrl,locationAddress, lat, long, geoHash, {
                     saveNewCreate.value = NewCreateResult.ResultOk
                 }, {
                     saveNewCreate.value = NewCreateResult.ResultError

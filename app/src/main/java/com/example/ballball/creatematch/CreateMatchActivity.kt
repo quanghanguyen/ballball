@@ -104,6 +104,7 @@ class CreateMatchActivity : AppCompatActivity() {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initEvents() {
         disablePreDay()
         back()
@@ -137,31 +138,86 @@ class CreateMatchActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun saveRequest() {
         createMatchBinding.saveRequest.setOnClickListener {
             if (matchDate == null) {
-                Toast.makeText(applicationContext, "Vui lòng chọn ngày", Toast.LENGTH_SHORT).show()
+                val currentDate = LocalDate.now()
+                val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
+                matchDate = currentDate.format(dateFormatter)
             }
-            if (locationAddress == null) {
-                Toast.makeText(applicationContext, "Vui lòng chọn sân", Toast.LENGTH_SHORT).show()
-            } else {
-                val dialog = Dialog(this, R.style.MyAlertDialogTheme)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                createMatchDialogBinding = CreateMatchDialogBinding.inflate(layoutInflater)
-                dialog.setCancelable(false)
-                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.setContentView(createMatchDialogBinding.root)
-                createMatchDialogBinding.date.text = matchDate
-                createMatchDialogBinding.time.text = createMatchBinding.time.text
-                createMatchDialogBinding.yes.setOnClickListener {
-                    save()
-                    dialog.dismiss()
-                }
-                createMatchDialogBinding.no.setOnClickListener {
-                    dialog.dismiss()
-                }
-                dialog.show()
+            if (createMatchBinding.pitchLocation.text.equals("Sân Đại Học Khoa Học")) {
+                locationAddress = LocationAddress.khoaHocAddress
+                lat = LocationAddress.khoaHocLat
+                long = LocationAddress.khoaHocLong
+                geoHash = LocationAddress.khoaHocHash
             }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Monaco")) {
+                locationAddress = LocationAddress.monacoAddress
+                lat = LocationAddress.monacoLat
+                long = LocationAddress.monacoLong
+                geoHash = LocationAddress.monacoHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Lâm Hoằng")) {
+                locationAddress = LocationAddress.lamHoangAddress
+                lat = LocationAddress.lamHoangLat
+                long = LocationAddress.lamHoangLong
+                geoHash = LocationAddress.lamHoangHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân An Cựu")) {
+                locationAddress = LocationAddress.anCuuAddress
+                lat = LocationAddress.anCuuLat
+                long = LocationAddress.anCuuLong
+                geoHash = LocationAddress.anCuuHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Đại Học Luật")) {
+                locationAddress = LocationAddress.luatAddress
+                lat = LocationAddress.luatLat
+                long = LocationAddress.luatLong
+                geoHash = LocationAddress.luatHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Uyên Phương")) {
+                locationAddress = LocationAddress.uyenPhuongAddress
+                lat = LocationAddress.uyenPhuongLat
+                long = LocationAddress.uyenPhuongLong
+                geoHash = LocationAddress.uyenPhuongHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Đại Học Y Dược")) {
+                locationAddress = LocationAddress.yDuocAddress
+                lat = LocationAddress.yDuocLat
+                long = LocationAddress.yDuocLong
+                geoHash = LocationAddress.yDuocHash
+            }
+
+            if (createMatchBinding.pitchLocation.text.equals("Sân Xuân Phú")) {
+                locationAddress = LocationAddress.xuanPhuAddress
+                lat = LocationAddress.xuanPhuLat
+                long = LocationAddress.xuanPhuLong
+                geoHash = LocationAddress.xuanPhuHash
+            }
+
+            val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            createMatchDialogBinding = CreateMatchDialogBinding.inflate(layoutInflater)
+            dialog.setCancelable(false)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setContentView(createMatchDialogBinding.root)
+            createMatchDialogBinding.date.text = matchDate
+            createMatchDialogBinding.time.text = createMatchBinding.time.text
+            createMatchDialogBinding.yes.setOnClickListener {
+                save()
+                dialog.dismiss()
+            }
+            createMatchDialogBinding.no.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
         }
     }
 
@@ -180,12 +236,12 @@ class CreateMatchActivity : AppCompatActivity() {
                     teamPeopleNumber, teamImageUrl!!,
                     locationAddress!!, lat!!, long!!, geoHash!!)
                 //save request match notifications
-                createMatchViewModel.notification(matchID, teamName!!)
+                createMatchViewModel.notification(matchID, teamName!!, userUID)
                 //save new create match
                 createMatchViewModel.saveNewCreate(userUID, matchID,
                     deviceToken!!, teamName!!, phone!!, matchDate!!, time, location, note,
                     teamPeopleNumber, teamImageUrl!!,
-                    locationAddress!!, lat!!, long!!)
+                    locationAddress!!, lat!!, long!!, geoHash!!)
 
                 Log.e("Info", userUID)
                 Log.e("Info", matchID)
@@ -242,13 +298,6 @@ class CreateMatchActivity : AppCompatActivity() {
             TimePickerDialog(this, R.style.MyTimePickerTheme, object : TimePickerDialog.OnTimeSetListener {
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
                     createMatchBinding.time.text = String.format("%02d:%02d", hourOfDay, minute)
-//                    if (hourOfDay >= mCurrentTime.get(Calendar.HOUR_OF_DAY)
-//                        && minute > mCurrentTime.get(Calendar.MINUTE)
-//                    ) {
-//                        createMatchBinding.time.text = String.format("%d:%d", hourOfDay, minute)
-//                    } else {
-//                        Toast.makeText(applicationContext, "Vui lòng chọn thời gian hợp lệ", Toast.LENGTH_SHORT).show()
-//                    }
                 }
             }, hour, minute, true).show()
         }
@@ -262,73 +311,41 @@ class CreateMatchActivity : AppCompatActivity() {
 
             layoutBottomSheetLocationBinding.khoaHoc.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.khoaHoc.text
-                locationAddress = LocationAddress.khoaHocAddress
-                lat = LocationAddress.khoaHocLat
-                long = LocationAddress.khoaHocLong
-                geoHash = LocationAddress.khoaHocHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.monaco.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.monaco.text
-                locationAddress = LocationAddress.monacoAddress
-                lat = LocationAddress.monacoLat
-                long = LocationAddress.monacoLong
-                geoHash = LocationAddress.monacoHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.lamHoang.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.lamHoang.text
-                locationAddress = LocationAddress.lamHoangAddress
-                lat = LocationAddress.lamHoangLat
-                long = LocationAddress.lamHoangLong
-                geoHash = LocationAddress.lamHoangHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.anCuu.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.anCuu.text
-                locationAddress = LocationAddress.anCuuAddress
-                lat = LocationAddress.anCuuLat
-                long = LocationAddress.anCuuLong
-                geoHash = LocationAddress.anCuuHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.luat.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.luat.text
-                locationAddress = LocationAddress.luatAddress
-                lat = LocationAddress.luatLat
-                long = LocationAddress.luatLong
-                geoHash = LocationAddress.luatHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.uyenPhuong.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.uyenPhuong.text
-                locationAddress = LocationAddress.uyenPhuongAddress
-                lat = LocationAddress.uyenPhuongLat
-                long = LocationAddress.uyenPhuongLong
-                geoHash = LocationAddress.uyenPhuongHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.yDuoc.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.yDuoc.text
-                locationAddress = LocationAddress.yDuocAddress
-                lat = LocationAddress.yDuocLat
-                long = LocationAddress.yDuocLong
-                geoHash = LocationAddress.yDuocHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
             layoutBottomSheetLocationBinding.xuanPhu.setOnClickListener {
                 createMatchBinding.pitchLocation.text = layoutBottomSheetLocationBinding.xuanPhu.text
-                locationAddress = LocationAddress.xuanPhuAddress
-                lat = LocationAddress.xuanPhuLat
-                long = LocationAddress.xuanPhuLong
-                geoHash = LocationAddress.xuanPhuHash
                 locationDialog.dismiss()
                 Animation.animateFade(this)
             }
@@ -369,5 +386,10 @@ class CreateMatchActivity : AppCompatActivity() {
             finish()
             Animation.animateSlideRight(this)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
     }
 }

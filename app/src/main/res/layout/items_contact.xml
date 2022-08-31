@@ -66,9 +66,8 @@
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="24dp"
-                android:src="@drawable/chat_icon_grey"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                />
+                android:background="@drawable/custom_borderless_ripple"
+                android:src="@drawable/chat_icon_grey" />
 
             <ImageView
                 android:id="@+id/call"
@@ -77,7 +76,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/chat"
                 android:src="@drawable/phone_icon_grey"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/custom_borderless_ripple"
                 />
 
         </RelativeLayout>

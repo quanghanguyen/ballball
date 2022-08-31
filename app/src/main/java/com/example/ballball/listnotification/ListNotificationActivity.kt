@@ -52,7 +52,7 @@ class ListNotificationActivity : AppCompatActivity() {
             listNotificationAdapter.setNotificationOnClickListerner(object :
             NotificationOnClickListerner{
                 override fun OnClick(data: ListNotificationModel) {
-                    ////
+                    Log.e("Click", "Clicked")
                 }
             })
         }
@@ -119,7 +119,7 @@ class ListNotificationActivity : AppCompatActivity() {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                //
             }
         })
     }
@@ -137,5 +137,10 @@ class ListNotificationActivity : AppCompatActivity() {
             finish()
             Animation.animateSlideRight(this)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
     }
 }

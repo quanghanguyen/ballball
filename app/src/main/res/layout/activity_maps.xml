@@ -25,15 +25,14 @@
             android:id="@+id/back"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/map_back_icon"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            />
+            android:background="@drawable/custom_borderless_ripple"
+            android:src="@drawable/map_back_icon" />
 
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/map_search_icon"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/custom_borderless_ripple"
             android:layout_alignParentEnd="true"
             />
 

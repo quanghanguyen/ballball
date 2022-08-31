@@ -35,34 +35,58 @@
     </RelativeLayout>
 
     <RelativeLayout
-
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_layout"
         >
 
-        <EditText
+        <RelativeLayout
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/search_background"
-            android:drawableStart="@drawable/search_icon"
-            android:drawableEnd="@drawable/search_filter_icon"
-            android:drawablePadding="12dp"
-            android:elevation="4dp"
-            android:fontFamily="@font/inter_medium"
-            android:hint="Nhập để tìm kiếm"
-            android:inputType="text"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:textColor="#7A7A7A"
-            android:textColorHint="#C7C7C7"
-            android:textSize="12sp"
-            tools:ignore="RtlSymmetry" />
+            android:elevation="12dp">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/new_search_icon" />
+
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="44dp"
+                android:layout_toEndOf="@+id/search_icon"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center_vertical"
+                android:hint="Nhập để tìm kiếm ..."
+                android:textColor="#7A7A7A"
+                android:textColorHint="#C7C7C7"
+                android:textSize="12sp"
+                android:inputType="text"
+                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined" />
+
+            <ImageView
+                android:id="@+id/filter_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/new_filter_icon" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/add_contact"
@@ -71,7 +95,7 @@
             android:layout_below="@+id/search_bar"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/custom_bordered_ripple"
             >
 
             <ImageView
@@ -126,15 +150,21 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/title_2"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="72dp"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>

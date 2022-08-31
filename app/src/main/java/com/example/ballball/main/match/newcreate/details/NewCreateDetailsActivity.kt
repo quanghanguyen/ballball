@@ -137,6 +137,11 @@ class NewCreateDetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
+    }
+
     private fun binding() {
         intent?.let { bundle ->
             val data = bundle.getParcelableExtra<CreateMatchModel>(NEW_CREATE_DATA)

@@ -17,17 +17,33 @@
         />
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back" />
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/back_button_background"
+            android:elevation="8dp">
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +60,9 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_layout">
+        android:layout_below="@+id/title_layout"
+        android:layout_marginTop="20dp"
+        >
 
         <RelativeLayout
             android:id="@+id/scroll_layout"
@@ -266,11 +284,13 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/textview_background"
                     android:fontFamily="@font/inter_regular"
-                    android:hint="Nhập ghi chú"
                     android:inputType="text"
                     android:paddingStart="16dp"
                     android:textColor="#363636"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColorHint="#363636"
+                    android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                    />
 
                 <Button
                     android:id="@+id/save_request"

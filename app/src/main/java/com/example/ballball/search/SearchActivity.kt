@@ -51,7 +51,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun initSearch() {
-        searchBinding.seach.addTextChangedListener(object : TextWatcher {
+        searchBinding.search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //
             }
@@ -72,6 +72,10 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel.searchFilter.observe(this) {result ->
             when (result) {
                 is SearchViewModel.SearchFilterResult.ResultOk -> {
+                    if (searchBinding.search.text.isNullOrEmpty()) {
+                        searchBinding.recyclerView.visibility = View.GONE
+                        searchBinding.imageLayout.visibility = View.GONE
+                    }
                     if (result.list.isEmpty()) {
                         with(searchBinding) {
                             recyclerView.visibility = View.GONE

@@ -44,10 +44,11 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
     fun notification(
         matchID : String,
         teamName: String,
+        userUID: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
-        val allNotification = AllNotificationModel(matchID, teamName)
+        val allNotification = AllNotificationModel(matchID, teamName, userUID)
         firebaseDatabase.getReference("Request_Match_Notification").child(matchID).setValue(allNotification)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -76,11 +77,13 @@ class CreateMatchRepository @Inject constructor(private val firebaseDatabase: Fi
         locationAddress: String,
         lat: Double,
         long: Double,
+        geoHash: String,
         onSuccess : (String) -> Unit,
         onFail : (String) -> Unit
     ) {
         val upComingData = CreateMatchModel(userUID, matchID, deviceToken, teamName, teamPhone, date,
-            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long)
+            time, location, note, teamPeopleNumber, teamImageUrl, locationAddress, lat, long, 0, "", "",
+            "", "", geoHash)
         firebaseDatabase.getReference("New_Create_Match").child(userUID).child(matchID).setValue(upComingData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

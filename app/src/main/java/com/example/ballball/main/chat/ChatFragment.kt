@@ -45,7 +45,7 @@ class ChatFragment : Fragment() {
         chatViewModel.loadChatList.observe(viewLifecycleOwner) {result ->
             with(chatBinding){
                 progressBar.visibility = View.GONE
-                mainLayout.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
             }
             when (result) {
                 is ChatViewModel.LoadChatList.Loading -> {
@@ -61,7 +61,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun initSearch() {
-        chatBinding.searchBar.addTextChangedListener(object : TextWatcher {
+        chatBinding.search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //
             }

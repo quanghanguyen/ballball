@@ -42,7 +42,9 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:textColor="#363636"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+        />
 
     <TextView
         android:id="@+id/_phone_number"
@@ -67,7 +69,9 @@
         android:inputType="number"
         android:paddingStart="16dp"
         android:textColor="#363636"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+        />
 
     <Button
         android:id="@+id/save"

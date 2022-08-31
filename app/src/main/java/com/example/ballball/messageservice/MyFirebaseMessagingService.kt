@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -23,13 +24,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     lateinit var builder: NotificationCompat.Builder
     private val channelId = "i.apps.notifications"
     private val description = "Test notification"
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (remoteMessage.data.isNotEmpty()) {
-            showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
+            if (remoteMessage.data["uid"].isNullOrEmpty() || remoteMessage.data["uid"] != userUID) {
+                showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
+            }
+//            showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
         }
 
         remoteMessage.notification?.let {

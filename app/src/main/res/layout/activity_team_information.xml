@@ -17,15 +17,33 @@
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp"
+        >
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/custom_borderless_ripple"
-            android:src="@drawable/back"
-            />
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:elevation="8dp"
+            android:background="@drawable/back_button_background"
+            >
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,22 +70,21 @@
             android:layout_height="match_parent"
             >
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/team_image_layout"
                 android:layout_width="242dp"
                 android:layout_height="136dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/team_image_background"
-                android:elevation="24dp"
-                android:padding="6dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="12dp"
+                card_view:cardBackgroundColor="#fff"
                 >
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="0dp"
                     android:background="@drawable/custom_borderless_ripple"
                     >
 
@@ -77,24 +94,15 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/empty_team_image"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"
                         />
 
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
-            </RelativeLayout>
-
-<!--            <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                android:id="@+id/add_team_image"-->
-<!--                android:layout_width="24dp"-->
-<!--                android:layout_height="24dp"-->
-<!--                android:layout_alignEnd="@+id/team_image_layout"-->
-<!--                android:layout_alignBottom="@+id/team_image_layout"-->
-<!--                android:src="@drawable/add_a_photo"-->
-<!--                android:layout_marginStart="40dp"-->
-<!--                app:civ_border_color="#7A7A7A"-->
-<!--                app:civ_border_width="1dp"-->
-<!--                android:background="?android:attr/selectableItemBackgroundBorderless"-->
-<!--                />-->
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/_title"
@@ -143,6 +151,7 @@
                     android:textColorHint="#7A7A7A"
                     android:textSize="12sp"
                     tools:ignore="RtlSymmetry"
+                    android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
                     />
 
                 <TextView
@@ -252,7 +261,9 @@
                     android:textColor="#363636"
                     android:textColorHint="#7A7A7A"
                     android:textSize="12sp"
-                    tools:ignore="RtlSymmetry" />
+                    tools:ignore="RtlSymmetry"
+                    android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+                    />
 
             </RelativeLayout>
 

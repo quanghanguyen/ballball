@@ -21,6 +21,7 @@ class ChatDetailsViewModel @Inject constructor(private val chatDetailsRepository
     }
 
     sealed class ReadMessageResult {
+        object Loading : ReadMessageResult()
         class ResultOk(val list : ArrayList<ChatModel>) : ReadMessageResult()
         object ResultError : ReadMessageResult()
     }

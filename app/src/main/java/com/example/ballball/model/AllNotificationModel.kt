@@ -6,5 +6,7 @@ data class AllNotificationModel (
     @SerializedName("matchId")
     val matchId : String = "",
     @SerializedName("teamName")
-    val teamName : String = ""
+    val teamName : String = "",
+    @SerializedName("userUID")
+    val userUID : String = ""
         )

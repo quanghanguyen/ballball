@@ -6,4 +6,9 @@
 <!--    <dimen name="design_bottom_navigation_height" tools:override="true">70dp</dimen>-->
 <!--    <dimen tools:override="true" name="design_navigation_icon_padding">20dp</dimen>-->
 
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_medium">14sp</dimen>
+    <dimen name="font_large">16sp</dimen>
+
+
 </resources>

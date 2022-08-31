@@ -11,14 +11,32 @@
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back" />
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/back_button_background"
+            android:elevation="8dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/team_name"
@@ -26,17 +44,26 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/inter_bold"
-            android:text="Mortified Coercion"
+            android:text="Dare the Flares"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </RelativeLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorPrimary" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayout_message"
         android:layout_below="@+id/title_layout"
-        android:layout_above="@+id/relativeLayout_message"/>
+        android:layout_marginTop="20dp" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout_message"
@@ -61,7 +88,9 @@
             android:paddingStart="8dp"
             android:textColor="#7A7A7A"
             android:textColorHint="#7A7A7A"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+            />
 
         <ImageView
             android:id="@+id/send"

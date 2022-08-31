@@ -73,7 +73,14 @@ class ChatDetailsActivity : AppCompatActivity() {
 
     private fun readMessageObserve() {
         chatDetailsViewModel.readMessageResult.observe(this) {result ->
+            with(chatDetailsBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
+                is ChatDetailsViewModel.ReadMessageResult.Loading -> {
+                    chatDetailsBinding.progressBar.visibility = View.VISIBLE
+                }
                 is ChatDetailsViewModel.ReadMessageResult.ResultOk -> {
                     chatDetailsAdapter.addNewData(result.list)
                 }
@@ -133,6 +140,11 @@ class ChatDetailsActivity : AppCompatActivity() {
             finish()
             Animation.animateSlideRight(this)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
     }
 
     private fun binding() {

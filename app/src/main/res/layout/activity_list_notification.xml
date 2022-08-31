@@ -19,15 +19,34 @@
     <RelativeLayout
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         >
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back" />
+        <RelativeLayout
+            android:id="@+id/back_layout"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/back_button_background"
+            android:elevation="8dp">
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,9 +54,10 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/inter_bold"
             android:text="Thông báo"
-            android:layout_toEndOf="@+id/back"
+            android:layout_toEndOf="@+id/back_layout"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_marginStart="20dp"
             />
         
         <RelativeLayout

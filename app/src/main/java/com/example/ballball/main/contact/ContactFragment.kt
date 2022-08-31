@@ -107,7 +107,7 @@ class ContactFragment : Fragment() {
     }
 
     private fun initNewContactSearch() {
-        contactBinding.searchBar.addTextChangedListener(object : TextWatcher {
+        contactBinding.search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //
             }
@@ -178,7 +178,7 @@ class ContactFragment : Fragment() {
     }
 
     private fun initSearch() {
-        contactBinding.searchBar.addTextChangedListener(object : TextWatcher {
+        contactBinding.search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //
             }

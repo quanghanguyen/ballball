@@ -150,7 +150,7 @@ class TeamInformationActivity : AppCompatActivity() {
     }
 
     private fun selectTeamImage() {
-        teamInformationBinding.cardView.setOnClickListener {
+        teamInformationBinding.teamImageLayout.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
             } else {

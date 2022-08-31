@@ -10,7 +10,7 @@
         android:id="@+id/success_layout"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:background="@drawable/dialog_rounded"
+        android:background="@drawable/loading_dialog_rounded"
         >
 
         <ImageView
