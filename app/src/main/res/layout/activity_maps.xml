@@ -26,15 +26,51 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/custom_borderless_ripple"
-            android:src="@drawable/map_back_icon" />
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/map_search_icon"
-            android:background="@drawable/custom_borderless_ripple"
-            android:layout_alignParentEnd="true"
+            android:src="@drawable/map_back_icon"
+            android:layout_centerVertical="true"
             />
+
+        <RelativeLayout
+            android:id="@+id/search_bar"
+            android:layout_width="280dp"
+            android:layout_height="56dp"
+            android:background="@drawable/map_search_background"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            >
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/search_icon_map" />
+
+            <Spinner
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="36dp"
+                android:layout_toEndOf="@+id/search_icon"
+                android:background="@drawable/custom_borderless_ripple"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="#6F6F6F"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/filter_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/map_filter_icon"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

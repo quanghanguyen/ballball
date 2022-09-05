@@ -20,7 +20,7 @@ class HomeRepository @Inject constructor(private val firebaseStorage: FirebaseSt
                 val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
                 onSuccess(bitmap)
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 onFail(it)
             }
         }

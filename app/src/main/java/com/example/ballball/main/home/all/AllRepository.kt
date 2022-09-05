@@ -29,6 +29,7 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
                 if (snapshot.exists()) {
                    val listRequest = ArrayList<CreateMatchModel>()
                    for (requestSnapshot in snapshot.children) {
+                       val childName = requestSnapshot.key.toString()
                        requestSnapshot.getValue(CreateMatchModel::class.java)?.let {list ->
                            val currentDate = LocalDate.now()
                            val currentTime = LocalTime.now()
@@ -40,16 +41,18 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
                            val time = LocalTime.parse(matchTime, timeFormatter)
 
                            if (userUID != list.userUID &&
+//                               date >= currentDate &&
                                userUID != list.clientUID1 &&
                                userUID != list.clientUID2 &&
-                               userUID != list.clientUID3 &&
-                               date >= currentDate) {
+                               userUID != list.clientUID3
+                               ) {
                                    listRequest.add(0, list)
                            }
                        }
                    }
                     onSuccess(listRequest)
-                } else {
+                }
+                else {
                     val listRequest = ArrayList<CreateMatchModel>()
                     onSuccess(listRequest)
                 }

@@ -46,8 +46,6 @@ data class CreateMatchModel(
     val clientUID : String = "",
     @SerializedName("geoHash")
     val geoHash : String = "",
-//    @SerializedName("clientPhone")
-//    val clientPhone: String = "",
     @SerializedName("clientUid1")
     var clientUID1 : String = "",
     @SerializedName("clientUid2")

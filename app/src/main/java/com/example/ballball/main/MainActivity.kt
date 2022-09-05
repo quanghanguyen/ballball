@@ -33,6 +33,7 @@ import com.example.ballball.databinding.LocationAccessDialogBinding
 import com.example.ballball.main.home.nearme.NearMeFragment
 import com.example.ballball.user.walkthrough.team.TeamViewModel
 import com.example.ballball.utils.Animation
+import com.example.ballball.utils.DatabaseConnection
 import com.example.ballball.utils.MessageConnection.firebaseMessaging
 import com.example.ballball.utils.Model
 import com.example.ballball.utils.Model.currentLat
@@ -45,7 +46,10 @@ import com.firebase.geofire.core.GeoHash
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -76,6 +80,22 @@ class MainActivity : AppCompatActivity() {
         firebaseMessaging.subscribeToTopic("requestMatch")
         initEvents()
         initObserves()
+
+//        DatabaseConnection.databaseReference.getReference("Request_Match").child("-NAn7x_rXBLFH88VCTaC").addValueEventListener(object:
+//        ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (dataSnapshot in snapshot.children) {
+//                        val name = dataSnapshot.key
+//                        Log.e("CHILD NAME", name.toString())
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                //
+//            }
+//        })
     }
 
     private fun initObserves() {

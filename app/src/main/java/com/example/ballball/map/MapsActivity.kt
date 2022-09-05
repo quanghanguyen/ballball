@@ -13,10 +13,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.ballball.R
+import com.example.ballball.adapter.SpinnerAdapter
 import com.example.ballball.databinding.ActivityMapsBinding
 import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
 import com.example.ballball.databinding.MapNavigationDialogBinding
@@ -71,12 +73,41 @@ class MapsActivity :
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var mapBottomSheetDialogBinding: MapNavigationDialogBinding
+    private lateinit var spinnerAdapter: SpinnerAdapter
     private var currentLat : Double? = null
     private var currentLong : Double? = null
     private var currentAddress : String? = null
     private var destinationLat : Double? = null
     private var destinationLong : Double? = null
     private var destinationAddress : String? = null
+    private val locationName = arrayOf(
+        "Sân Đại Học Khoa Học",
+        "Sân Monaco",
+        "Sân Lâm Hoằng",
+        "Sân An Cựu",
+        "Sân Đại Học Luật",
+        "Sân Uyên Phương",
+        "Sân Đại Học Y Dược",
+        "Sân Xuân Phú"
+    )
+    private val locationAddress = arrayOf(
+        "77 Nguyễn Huệ, Phú Nhuận, Thành phố Huế",
+        "FJJ2+M47, Vỹ Dạ, Thành phố Huế",
+        "FHJX+5V, Vỹ Dạ, Thành phố Huế",
+        "97 An Dương Vương, An Đông, Thành phố Huế",
+        "CJP5+VJ2, Võ Văn Kiệt, An Tây, Thành phố Huế",
+        "11 La Sơn Phu Tử, Tây Lộc, Thành phố Huế",
+        "6 Ngô Quyền, Vĩnh Ninh, Thành phố Huế",
+        "FJ82+RRW, Xuân Phú, Thành phố Huế"
+    )
+    val khoaHoc = LatLng(khoaHocLat, khoaHocLong)
+    val monaco = LatLng(monacoLat, monacoLong)
+    val lamHoang = LatLng(lamHoangLat, lamHoangLong)
+    val anCuu = LatLng(anCuuLat, anCuuLong)
+    val luat = LatLng(luatLat, luatLong)
+    val uyenPhuong = LatLng(uyenPhuongLat, uyenPhuongLong)
+    val yDuoc = LatLng(yDuocLat, yDuocLong)
+    val xuanPhu = LatLng(xuanPhuLat, xuanPhuLong)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,12 +154,51 @@ class MapsActivity :
             GetDirection(urll).execute()
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))
         }
-
         initEvents()
     }
 
     private fun initEvents() {
+        initSpinner()
         back()
+    }
+
+    private fun initSpinner() {
+        spinnerAdapter = SpinnerAdapter(locationName, locationAddress, applicationContext)
+        binding.search.adapter = spinnerAdapter
+        binding.search.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                when (position) {
+                    0 -> {
+//                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(khoaHoc, 15f))
+                    }
+                    1 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(monaco, 17f))
+                    }
+                    2 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(lamHoang, 17f))
+                    }
+                    3 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(anCuu, 17f))
+                    }
+                    4 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(luat, 17f))
+                    }
+                    5 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(uyenPhuong, 17f))
+                    }
+                    6 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(yDuoc, 17f))
+                    }
+                    7 -> {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(xuanPhu, 17f))
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //
+            }
+        }
     }
 
     private fun back() {
@@ -153,14 +223,6 @@ class MapsActivity :
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         val originLocation = LatLng(currentLat!!, currentLong!!)
-        val khoaHoc = LatLng(khoaHocLat, khoaHocLong)
-        val monaco = LatLng(monacoLat, monacoLong)
-        val lamHoang = LatLng(lamHoangLat, lamHoangLong)
-        val anCuu = LatLng(anCuuLat, anCuuLong)
-        val luat = LatLng(luatLat, luatLong)
-        val uyenPhuong = LatLng(uyenPhuongLat, uyenPhuongLong)
-        val yDuoc = LatLng(yDuocLat, yDuocLong)
-        val xuanPhu = LatLng(xuanPhuLat, xuanPhuLong)
 
         map.addMarker(
             (MarkerOptions()
@@ -212,7 +274,7 @@ class MapsActivity :
                 .snippet(xuanPhuAddress)
         )
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15f))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, git add15f))
 
         enableMyLocation()
         map.uiSettings.isMyLocationButtonEnabled = false

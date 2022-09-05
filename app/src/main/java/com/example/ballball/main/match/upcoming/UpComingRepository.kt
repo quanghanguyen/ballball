@@ -37,7 +37,8 @@ class UpComingRepository @Inject constructor(private val firebaseDatabase: Fireb
                             val date = LocalDate.parse(matchDate, dateFormatter)
                             val time = LocalTime.parse(matchTime, timeFormatter)
 
-                            if (userUID != list.clientUID1 &&
+                            if (
+                                userUID != list.clientUID1 &&
                                 userUID != list.clientUID2 &&
                                 userUID != list.clientUID3 &&
                                 date >= currentDate) {

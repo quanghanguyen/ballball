@@ -21,7 +21,7 @@ object LocationAddress {
     val lamHoangHash = GeoFireUtils.getGeoHashForLocation(GeoLocation(lamHoangLat, lamHoangLong))
 
 
-    val anCuuAddress = "97 An Dương Vương, An Đông, Thành phố Huế, Vietnam"
+    val anCuuAddress = "97 An Dương Vương, An Đông, Thành phố Huế, Thừa Thiên Huế, Vietnam"
     val anCuuLat = 16.457833770534524
     val anCuuLong = 107.61396960304414
     val anCuuHash = GeoFireUtils.getGeoHashForLocation(GeoLocation(anCuuLat, anCuuLong))
