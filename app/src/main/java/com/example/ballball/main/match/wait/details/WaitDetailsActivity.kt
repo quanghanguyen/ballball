@@ -135,12 +135,7 @@ class WaitDetailsActivity : AppCompatActivity() {
     }
 
     private fun handleVariables() {
-        FirebaseDatabase.getInstance().getReference("Teams").child(userUID!!).get()
-            .addOnSuccessListener {
-                clientTeamName = it.child("teamName").value.toString()
-            }
-
-        StorageConnection.storageReference.getReference("Users").child(userUID).downloadUrl
+        StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
             .addOnSuccessListener {
                 userImageUrl = it.toString()
             }
@@ -244,33 +239,41 @@ class WaitDetailsActivity : AppCompatActivity() {
                 peopleNumber.text = data?.teamPeopleNumber
                 location.text = data?.location
                 locationAddress.text = data?.locationAddress
-                note.text = data?.note
+                if (data?.note?.isEmpty() == true) {
+                    note.text = "..."
+                } else {
+                    note.text = data?.note
+                }
                 matchID = data?.matchID
                 Model.teamName = data?.teamName
                 matchDate = data?.date
                 matchTime = data?.time
                 teamPhone = data?.teamPhone
-                clientUID = data?.userUID
+                clientUID = data?.clientUID
                 confirmUID = data?.confirmUID
-
                 destinationLat = data?.lat
                 destinationLong = data?.long
                 destinationAddress = data?.locationAddress
+                clientTeamName = data?.teamName
             }
         }
     }
 
     private fun openMap() {
         waitDetailsBinding.navigationLayout.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("currentLat", currentLat)
-            intent.putExtra("currentLong", currentLong)
-            intent.putExtra("currentAddress", currentAddress)
-            intent.putExtra("destinationLat", destinationLat)
-            intent.putExtra("destinationLong", destinationLong)
-            intent.putExtra("destinationAddress", destinationAddress)
-            startActivity(intent)
-            Animation.animateSlideLeft(this)
+            if (checkPermissions()) {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("currentLat", currentLat)
+                intent.putExtra("currentLong", currentLong)
+                intent.putExtra("currentAddress", currentAddress)
+                intent.putExtra("destinationLat", destinationLat)
+                intent.putExtra("destinationLong", destinationLong)
+                intent.putExtra("destinationAddress", destinationAddress)
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            } else {
+               requestPermissions()
+            }
         }
     }
 

@@ -35,14 +35,37 @@ class NearMeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getLocation()
         initList()
         initObserve()
+    }
 
-//        if (userUID != null) {
-//            nearMeViewModel.loadNearMeList(userUID, currentLat!!, currentLong!!)
-//        }
-//        Log.e("currentLat", currentLat.toString())
-//        Log.e("currentLong", currentLong.toString())
+    private fun getLocation() {
+        fusedLocationClient = activity?.let { LocationServices.getFusedLocationProviderClient(it.applicationContext) }!!
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
+            if (location != null) {
+                val currentLat = location.latitude
+                val currentLong = location.longitude
+
+                Log.e("currentLat", currentLat.toString())
+                Log.e("currentLong", currentLong.toString())
+
+                if (userUID != null) {
+                    nearMeViewModel.loadNearMeList(userUID, currentLat, currentLong)
+                }
+            }
+        }
     }
 
     private fun initObserve() {
@@ -92,34 +115,5 @@ class NearMeFragment : Fragment() {
     ): View {
         nearMeBinding = FragmentNearMeBinding.inflate(inflater, container, false)
         return nearMeBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        fusedLocationClient = activity?.let { LocationServices.getFusedLocationProviderClient(it.applicationContext) }!!
-
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        fusedLocationClient.lastLocation.addOnSuccessListener { location : Location? ->
-            if (location != null) {
-                val currentLat = location.latitude
-                val currentLong = location.longitude
-
-                Log.e("currentLat", currentLat.toString())
-                Log.e("currentLong", currentLong.toString())
-
-                if (userUID != null) {
-                    nearMeViewModel.loadNearMeList(userUID, currentLat, currentLong)
-                }
-            }
-        }
     }
 }

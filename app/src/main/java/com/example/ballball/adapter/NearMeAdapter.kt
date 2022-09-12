@@ -33,6 +33,8 @@ class NearMeAdapter @Inject constructor(private var nearMeList : ArrayList<Creat
                   Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
                   newCreate.text = "Gần tôi"
                   waitConfirm.visibility = View.GONE
+                  highlightIcon1.visibility = View.GONE
+                  highlightIcon2.visibility = View.GONE
 
                   items.setOnClickListener {
                       listerner.onItemClick(list)

@@ -208,6 +208,11 @@ class MapsActivity :
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
+    }
+
     private fun setWindowFlag(bits: Int, on: Boolean) {
         val win = window
         val winParams = win.attributes
@@ -274,7 +279,7 @@ class MapsActivity :
                 .snippet(xuanPhuAddress)
         )
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, git add15f))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 15f))
 
         enableMyLocation()
         map.uiSettings.isMyLocationButtonEnabled = false

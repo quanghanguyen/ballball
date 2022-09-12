@@ -250,7 +250,11 @@ class UpComingDetailsActivity : AppCompatActivity() {
                 peopleNumber.text = data?.teamPeopleNumber
                 location.text = data?.location
                 locationAddress.text = data?.locationAddress
-                note.text = data?.note
+                if (data?.note?.isEmpty() == true) {
+                    note.text = "..."
+                } else {
+                    note.text = data?.note
+                }
 
                 if (userUID == data?.userUID) {
                     Glide.with(teamImage).load(data?.clientImageUrl).centerCrop().into(teamImage)
@@ -288,15 +292,19 @@ class UpComingDetailsActivity : AppCompatActivity() {
 
     private fun openMap() {
         upComingDetailsBinding.navigationLayout.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("currentLat", Model.currentLat)
-            intent.putExtra("currentLong", Model.currentLong)
-            intent.putExtra("currentAddress", Model.currentAddress)
-            intent.putExtra("destinationLat", destinationLat)
-            intent.putExtra("destinationLong", destinationLong)
-            intent.putExtra("destinationAddress", destinationAddress)
-            startActivity(intent)
-            Animation.animateSlideLeft(this)
+            if (checkPermissions()) {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("currentLat", Model.currentLat)
+                intent.putExtra("currentLong", Model.currentLong)
+                intent.putExtra("currentAddress", Model.currentAddress)
+                intent.putExtra("destinationLat", destinationLat)
+                intent.putExtra("destinationLong", destinationLong)
+                intent.putExtra("destinationAddress", destinationAddress)
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            } else {
+                requestPermissions()
+            }
         }
     }
 

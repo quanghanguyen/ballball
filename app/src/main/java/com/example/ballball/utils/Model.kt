@@ -32,4 +32,5 @@ object Model {
     var userImageUrl : String? = null
     var geoHash : String? = null
     var uid : String? = null
+    var userAvatarUrl : String? = null
 }

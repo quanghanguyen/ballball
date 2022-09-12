@@ -99,6 +99,11 @@ class SignInVerifyActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animation.animateSlideRight(this)
+    }
+
     private fun verify() {
         val dialog = Dialog(this, R.style.MyAlertDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -136,40 +141,15 @@ class SignInVerifyActivity : AppCompatActivity() {
                             }
                     } else {
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            dialog.dismiss()
                             Toast.makeText(this,"Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
-//                signInWithPhoneAuthCredential(credential)
             } else {
+                dialog.dismiss()
                 Toast.makeText(this,"Hãy nhập mã OTP", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-//    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-//        auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
-//            if (task.isSuccessful) {
-//                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-//                val userUID = FirebaseAuth.getInstance().currentUser?.uid
-//                DatabaseConnection.databaseReference.getReference("Teams").child(userUID!!).get()
-//                    .addOnSuccessListener {
-//                        if (it.exists()) {
-//                            startActivity(Intent(this, MainActivity::class.java))
-//                            Animation.animateSlideLeft(this)
-//                        } else {
-//                            val intent = Intent(applicationContext, NameActivity::class.java)
-//                            intent.putExtra("phoneNumber", phoneNumber)
-//                            startActivity(intent)
-//                            finish()
-//                            Animation.animateSlideLeft(this)
-//                        }
-//                    }
-//            } else {
-//                if (task.exception is FirebaseAuthInvalidCredentialsException) {
-//                    Toast.makeText(this,"Mã OTP không hợp lệ", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
 }

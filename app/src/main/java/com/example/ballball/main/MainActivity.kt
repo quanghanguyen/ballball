@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
     private val permissionId = 0
     private lateinit var locationAccessDialogBinding: LocationAccessDialogBinding
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
-    private var userAvatarUrl : String? = null
     private var teamAvatarUrl : String? = null
     private var teamName : String? = null
 
@@ -121,8 +120,8 @@ class MainActivity : AppCompatActivity() {
     private fun handleVariables() {
         StorageConnection.storageReference.getReference("Users").child(userUID!!).downloadUrl
             .addOnSuccessListener {
-                userAvatarUrl = it.toString()
-                mainViewModel.updateUser(userUID, userAvatarUrl!!)
+                val userAvatarUrl = it.toString()
+                mainViewModel.updateUser(userUID, userAvatarUrl)
             }
             .addOnFailureListener {
                 Log.e("Error", it.toString())
@@ -162,6 +161,8 @@ class MainActivity : AppCompatActivity() {
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
+                        Log.e("Lat", list[0].latitude.toString())
+                        Log.e("Long", list[0].longitude.toString())
                     }
                 }
             } else {

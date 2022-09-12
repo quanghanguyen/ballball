@@ -9,7 +9,7 @@ class UserInformationRepository @Inject constructor(private val firebaseDatabase
         userUID : String,
         onSuccess : (DataSnapshot) -> Unit,
         onFail : (Exception) -> Unit
-        ) {
+    ) {
         firebaseDatabase.getReference("Users").child(userUID).get()
             .addOnSuccessListener {
                 onSuccess(it)

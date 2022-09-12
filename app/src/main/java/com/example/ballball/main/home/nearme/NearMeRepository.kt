@@ -53,7 +53,11 @@ class NearMeRepository @Inject constructor(private val firebaseDatabase: Firebas
                             val time = LocalTime.parse(matchTime, timeFormatter)
 
                             when {
-                                distanceInM <= radiusInM &&  userUID != list.userUID && date >= currentDate -> {
+                                distanceInM <= radiusInM && date >= currentDate &&
+                                        userUID != list.userUID &&
+                                        userUID != list.clientUID1 &&
+                                        userUID != list.clientUID2 &&
+                                        userUID != list.clientUID3 -> {
                                     listNearMe.add(0, list)
                                 }
                             }

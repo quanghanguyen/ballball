@@ -98,7 +98,6 @@ class AllDetailsActivity : AppCompatActivity() {
     private fun initEvents() {
         handleVariable()
         binding()
-        getLocation()
         openMap()
         back()
         phoneCall()
@@ -258,7 +257,12 @@ class AllDetailsActivity : AppCompatActivity() {
                 peopleNumber.text = data?.teamPeopleNumber
                 location.text = data?.location
                 locationAddress.text = data?.locationAddress
-                note.text = data?.note
+
+                if (data?.note?.isEmpty() == true) {
+                    note.text = "..."
+                } else {
+                    note.text = data?.note
+                }
 
                 destinationLat = data?.lat
                 destinationLong = data?.long
@@ -282,15 +286,19 @@ class AllDetailsActivity : AppCompatActivity() {
 
     private fun openMap() {
         allDetailsBinding.navigationLayout.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("currentLat", currentLat)
-            intent.putExtra("currentLong", currentLong)
-            intent.putExtra("currentAddress", currentAddress)
-            intent.putExtra("destinationLat", destinationLat)
-            intent.putExtra("destinationLong", destinationLong)
-            intent.putExtra("destinationAddress", destinationAddress)
-            startActivity(intent)
-            Animation.animateSlideLeft(this)
+            if (checkPermissions()) {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("currentLat", currentLat)
+                intent.putExtra("currentLong", currentLong)
+                intent.putExtra("currentAddress", currentAddress)
+                intent.putExtra("destinationLat", destinationLat)
+                intent.putExtra("destinationLong", destinationLong)
+                intent.putExtra("destinationAddress", destinationAddress)
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            } else {
+                requestPermissions()
+            }
         }
     }
 

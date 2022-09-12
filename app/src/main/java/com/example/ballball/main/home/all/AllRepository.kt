@@ -41,7 +41,7 @@ class AllRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
                            val time = LocalTime.parse(matchTime, timeFormatter)
 
                            if (userUID != list.userUID &&
-//                               date >= currentDate &&
+                               date >= currentDate &&
                                userUID != list.clientUID1 &&
                                userUID != list.clientUID2 &&
                                userUID != list.clientUID3

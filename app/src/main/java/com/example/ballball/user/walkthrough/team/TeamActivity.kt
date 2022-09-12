@@ -24,6 +24,8 @@ import com.example.ballball.main.MainActivity
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.MessageConnection
 import com.example.ballball.utils.Model.deviceToken
+import com.example.ballball.utils.Model.userAvatarUrl
+import com.example.ballball.utils.StorageConnection
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -67,6 +69,14 @@ class TeamActivity : AppCompatActivity() {
                     deviceToken = task.result
                 }
             })
+
+        StorageConnection.storageReference.getReference("Users").child(userUid!!).downloadUrl
+            .addOnSuccessListener {
+                userAvatarUrl = it.toString()
+            }
+            .addOnFailureListener {
+                Log.e("Error", it.toString())
+            }
         }
 
     private fun next() {
@@ -78,7 +88,6 @@ class TeamActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         teamBinding.next.setOnClickListener {
-            dialog.show()
             if (
                 teamBinding.teamName.text.isEmpty()
                 || teamBinding.location.text.isEmpty()
@@ -86,6 +95,7 @@ class TeamActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             } else {
+                dialog.show()
                 if (this::imgUri.isInitialized) {
                     if (userUid != null) {
                         teamViewModel.saveTeamsImage(imgUri, userUid)

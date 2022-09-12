@@ -100,7 +100,6 @@ class SignInActivity : AppCompatActivity() {
                 Animation.animateSlideLeft(this@SignInActivity)
             }
         }
-
     }
 
     private fun phoneCheck() {

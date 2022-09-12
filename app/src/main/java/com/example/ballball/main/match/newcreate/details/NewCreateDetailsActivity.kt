@@ -157,7 +157,11 @@ class NewCreateDetailsActivity : AppCompatActivity() {
                 peopleNumber.text = data?.teamPeopleNumber
                 location.text = data?.location
                 locationAddress.text = data?.locationAddress
-                note.text = data?.note
+                if (data?.note?.isEmpty() == true) {
+                    note.text = "..."
+                } else {
+                    note.text = data?.note
+                }
 
                 matchID = data?.matchID
                 destinationLat = data?.lat
@@ -169,22 +173,19 @@ class NewCreateDetailsActivity : AppCompatActivity() {
 
     private fun openMap() {
         newCreateBinding.navigationLayout.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("currentLat", currentLat)
-            intent.putExtra("currentLong", currentLong)
-            intent.putExtra("currentAddress", currentAddress)
-            intent.putExtra("destinationLat", destinationLat)
-            intent.putExtra("destinationLong", destinationLong)
-            intent.putExtra("destinationAddress", destinationAddress)
-
-//            Log.e("currentLat", currentLat.toString())
-//            Log.e("currentLong", currentLong.toString())
-//            Log.e("currentAddress", currentAddress.toString())
-//            Log.e("destinationLat", destinationLat.toString())
-//            Log.e("destinationLong", destinationLong.toString())
-//            Log.e("destinationAddress", destinationAddress.toString())
-            startActivity(intent)
-            Animation.animateSlideLeft(this)
+            if (checkPermissions()) {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("currentLat", currentLat)
+                intent.putExtra("currentLong", currentLong)
+                intent.putExtra("currentAddress", currentAddress)
+                intent.putExtra("destinationLat", destinationLat)
+                intent.putExtra("destinationLong", destinationLong)
+                intent.putExtra("destinationAddress", destinationAddress)
+                startActivity(intent)
+                Animation.animateSlideLeft(this)
+            } else {
+                requestPermissions()
+            }
         }
     }
 

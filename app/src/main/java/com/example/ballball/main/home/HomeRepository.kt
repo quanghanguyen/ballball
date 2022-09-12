@@ -17,7 +17,8 @@ class HomeRepository @Inject constructor(private val firebaseStorage: FirebaseSt
     ) {
         firebaseStorage.getReference("Users").child(userUID).getFile(localFile)
             .addOnSuccessListener {
-                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                val tmpOptions = BitmapFactory.Options()
+                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath, tmpOptions)
                 onSuccess(bitmap)
             }
             .addOnFailureListener {

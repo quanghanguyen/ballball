@@ -61,7 +61,7 @@ class TeamRepository @Inject constructor (
         onFail : (String) -> Unit
     ) {
         val updateUsers = mapOf(
-            "teamName" to teamName
+            "teamName" to teamName,
         )
         firebaseDatabase.getReference("Users").child(userUID).updateChildren(updateUsers)
             .addOnCompleteListener {

@@ -47,367 +47,258 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/main_layout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_layout"
-        >
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_layout">
 
         <RelativeLayout
-            android:id="@+id/team_image_layout"
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/team_image_background"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            >
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
+                android:id="@+id/team_image_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="28dp">
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/team_image_background">
 
-                <ImageView
-                    android:id="@+id/team_image"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/add_photo_alternate" />
-            </androidx.cardview.widget.CardView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/click_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/team_image_layout"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/alert_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/alert_icon" />
-
-            <TextView
-                android:id="@+id/_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@+id/alert_icon"
-                android:fontFamily="@font/inter_medium"
-                android:text="Trận này cũng đang có"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/click_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/_text"
-                android:fontFamily="@font/inter_medium"
-                android:text="X"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/click_number"
-                android:fontFamily="@font/inter_medium"
-                android:text="người khác gửi yêu cầu"
-                android:textColor="#FF4A4A"
-                android:textSize="12sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/match_information"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_below="@+id/click_layout"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/match_infomation_background"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:elevation="8dp">
-
-            <RelativeLayout
-                android:id="@+id/date_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
-                android:layout_toStartOf="@+id/line">
-
-                <RelativeLayout
-                    android:id="@+id/date_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
+                    app:cardCornerRadius="28dp">
 
                     <ImageView
-                        android:id="@+id/date_icon"
-                        android:layout_width="24dp"
-                        android:layout_height="28dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/date_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_toEndOf="@+id/date_icon"
-                        android:text="Ngày"
-                        android:textColor="#7A7A7A"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/date_layout"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="08/08/22"
-                    android:textColor="#363636"
-                    android:textSize="16sp" />
+                        android:id="@+id/team_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/empty_team_image" />
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:layout_toStartOf="@+id/time_container"
-                android:background="#E7E7E7" />
-
             <RelativeLayout
-                android:id="@+id/time_container"
-                android:layout_width="wrap_content"
+                android:id="@+id/click_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-
-                <RelativeLayout
-                    android:id="@+id/time_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
-
-                    <ImageView
-                        android:id="@+id/time_icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/clock_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_toEndOf="@+id/time_icon"
-                        android:text="Giờ"
-                        android:textColor="#7A7A7A"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/time_layout"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="18:00"
-                    android:textColor="#363636"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
-
-            <View
-                android:id="@+id/line_2"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
+                android:layout_below="@+id/team_image_layout"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_toEndOf="@+id/time_container"
-                android:background="#E7E7E7" />
-
-            <RelativeLayout
-                android:id="@+id/people_number_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@+id/line_2">
-
-                <RelativeLayout
-                    android:id="@+id/people_number_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/people_number_icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/user_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_toEndOf="@+id/people_number_icon"
-                        android:text="Người"
-                        android:textColor="#7A7A7A"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/people_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/people_number_layout"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="10"
-                    android:textColor="#363636"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/navigation_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/match_information"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            >
-
-            <ImageView
-                android:id="@+id/location_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/location" />
-
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:layout_toEndOf="@+id/location_icon"
-                android:fontFamily="@font/inter_medium"
-                android:text="Sân Monaco Huế"
-                android:textColor="#363636"
-                android:textSize="12sp" />
-
-            <RelativeLayout
-                android:id="@+id/navigation_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_bordered_ripple">
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/navigation_icon"
+                    android:id="@+id/alert_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/location_navigation" />
+                    android:src="@drawable/alert_icon" />
+
+                <TextView
+                    android:id="@+id/_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/alert_icon"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Trận này cũng đang có"
+                    android:textColor="#FF4A4A"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/click_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/_text"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="X"
+                    android:textColor="#FF4A4A"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/navigation_icon"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="Chỉ đường"
-                    android:textColor="#0066FF"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/click_number"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="người khác gửi yêu cầu"
+                    android:textColor="#FF4A4A"
                     android:textSize="12sp" />
 
             </RelativeLayout>
 
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/location_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/navigation_container"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/inter_medium"
-            android:gravity="center"
-            android:text="FJJ2+M47, Vỹ Dạ, Thành phố Huế, Thừa Thiên Huế, Việt Nam "
-            android:textColor="#7A7A7A"
-            android:textSize="10sp" />
-
-        <RelativeLayout
-            android:id="@+id/chat_layout"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/location_address"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/phone_background">
-
             <RelativeLayout
-                android:id="@+id/open_chat"
+                android:id="@+id/match_information"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/custom_borderless_ripple">
+                android:layout_height="80dp"
+                android:layout_below="@+id/click_layout"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/match_infomation_background"
+                android:elevation="8dp">
 
                 <RelativeLayout
+                    android:id="@+id/date_container"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true">
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_toStartOf="@+id/line">
 
-                    <ImageView
-                        android:id="@+id/chat_icon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/chat_icon" />
-
-                    <TextView
+                    <RelativeLayout
+                        android:id="@+id/date_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toEndOf="@+id/chat_icon"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/date_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="28dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/date_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/date_icon"
+                            android:text="Ngày"
+                            android:textColor="#7A7A7A"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/date_layout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Nhắn tin"
+                        android:text="08/08/22"
+                        android:textColor="#363636"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toStartOf="@+id/time_container"
+                    android:background="#E7E7E7" />
+
+                <RelativeLayout
+                    android:id="@+id/time_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <RelativeLayout
+                        android:id="@+id/time_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/time_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/clock_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/time_icon"
+                            android:text="Giờ"
+                            android:textColor="#7A7A7A"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/time_layout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="18:00"
+                        android:textColor="#363636"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/line_2"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toEndOf="@+id/time_container"
+                    android:background="#E7E7E7" />
+
+                <RelativeLayout
+                    android:id="@+id/people_number_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/line_2">
+
+                    <RelativeLayout
+                        android:id="@+id/people_number_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/people_number_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/user_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_toEndOf="@+id/people_number_icon"
+                            android:text="Người"
+                            android:textColor="#7A7A7A"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/people_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/people_number_layout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:text="10"
                         android:textColor="#363636"
                         android:textSize="16sp" />
 
@@ -415,98 +306,233 @@
 
             </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/location_address"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/phone_background"
-            android:layout_marginEnd="20dp"
-            >
-
             <RelativeLayout
-                android:id="@+id/phone_call"
+                android:id="@+id/navigation_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/custom_borderless_ripple">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/match_information"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp">
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/location" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/location_icon"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Sân Monaco Huế"
+                    android:textColor="#363636"
+                    android:textSize="12sp" />
 
                 <RelativeLayout
+                    android:id="@+id/navigation_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/custom_bordered_ripple">
 
                     <ImageView
-                        android:id="@+id/phone_icon"
+                        android:id="@+id/navigation_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/phone_icon" />
+                        android:src="@drawable/location_navigation" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toEndOf="@+id/phone_icon"
-                        android:fontFamily="@font/inter_medium"
-                        android:text="Điện thoại"
-                        android:textColor="#363636"
-                        android:textSize="16sp" />
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/navigation_icon"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Chỉ đường"
+                        android:textColor="#0066FF"
+                        android:textSize="12sp" />
 
                 </RelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/location_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/navigation_container"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_medium"
+                android:gravity="center"
+                android:text="FJJ2+M47, Vỹ Dạ, Thành phố Huế, Thừa Thiên Huế, Việt Nam "
+                android:textColor="#7A7A7A"
+                android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/note_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/chat_layout"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/inter_medium"
-            android:text="Ghi chú"
-            android:textColor="#363636"
-            android:textSize="16sp"
-            android:layout_marginStart="20dp"
-            />
+            <LinearLayout
+                android:id="@+id/contact_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/location_address"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-        <RelativeLayout
-            android:id="@+id/note_layout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_below="@+id/note_title"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/textview_background">
+                <RelativeLayout
+                    android:id="@+id/chat_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/phone_background"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/open_chat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_borderless_ripple">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:id="@+id/chat_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/chat_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@+id/chat_icon"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Nhắn tin"
+                                android:textColor="#363636"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/phone_background"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/phone_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_borderless_ripple">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:id="@+id/phone_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/phone_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@+id/phone_icon"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Điện thoại"
+                                android:textColor="#363636"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/note_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contact_layout"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Ghi chú"
+                android:textColor="#363636"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/note_title"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/inter_medium"
-                android:padding="16dp"
+                android:text="..."
                 android:textColor="#363636"
                 android:textSize="12sp"
                 />
 
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/note_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_below="@+id/note_title"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:background="@drawable/textview_background">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/note"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:fontFamily="@font/inter_medium"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:textColor="#363636"-->
+<!--                    android:textSize="12sp" />-->
+
+<!--            </RelativeLayout>-->
+
+            <Button
+                android:id="@+id/cancel_request"
+                style="@style/Button"
+                android:layout_below="@+id/note"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_shape"
+                android:text="Hủy yêu cầu"
+                android:textAllCaps="false" />
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/cancel_request"
-            style="@style/Button"
-            android:layout_below="@+id/note_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/button_shape"
-            android:text="Hủy yêu cầu"
-            android:textAllCaps="false" />
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

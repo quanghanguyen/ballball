@@ -49,6 +49,9 @@ class HomeAdapter @Inject constructor(private var requestList : ArrayList<Create
                         Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
                         newCreate.visibility = View.GONE
                         waitConfirm.visibility = View.GONE
+                        highlightIcon1.visibility = View.GONE
+                        highlightIcon2.visibility = View.GONE
+
                         if (list.highlight == 1) {
                             highlightIcon2.visibility = View.VISIBLE
                         }
