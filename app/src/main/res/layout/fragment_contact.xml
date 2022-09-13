@@ -38,8 +38,7 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_layout"
-        >
+        android:layout_below="@+id/title_layout">
 
         <RelativeLayout
             android:id="@+id/search_bar"
@@ -49,8 +48,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/search_background"
-            android:elevation="12dp"
-            >
+            android:elevation="12dp">
 
             <ImageView
                 android:id="@+id/search_icon"
@@ -58,8 +56,7 @@
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
-                android:src="@drawable/new_search_icon"
-                />
+                android:src="@drawable/new_search_icon" />
 
             <EditText
                 android:id="@+id/search"
@@ -77,8 +74,7 @@
                 android:textColor="#7A7A7A"
                 android:textColorHint="#C7C7C7"
                 android:textSize="12sp"
-                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
-                />
+                android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined" />
 
             <ImageView
                 android:id="@+id/filter_icon"
@@ -98,16 +94,14 @@
             android:layout_below="@+id/search_bar"
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/custom_bordered_ripple"
-            >
+            android:background="@drawable/custom_bordered_ripple">
 
             <ImageView
                 android:id="@+id/add_contact_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/add_contact"
                 android:layout_centerVertical="true"
-                />
+                android:src="@drawable/add_contact" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -139,7 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_below="@+id/title"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            />
 
         <TextView
             android:id="@+id/title_2"
@@ -151,22 +146,17 @@
             android:fontFamily="@font/inter_semibold"
             android:text="Mới thêm"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            />
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/title_2"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="72dp"
-            >
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.core.widget.NestedScrollView>
+            />
 
     </RelativeLayout>
 

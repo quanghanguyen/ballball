@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -20,10 +21,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
-import com.example.ballball.databinding.ActivityUserInformationBinding
-import com.example.ballball.databinding.LayoutBottomSheetDialogBinding
-import com.example.ballball.databinding.SignOutDialogBinding
-import com.example.ballball.databinding.SuccessDialogBinding
+import com.example.ballball.databinding.*
 import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.onboarding.activity.OnBoardingActivity2
 import com.example.ballball.user.teaminformation.TeamInformationActivity
@@ -47,6 +45,8 @@ class UserInformationActivity : AppCompatActivity() {
     private lateinit var signOutDialogBinding: SignOutDialogBinding
     private lateinit var imgUri : Uri
     private lateinit var successDialogBinding: SuccessDialogBinding
+    private lateinit var loadingDialogBinding: LoadingDialogBinding
+    private lateinit var loadingDialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +130,7 @@ class UserInformationActivity : AppCompatActivity() {
             } else {
                 selectAvatarFromCamera()
                 dialog.dismiss()
-                Animation.animateFade(this)
+                Animation.animateSlideLeft(this)
             }
         }
 
@@ -140,7 +140,7 @@ class UserInformationActivity : AppCompatActivity() {
             } else {
                 selectAvatar()
                 dialog.dismiss()
-                Animation.animateFade(this)
+                Animation.animateSlideLeft(this)
             }
         }
         dialog.show()
@@ -165,6 +165,14 @@ class UserInformationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        loadingDialog = Dialog(this, R.style.MyAlertDialogTheme)
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
+        loadingDialog.setContentView(loadingDialogBinding.root)
+        loadingDialog.setCancelable(false)
+        loadingDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        loadingDialog.show()
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
             imgUri = data?.data!!
@@ -221,6 +229,7 @@ class UserInformationActivity : AppCompatActivity() {
 
     private fun saveAvatarObserve() {
         userInformationViewModel.saveAvatar.observe(this) {result ->
+
             when (result) {
                 is UserInformationViewModel.SaveAvatar.ResultOk -> {
                     val dialog = Dialog(this, R.style.MyAlertDialogTheme)
@@ -230,10 +239,15 @@ class UserInformationActivity : AppCompatActivity() {
                     dialog.setCancelable(false)
                     dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     successDialogBinding.text.text = "Thay đổi ảnh đại diện thành công"
-                    successDialogBinding.successLayout.setOnClickListener {
-                        dialog.dismiss()
+                    successDialogBinding.next.setOnClickListener {
+                        dialog.cancel()
                     }
+                    loadingDialog.dismiss()
                     dialog.show()
+                    val handler = Handler()
+                    handler.postDelayed({
+                        dialog.cancel()
+                    }, 5000)
                 }
                 is UserInformationViewModel.SaveAvatar.ResultError -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()

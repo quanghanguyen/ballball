@@ -36,6 +36,7 @@ import com.example.ballball.utils.Animation
 import com.example.ballball.utils.DatabaseConnection
 import com.example.ballball.utils.MessageConnection.firebaseMessaging
 import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.currentAddress
 import com.example.ballball.utils.Model.currentLat
 import com.example.ballball.utils.Model.currentLong
 import com.example.ballball.utils.Model.teamName
@@ -161,8 +162,8 @@ class MainActivity : AppCompatActivity() {
                             geocoder.getFromLocation(location.latitude, location.longitude, 1)
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
-                        Log.e("Lat", list[0].latitude.toString())
-                        Log.e("Long", list[0].longitude.toString())
+                        currentAddress = list[0].getAddressLine(0)
+                        Log.e("Address", currentAddress.toString())
                     }
                 }
             } else {

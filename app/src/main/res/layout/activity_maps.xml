@@ -23,21 +23,22 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/custom_borderless_ripple"
-            android:src="@drawable/map_back_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_centerVertical="true"
-            />
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_borderless_ripple"
+            android:src="@drawable/map_back_icon" />
 
         <RelativeLayout
             android:id="@+id/search_bar"
             android:layout_width="280dp"
             android:layout_height="56dp"
-            android:background="@drawable/map_search_background"
-            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/back"
             android:layout_centerVertical="true"
-            >
+            android:layout_marginStart="8dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/map_search_background">
 
             <ImageView
                 android:id="@+id/search_icon"
@@ -45,7 +46,8 @@
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
-                android:src="@drawable/search_icon_map" />
+                android:src="@drawable/search_icon_map"
+                />
 
             <Spinner
                 android:id="@+id/search"
@@ -67,8 +69,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="12dp"
-                android:src="@drawable/map_filter_icon"
-                />
+                android:src="@drawable/map_filter_icon" />
 
         </RelativeLayout>
 

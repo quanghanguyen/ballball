@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -24,6 +25,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -277,12 +282,13 @@ class CreateMatchActivity : AppCompatActivity() {
                         finish()
                         Animation.animateSlideRight(this)
                     }
-                    createMatchSuccessDialogBinding.watchMatch.setOnClickListener {
+                    dialog.show()
+                    val handler = Handler()
+                    handler.postDelayed({
                         dialog.dismiss()
                         finish()
                         Animation.animateSlideRight(this)
-                    }
-                    dialog.show()
+                    }, 5000)
                 }
                 is CreateMatchViewModel.SaveRequest.ResultError -> {}
             }

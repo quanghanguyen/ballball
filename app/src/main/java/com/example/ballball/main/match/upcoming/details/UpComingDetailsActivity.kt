@@ -15,6 +15,7 @@ import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.Window
@@ -215,12 +216,18 @@ class UpComingDetailsActivity : AppCompatActivity() {
                     dialog.setCancelable(false)
                     dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     successDialogBinding.text.text = "Trận đấu này đã được hủy"
-                    successDialogBinding.successLayout.setOnClickListener {
+                    successDialogBinding.next.setOnClickListener {
                         dialog.dismiss()
                         finish()
                         Animation.animateSlideRight(this)
                     }
                     dialog.show()
+                    val handler = Handler()
+                    handler.postDelayed({
+                        dialog.cancel()
+                        finish()
+                        Animation.animateSlideRight(this)
+                    }, 5000)
                 }
                 is UpComingDetailsViewModel.CancelUpComing.ResultError -> {}
                 is UpComingDetailsViewModel.CancelUpComing.CancelNotificationOk -> {}

@@ -16,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TeamInformationViewModel @Inject constructor(
     private val teamInformationRepository: TeamInformationRepository,
-    private val teamRepository: TeamRepository ) : ViewModel() {
+    private val teamRepository: TeamRepository
+    ) : ViewModel() {
 
     val loadTeamInfo = MutableLiveData<LoadTeamInfo>()
     val saveTeams = MutableLiveData<SaveTeams>()

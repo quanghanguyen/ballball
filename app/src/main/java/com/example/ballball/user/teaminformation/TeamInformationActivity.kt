@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -18,10 +19,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
-import com.example.ballball.databinding.ActivityTeamInformationBinding
-import com.example.ballball.databinding.LayoutBottomSheetLocationBinding
-import com.example.ballball.databinding.LayoutBottomSheetPeopleNumberBinding
-import com.example.ballball.databinding.SuccessDialogBinding
+import com.example.ballball.databinding.*
 import com.example.ballball.main.MainActivity
 import com.example.ballball.user.userinfomation.UserInformationViewModel
 import com.example.ballball.user.walkthrough.team.TeamViewModel
@@ -45,6 +43,8 @@ class TeamInformationActivity : AppCompatActivity() {
     private lateinit var layoutBottomSheetPeopleNumberBinding: LayoutBottomSheetPeopleNumberBinding
     private lateinit var imgUri : Uri
     private lateinit var successDialogBinding: SuccessDialogBinding
+    private lateinit var loadingDialogBinding: LoadingDialogBinding
+    private lateinit var loadingDialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,9 +114,7 @@ class TeamInformationActivity : AppCompatActivity() {
         teamInformationViewModel.saveTeams.observe(this) {result ->
             when (result) {
                 is TeamInformationViewModel.SaveTeams.ResultOk -> {
-                    //
-                    finish()
-                    Animation.animateSlideRight(this)
+                    Toast.makeText(this, "Thay đổi thông tin thành công", Toast.LENGTH_SHORT).show()
                 }
                 is TeamInformationViewModel.SaveTeams.ResultError -> {}
             }
@@ -134,10 +132,15 @@ class TeamInformationActivity : AppCompatActivity() {
                     dialog.setCancelable(false)
                     dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     successDialogBinding.text.text = "Lưu thông tin thành công"
-                    successDialogBinding.successLayout.setOnClickListener {
-                        dialog.dismiss()
+                    successDialogBinding.next.setOnClickListener {
+                        dialog.cancel()
                     }
+                    loadingDialog.dismiss()
                     dialog.show()
+                    val handler = Handler()
+                    handler.postDelayed({
+                        dialog.cancel()
+                    }, 5000)
                 }
                 is TeamInformationViewModel.SaveTeamsImage.ResultError -> {
                     Toast.makeText(this, result.errorMessage, Toast.LENGTH_SHORT).show()
@@ -147,19 +150,26 @@ class TeamInformationActivity : AppCompatActivity() {
     }
 
     private fun save() {
+        loadingDialog = Dialog(this, R.style.MyAlertDialogTheme)
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
+        loadingDialog.setContentView(loadingDialogBinding.root)
+        loadingDialog.setCancelable(false)
+        loadingDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         teamInformationBinding.save.setOnClickListener {
-            if (this::imgUri.isInitialized) {
-                if (userUID != null) {
-                    teamInformationViewModel.saveTeamsImage(imgUri, userUID)
+            if (teamInformationBinding.teamName.text.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập Tên đội", Toast.LENGTH_SHORT).show()
+            } else {
+                loadingDialog.show()
+                if (this::imgUri.isInitialized) {
+                    if (userUID != null) {
+                        teamInformationViewModel.saveTeamsImage(imgUri, userUID)
+                    }
                 }
-            }
-            if (teamInformationBinding.teamName.text.isNotEmpty()) {
                 if (userUID != null) {
                     teamInformationViewModel.saveTeams(userUID, teamInformationBinding.teamName.text.toString(),
                         teamInformationBinding.location.text.toString(), teamInformationBinding.peopleNumber.text.toString(),
                         teamInformationBinding.note.text.toString(), deviceToken!!)
-                } else {
-                    Toast.makeText(this, "Vui lòng nhập Tên đội", Toast.LENGTH_SHORT).show()
                 }
             }
         }

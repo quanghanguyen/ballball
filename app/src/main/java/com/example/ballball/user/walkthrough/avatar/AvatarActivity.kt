@@ -75,7 +75,7 @@ class AvatarActivity : AppCompatActivity() {
             } else {
                 selectAvatarFromCamera()
                 dialog.dismiss()
-                Animation.animateFade(this)
+                Animation.animateSlideLeft(this)
             }
         }
 
@@ -85,7 +85,7 @@ class AvatarActivity : AppCompatActivity() {
             } else {
                 selectAvatar()
                 dialog.dismiss()
-                Animation.animateFade(this)
+                Animation.animateSlideLeft(this)
             }
         }
 

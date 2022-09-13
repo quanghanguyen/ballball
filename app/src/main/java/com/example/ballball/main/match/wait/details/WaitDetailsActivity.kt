@@ -15,6 +15,7 @@ import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -160,12 +161,18 @@ class WaitDetailsActivity : AppCompatActivity() {
                     dialog.setCancelable(false)
                     dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                     successDialogBinding.text.text = "Yêu cầu bắt trận của bạn đã được hủy"
-                    successDialogBinding.successLayout.setOnClickListener {
+                    successDialogBinding.next.setOnClickListener {
                         dialog.dismiss()
                         finish()
                         Animation.animateSlideRight(this)
                     }
                     dialog.show()
+                    val handler = Handler()
+                    handler.postDelayed({
+                        dialog.cancel()
+                        finish()
+                        Animation.animateSlideRight(this)
+                    }, 5000)
                 }
                 is WaitDetailsViewModel.CancelWaitMatch.ResultError -> {}
                 is WaitDetailsViewModel.CancelWaitMatch.NotificationOk -> {}

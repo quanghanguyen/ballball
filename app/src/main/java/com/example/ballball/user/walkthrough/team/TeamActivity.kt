@@ -41,6 +41,7 @@ class TeamActivity : AppCompatActivity() {
     private lateinit var imgUri : Uri
     private val userUid = FirebaseAuth.getInstance().currentUser?.uid
     private lateinit var loadingDialogBinding: LoadingDialogBinding
+    private lateinit var dialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +81,7 @@ class TeamActivity : AppCompatActivity() {
         }
 
     private fun next() {
-        val dialog = Dialog(this, R.style.MyAlertDialogTheme)
+        dialog = Dialog(this, R.style.MyAlertDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
         dialog.setContentView(loadingDialogBinding.root)
@@ -188,6 +189,7 @@ class TeamActivity : AppCompatActivity() {
                 is TeamViewModel.SaveTeamsImage.Loading -> {}
                 is TeamViewModel.SaveTeamsImage.ResultOk -> {
                     Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                     Animation.animateSlideLeft(this)
