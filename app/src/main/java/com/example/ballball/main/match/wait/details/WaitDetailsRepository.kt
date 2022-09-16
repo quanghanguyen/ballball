@@ -67,6 +67,28 @@ class WaitDetailsRepository @Inject constructor(private val firebaseDatabase: Fi
             }
         }
 
+    fun restoreMatch(
+        matchID: String,
+        clientUIDClick : String,
+        onSuccess: (String) -> Unit,
+        onFail: (String) -> Unit
+    ) {
+        val restoreMatch = mapOf(
+            clientUIDClick to ""
+        )
+        firebaseDatabase.getReference("Request_Match").child(matchID).updateChildren(restoreMatch)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess(it.toString())
+                } else {
+                    onFail(it.exception?.message.orEmpty())
+                }
+            }
+            .addOnFailureListener {
+                onFail(it.message.orEmpty())
+            }
+        }
+
     fun cancelRequestNotification(
         userUID: String, matchID: String, date: String, time: String, clientTeamName: String,
         onSuccess : (String) -> Unit,

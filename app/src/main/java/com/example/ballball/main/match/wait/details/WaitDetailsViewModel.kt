@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ballball.main.match.newcreate.NewCreateViewModel
 import com.example.ballball.main.match.newcreate.details.NewCreateDetailsViewModel
+import com.example.ballball.main.match.upcoming.details.UpComingDetailsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
 
     val cancelWaitMatch = MutableLiveData<CancelWaitMatch>()
     val cancelWaitMatchListNotification = MutableLiveData<CancelWaitMatchListNotification>()
+    val restoreMatch = MutableLiveData<RestoreMatch>()
 
     sealed class CancelWaitMatch {
         object ResultOk : CancelWaitMatch()
@@ -31,6 +33,11 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
     sealed class CancelWaitMatchListNotification {
         object ResultOk : CancelWaitMatchListNotification()
         object ResultError : CancelWaitMatchListNotification()
+    }
+
+    sealed class RestoreMatch {
+        object ResultOk : RestoreMatch()
+        object ResultError : RestoreMatch()
     }
 
     fun cancelWaitMatch(
@@ -95,6 +102,21 @@ class WaitDetailsViewModel @Inject constructor(private val waitDetailsRepository
                 cancelWaitMatchListNotification.value = CancelWaitMatchListNotification.ResultOk
             }, {
                 cancelWaitMatchListNotification.value = CancelWaitMatchListNotification.ResultError
+            })
+        }
+    }
+
+    fun restoreMatch(
+        matchID: String,
+        clientUIDClick : String
+    ) {
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            throwable.printStackTrace()
+        }) {
+            waitDetailsRepository.restoreMatch(matchID, clientUIDClick, {
+                restoreMatch.value = RestoreMatch.ResultOk
+            }, {
+                restoreMatch.value = RestoreMatch.ResultError
             })
         }
     }

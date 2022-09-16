@@ -34,6 +34,7 @@ import com.example.ballball.map.MapsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.click
 import com.example.ballball.utils.Model.clientTeamName
 import com.example.ballball.utils.Model.clientUID
 import com.example.ballball.utils.Model.confirmUID
@@ -124,6 +125,16 @@ class WaitDetailsActivity : AppCompatActivity() {
     private fun initObserve() {
         cancelWaitRequestObserve()
         cancelWaitListNotificationObserve()
+        restoreMatchObserve()
+    }
+
+    private fun restoreMatchObserve() {
+        waitDetailsViewModel.restoreMatch.observe(this) {result ->
+            when (result) {
+                is WaitDetailsViewModel.RestoreMatch.ResultOk -> {}
+                is WaitDetailsViewModel.RestoreMatch.ResultError -> {}
+            }
+        }
     }
 
     private fun cancelWaitListNotificationObserve() {
@@ -198,8 +209,9 @@ class WaitDetailsActivity : AppCompatActivity() {
             signOutDialogBinding.yes.setOnClickListener {
                 if (userUID != null) {
                     val updatedClick = currentClick?.minus(1)
+                    val clientClickNumber = "clientUID$click"
                     waitDetailsViewModel.cancelWaitMatch(userUID, matchID!!, matchDate!!, matchTime!!, clientTeamName!!, confirmUID!!, updatedClick!!)
-
+                    waitDetailsViewModel.restoreMatch(matchID!!, clientClickNumber)
                     val timeUtils : Long = System.currentTimeMillis()
                     waitDetailsViewModel.cancelWaitMatchListNotification(clientUID!!, clientTeamName!!, userImageUrl!!, "cancelWaitMatch",
                     matchDate!!, matchTime!!, timeUtils)
@@ -262,6 +274,7 @@ class WaitDetailsActivity : AppCompatActivity() {
                 destinationLong = data?.long
                 destinationAddress = data?.locationAddress
                 clientTeamName = data?.teamName
+                click = data?.click
             }
         }
     }

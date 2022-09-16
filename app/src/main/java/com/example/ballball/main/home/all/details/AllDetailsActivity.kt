@@ -198,7 +198,7 @@ class AllDetailsActivity : AppCompatActivity() {
                                 matchID, deviceToken!!, name!!, phoneNumber!!, matchDate!!,
                                 matchTime!!, matchLocation!!, teamNote!!, teamPeopleNumber!!, teamImageUrl!!,
                                 destinationAddress!!, destinationLat!!, destinationLong!!, click, clientTeamName!!, clientUID,
-                                clientImageUrl!!, userUID, teamConfirmUID!!, geoHash!!)
+                                clientImageUrl!!, userUID, teamConfirmUID!!, geoHash!!, click)
 
                             val timeUtils : Long = System.currentTimeMillis()
                             allDetailsViewModel.waiMatchListNotification(teamConfirmUID!!, clientTeamName!!, userImageUrl!!, "waitMatch", matchDate!!, matchTime!!, timeUtils)
