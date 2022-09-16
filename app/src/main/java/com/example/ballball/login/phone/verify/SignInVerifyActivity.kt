@@ -135,7 +135,7 @@ class SignInVerifyActivity : AppCompatActivity() {
                                     val intent = Intent(applicationContext, NameActivity::class.java)
                                     intent.putExtra("phoneNumber", phoneNumber)
                                     startActivity(intent)
-                                    finish()
+                                    finishAffinity()
                                     Animation.animateSlideLeft(this)
                                 }
                             }

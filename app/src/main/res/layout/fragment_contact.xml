@@ -130,11 +130,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@+id/title"
-            android:layout_marginTop="8dp"
-            />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/title_2"
@@ -152,10 +151,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="152dp"
             android:layout_below="@+id/title_2"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="40dp"
             />
 
     </RelativeLayout>

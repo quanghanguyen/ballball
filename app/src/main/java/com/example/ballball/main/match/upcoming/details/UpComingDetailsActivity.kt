@@ -324,7 +324,7 @@ class UpComingDetailsActivity : AppCompatActivity() {
                     if (location != null) {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         Model.currentLat = list[0].latitude
                         Model.currentLong = list[0].longitude
                         Model.currentAddress = list[0].getAddressLine(0)

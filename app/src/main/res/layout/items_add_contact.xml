@@ -7,19 +7,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:background="@drawable/contact_background"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginTop="12dp"
-        >
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/contact_background">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_centerVertical="true"
-            >
+            android:layout_marginStart="12dp">
 
             <TextView
                 android:id="@+id/user_name"
@@ -28,7 +26,8 @@
                 android:fontFamily="@font/inter_semibold"
                 android:text="Frenzy Shooters"
                 android:textColor="#363636"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <TextView
                 android:id="@+id/user_phone"
@@ -58,7 +57,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/custom_borderless_ripple"
-                android:src="@drawable/phone_icon_grey" />
+                android:src="@drawable/phone_icon_grey"
+                />
 
         </RelativeLayout>
 

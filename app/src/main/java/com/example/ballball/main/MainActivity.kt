@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             when (result) {
                 is MainViewModel.UpdateUsers.ResultOk -> {}
                 is MainViewModel.UpdateUsers.ResultError -> {}
+                else -> {}
             }
         }
     }
@@ -159,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                     if (location != null) {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
                         currentLat = list[0].latitude
                         currentLong = list[0].longitude
                         currentAddress = list[0].getAddressLine(0)

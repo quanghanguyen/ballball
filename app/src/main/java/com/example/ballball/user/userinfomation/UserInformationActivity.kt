@@ -165,21 +165,21 @@ class UserInformationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         loadingDialog = Dialog(this, R.style.MyAlertDialogTheme)
         loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         loadingDialogBinding = LoadingDialogBinding.inflate(layoutInflater)
         loadingDialog.setContentView(loadingDialogBinding.root)
         loadingDialog.setCancelable(false)
         loadingDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        loadingDialog.show()
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
+            loadingDialog.show()
             imgUri = data?.data!!
             userInformationBinding.profilePicture.setImageURI(imgUri)
         }
 
         if (requestCode == 1 && resultCode == RESULT_OK)  {
+            loadingDialog.show()
             val bundle : Bundle? = data?.extras
             val finalPhoto : Bitmap = bundle?.get("data") as Bitmap
             val bytes = ByteArrayOutputStream()

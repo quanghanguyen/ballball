@@ -191,7 +191,7 @@ class TeamActivity : AppCompatActivity() {
                     Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                     Animation.animateSlideLeft(this)
                 }
                 is TeamViewModel.SaveTeamsImage.ResultError -> {
