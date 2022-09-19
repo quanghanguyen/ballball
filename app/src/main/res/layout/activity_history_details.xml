@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".history.details.HistoryDetailsActivity"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:elevation="8dp"
+            android:background="@drawable/back_button_background"
+            >
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/custom_borderless_ripple">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back_icon"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/inter_bold"
+            android:text="Hungry Admirals FC"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_layout"
+        >
+
+        <RelativeLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <RelativeLayout
+                android:id="@+id/team_image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/team_image_background"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="28dp">
+
+                    <ImageView
+                        android:id="@+id/team_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/empty_team_image"
+                        />
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lịch sử đá"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="16sp"
+                android:layout_below="@+id/team_image_layout"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/match_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_centerHorizontal="true"
+                    android:text="12/12/2022"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="12sp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/date"
+                    android:padding="4dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/client_team_name"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Hungry Admirals FC"
+                        android:textColor="#7A7A7A"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/inter_medium"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/home_team_name"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Team Milk Away"
+                        android:textColor="#7A7A7A"
+                        android:textSize="16sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:gravity="center"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/score"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="@color/black"
+                            android:text="2"
+                            android:fontFamily="@font/inter_medium"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="@color/black"
+                            android:text=":"
+                            android:fontFamily="@font/inter_medium"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="@color/black"
+                            android:text="2"
+                            android:fontFamily="@font/inter_medium"
+                            android:layout_alignParentEnd="true"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/contact_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/match_result"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/chat_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/phone_background"
+                    android:layout_marginEnd="8dp"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/open_chat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_borderless_ripple">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:id="@+id/chat_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/chat_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@+id/chat_icon"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Nhắn tin"
+                                android:textColor="#363636"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/phone_background"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/phone_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/custom_borderless_ripple">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:id="@+id/phone_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/phone_icon" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@+id/phone_icon"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Điện thoại"
+                                android:textColor="#363636"
+                                android:textSize="16sp"
+                                />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

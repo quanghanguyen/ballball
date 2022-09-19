@@ -156,6 +156,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/match_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -184,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="20dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/custom_bordered_ripple"
             >
 
             <TextView
@@ -204,11 +205,12 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/notification_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="20dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/custom_bordered_ripple"
             >
 
             <TextView

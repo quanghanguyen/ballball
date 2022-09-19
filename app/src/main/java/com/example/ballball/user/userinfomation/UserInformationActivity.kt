@@ -22,6 +22,8 @@ import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.databinding.*
+import com.example.ballball.history.HistoryActivity
+import com.example.ballball.listnotification.ListNotificationActivity
 import com.example.ballball.login.phone.login.SignInActivity
 import com.example.ballball.onboarding.activity.OnBoardingActivity2
 import com.example.ballball.user.teaminformation.TeamInformationActivity
@@ -62,8 +64,24 @@ class UserInformationActivity : AppCompatActivity() {
     private fun initEvents() {
         back()
         teamInformation()
+        historyMatch()
+        notificationList()
         editAvatar()
         signOut()
+    }
+
+    private fun notificationList() {
+        userInformationBinding.notificationLayout.setOnClickListener {
+            startActivity(Intent(this, ListNotificationActivity::class.java))
+            Animation.animateSlideLeft(this)
+        }
+    }
+
+    private fun historyMatch() {
+        userInformationBinding.matchHistory.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+            Animation.animateSlideLeft(this)
+        }
     }
 
     private fun signOut() {

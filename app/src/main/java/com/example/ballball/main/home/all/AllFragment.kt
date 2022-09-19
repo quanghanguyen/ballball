@@ -92,20 +92,6 @@ class AllFragment : Fragment() {
                     }
                 }
             )
-
-//            allAdapter.setOnHighLightClickListerner(object :
-//                HighLightOnClickListerner{
-//                override fun onHighLightClickListerner(requestData: CreateMatchModel) {
-//                    allViewModel.handleHighLight(requestData.matchID)
-//                }
-//            })
-//
-//            allAdapter.setOnNotHighLightClickListerner(object :
-//            NotHighLightOnClickListerner{
-//                override fun onNotHighLightClickListerner(requestData: CreateMatchModel) {
-//                    allViewModel.handleNotHighLight(requestData.matchID)
-//                }
-//            })
         }
     }
 

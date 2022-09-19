@@ -47,6 +47,7 @@
             android:text="Hungry Admirals FC"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -69,7 +70,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/team_image_background">
+                android:background="@drawable/team_image_background"
+                >
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/onboarding_selected_dot_white"
-        android:state_selected="true" />
+        android:state_selected="true"
+        />
     <item
-        android:drawable="@drawable/onboarding_unselected_dot_white" />
+        android:drawable="@drawable/onboarding_unselected_dot_white"
+        />
 </selector>
