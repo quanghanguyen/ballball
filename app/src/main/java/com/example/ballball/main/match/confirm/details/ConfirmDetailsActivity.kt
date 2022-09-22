@@ -330,7 +330,13 @@ class ConfirmDetailsActivity : AppCompatActivity() {
             val data = bundle.getParcelableExtra<CreateMatchModel>(KEY_DATA)
             with(confirmDetailsBinding) {
                 teamName.text = data?.clientTeamName
-                Glide.with(teamImage).load(data?.clientImageUrl).centerCrop().into(teamImage)
+                data?.confirmUID?.let { path ->
+                    FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                        .addOnSuccessListener {
+                            val image = it.child("teamImageUrl").value.toString()
+                            Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                        }
+                }
                 date.text = data?.date
                 time.text = data?.time
                 peopleNumber.text = data?.teamPeopleNumber

@@ -11,6 +11,7 @@ import com.example.ballball.`interface`.NotHighLightOnClickListerner
 import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
+import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
 class NewCreateAdapter @Inject constructor(private var newCreateList : ArrayList<CreateMatchModel>)
@@ -52,7 +53,14 @@ class NewCreateAdapter @Inject constructor(private var newCreateList : ArrayList
                 location.text = list.location
                 peopleNumber.text = list.teamPeopleNumber
                 address.text = list.locationAddress
-                Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
+                list.userUID.let { path ->
+                    FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                        .addOnSuccessListener {
+                            val image = it.child("teamImageUrl").value.toString()
+                            Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                        }
+                }
+//                Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
                 waitConfirm.visibility = View.GONE
                 if (list.highlight == 1) {
                     highlightIcon2.visibility = View.VISIBLE

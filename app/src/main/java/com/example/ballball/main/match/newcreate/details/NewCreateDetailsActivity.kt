@@ -41,6 +41,7 @@ import com.example.ballball.utils.Model.matchID
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -150,7 +151,13 @@ class NewCreateDetailsActivity : AppCompatActivity() {
                     clickLayout.visibility = View.GONE
                 }
                 teamName.text = data?.teamName
-                Glide.with(teamImage).load(data?.teamImageUrl).centerCrop().into(teamImage)
+                data?.userUID?.let { path ->
+                    FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                        .addOnSuccessListener {
+                            val image = it.child("teamImageUrl").value.toString()
+                            Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                        }
+                    }
                 clickNumber.text = data?.click.toString()
                 date.text = data?.date
                 time.text = data?.time
@@ -162,7 +169,6 @@ class NewCreateDetailsActivity : AppCompatActivity() {
                 } else {
                     note.text = data?.note
                 }
-
                 matchID = data?.matchID
                 destinationLat = data?.lat
                 destinationLong = data?.long

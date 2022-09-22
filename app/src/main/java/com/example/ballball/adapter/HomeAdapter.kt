@@ -12,13 +12,10 @@ import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.model.UsersModel
+import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
-class HomeAdapter @Inject constructor(
-    private var requestList : ArrayList<CreateMatchModel>,
-//    private var teamImage : String
-    )
-    : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
+class HomeAdapter @Inject constructor(private var requestList : ArrayList<CreateMatchModel>) : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     private lateinit var listerner: OnItemClickListerner
 
@@ -49,7 +46,13 @@ class HomeAdapter @Inject constructor(
                         location.text = list.location
                         peopleNumber.text = list.teamPeopleNumber
                         address.text = list.locationAddress
-                        Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
+                        list.userUID.let { path ->
+                            FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                                .addOnSuccessListener {
+                                    val image = it.child("teamImageUrl").value.toString()
+                                    Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                                }
+                            }
                         newCreate.visibility = View.GONE
                         waitConfirm.visibility = View.GONE
                         highlightIcon1.visibility = View.GONE
@@ -61,16 +64,13 @@ class HomeAdapter @Inject constructor(
                         if (list.highlight == 0) {
                             highlightIcon2.visibility = View.GONE
                         }
-
                         items.setOnClickListener {
                             listerner.onItemClick(list)
                         }
-
                         highlightIcon1.setOnClickListener {
                             highlightIcon1.visibility = View.GONE
                             highlightIcon2.visibility = View.VISIBLE
                         }
-
                         highlightIcon2.setOnClickListener {
                             highlightIcon2.visibility = View.GONE
                             highlightIcon1.visibility = View.VISIBLE

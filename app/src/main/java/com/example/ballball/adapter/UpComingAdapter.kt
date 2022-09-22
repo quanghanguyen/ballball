@@ -12,6 +12,7 @@ import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
 class UpComingAdapter @Inject constructor(private var upComingList: ArrayList<CreateMatchModel>)
@@ -57,10 +58,22 @@ class UpComingAdapter @Inject constructor(private var upComingList: ArrayList<Cr
                 newCreate.visibility = View.GONE
                 waitConfirm.visibility = View.GONE
                 if (userUID == list.userUID) {
-                    Glide.with(teamImage).load(list.clientImageUrl).centerCrop().into(teamImage)
+                    list.clientUID.let { path ->
+                        FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                            .addOnSuccessListener {
+                                val image = it.child("teamImageUrl").value.toString()
+                                Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                            }
+                    }
                     teamName.text = list.clientTeamName
                 } else {
-                    Glide.with(teamImage).load(list.teamImageUrl).centerCrop().into(teamImage)
+                    list.userUID.let { path ->
+                        FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                            .addOnSuccessListener {
+                                val image = it.child("teamImageUrl").value.toString()
+                                Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                            }
+                    }
                     teamName.text = list.teamName
                 }
 

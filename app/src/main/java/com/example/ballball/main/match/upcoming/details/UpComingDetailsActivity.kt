@@ -264,10 +264,22 @@ class UpComingDetailsActivity : AppCompatActivity() {
                 }
 
                 if (userUID == data?.userUID) {
-                    Glide.with(teamImage).load(data?.clientImageUrl).centerCrop().into(teamImage)
+                    data?.clientUID?.let { path ->
+                        FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                            .addOnSuccessListener {
+                                val image = it.child("teamImageUrl").value.toString()
+                                Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                            }
+                        }
                     teamName.text = data?.clientTeamName
                 } else {
-                    Glide.with(teamImage).load(data?.teamImageUrl).centerCrop().into(teamImage)
+                    data?.userUID?.let { path ->
+                        FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                            .addOnSuccessListener {
+                                val image = it.child("teamImageUrl").value.toString()
+                                Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                            }
+                    }
                     teamName.text = data?.teamName
                 }
 

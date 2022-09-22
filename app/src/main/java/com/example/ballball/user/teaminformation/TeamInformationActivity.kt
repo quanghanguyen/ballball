@@ -113,9 +113,7 @@ class TeamInformationActivity : AppCompatActivity() {
     private fun saveTeamObserve() {
         teamInformationViewModel.saveTeams.observe(this) {result ->
             when (result) {
-                is TeamInformationViewModel.SaveTeams.ResultOk -> {
-                    Toast.makeText(this, "Thay đổi thông tin thành công", Toast.LENGTH_SHORT).show()
-                }
+                is TeamInformationViewModel.SaveTeams.ResultOk -> {}
                 is TeamInformationViewModel.SaveTeams.ResultError -> {}
             }
         }

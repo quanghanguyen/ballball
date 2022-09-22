@@ -245,7 +245,13 @@ class WaitDetailsActivity : AppCompatActivity() {
                     clickLayout.visibility = View.GONE
                 }
                 teamName.text = data?.teamName
-                Glide.with(teamImage).load(data?.teamImageUrl).centerCrop().into(teamImage)
+                data?.clientUID?.let { path ->
+                    FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                        .addOnSuccessListener {
+                            val image = it.child("teamImageUrl").value.toString()
+                            Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                        }
+                }
                 if (data?.click  == 1) {
                     clickLayout.visibility = View.GONE
                 } else {

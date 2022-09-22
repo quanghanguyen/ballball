@@ -12,6 +12,7 @@ import com.example.ballball.`interface`.OnItemClickListerner
 import com.example.ballball.databinding.MatchItemsBinding
 import com.example.ballball.model.CreateMatchModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
 class ConfirmAdapter @Inject constructor(private var confirmList: ArrayList<CreateMatchModel>)
@@ -53,7 +54,13 @@ class ConfirmAdapter @Inject constructor(private var confirmList: ArrayList<Crea
                 location.text = list.location
                 peopleNumber.text = list.teamPeopleNumber
                 address.text = list.locationAddress
-                Glide.with(teamImage).load(list.clientImageUrl).centerCrop().into(teamImage)
+                list.confirmUID.let { path ->
+                    FirebaseDatabase.getInstance().getReference("Teams").child(path).get()
+                        .addOnSuccessListener {
+                            val image = it.child("teamImageUrl").value.toString()
+                            Glide.with(teamImage).load(image).centerCrop().into(teamImage)
+                        }
+                    }
                 newCreate.visibility = View.GONE
 
                 if (list.highlight == 1) {
@@ -66,11 +73,9 @@ class ConfirmAdapter @Inject constructor(private var confirmList: ArrayList<Crea
                 items.setOnClickListener {
                     listerner.onItemClick(list)
                 }
-
                 highlightIcon1.setOnClickListener {
                     highLightListerner.onHighLightClickListerner(list)
                 }
-
                 highlightIcon2.setOnClickListener {
                     notHighLightListerner.onNotHighLightClickListerner(list)
                 }
