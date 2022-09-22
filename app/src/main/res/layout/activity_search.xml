@@ -98,29 +98,6 @@
 
     </RelativeLayout>
 
-<!--    <EditText-->
-<!--        android:id="@+id/search_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:layout_below="@+id/title_layout"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:background="@drawable/search_background"-->
-<!--        android:drawableStart="@drawable/search_icon"-->
-<!--        android:drawableEnd="@drawable/search_filter_icon"-->
-<!--        android:drawablePadding="12dp"-->
-<!--        android:elevation="4dp"-->
-<!--        android:fontFamily="@font/inter_medium"-->
-<!--        android:hint="Đội, sân, số người, ..."-->
-<!--        android:inputType="text"-->
-<!--        android:paddingStart="24dp"-->
-<!--        android:paddingEnd="24dp"-->
-<!--        android:textColor="#7A7A7A"-->
-<!--        android:textColorHint="#C7C7C7"-->
-<!--        android:textSize="12sp"-->
-<!--        tools:ignore="RtlSymmetry" />-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

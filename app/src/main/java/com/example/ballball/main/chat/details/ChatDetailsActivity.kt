@@ -15,11 +15,13 @@ import com.bumptech.glide.Glide
 import com.example.ballball.R
 import com.example.ballball.adapter.ChatDetailsAdapter
 import com.example.ballball.databinding.ActivityChatDetailsBinding
+import com.example.ballball.main.chat.ChatViewModel
 import com.example.ballball.main.home.all.details.AllDetailsActivity
 import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.model.UsersModel
 import com.example.ballball.utils.Animation
 import com.example.ballball.utils.Model
+import com.example.ballball.utils.Model.clientChatAvatar
 import com.example.ballball.utils.Model.receiverId
 import com.example.ballball.utils.Model.teamImageUrl
 import com.example.ballball.utils.Model.teamName
@@ -32,7 +34,6 @@ import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class ChatDetailsActivity : AppCompatActivity() {
-
     private lateinit var chatDetailsBinding: ActivityChatDetailsBinding
     private val chatDetailsViewModel : ChatDetailsViewModel by viewModels()
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
@@ -73,16 +74,50 @@ class ChatDetailsActivity : AppCompatActivity() {
 
     private fun readMessageObserve() {
         chatDetailsViewModel.readMessageResult.observe(this) {result ->
-//            with(chatDetailsBinding) {
-//                progressBar.visibility = View.GONE
-//                recyclerView.visibility = View.VISIBLE
-//            }
+            with(chatDetailsBinding) {
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
             when (result) {
                 is ChatDetailsViewModel.ReadMessageResult.Loading -> {
-//                    chatDetailsBinding.progressBar.visibility = View.VISIBLE
+                    chatDetailsBinding.progressBar.visibility = View.VISIBLE
                 }
                 is ChatDetailsViewModel.ReadMessageResult.ResultOk -> {
-                    chatDetailsAdapter.addNewData(result.list)
+                    Log.e("Size", result.list.size.toString())
+
+                    if (receiverId?.isNotEmpty() == true) {
+                        FirebaseDatabase.getInstance().getReference("Users").child(receiverId!!).get()
+                            .addOnSuccessListener {
+                                val chatAvatar = it.child("avatarUrl").value.toString()
+                                chatDetailsBinding.recyclerView.apply {
+                                    layoutManager = LinearLayoutManager(context)
+                                    chatDetailsAdapter = ChatDetailsAdapter(arrayListOf(), chatAvatar)
+                                    adapter = chatDetailsAdapter
+                                    chatDetailsAdapter.addNewData(result.list)
+                                    scrollToPosition(result.list.size.minus(1))
+                                }
+                            }
+                            .addOnFailureListener {
+                                Log.e("Error", it.toString())
+                            }
+                    } else {
+                        FirebaseDatabase.getInstance().getReference("Users").child(intentReceiverId!!).get()
+                            .addOnSuccessListener {
+                                val chatAvatar = it.child("avatarUrl").value.toString()
+                                chatDetailsBinding.recyclerView.apply {
+                                    layoutManager = LinearLayoutManager(context)
+                                    chatDetailsAdapter = ChatDetailsAdapter(arrayListOf(), chatAvatar)
+                                    adapter = chatDetailsAdapter
+                                    chatDetailsAdapter.addNewData(result.list)
+                                    scrollToPosition(result.list.size.minus(1))
+                                }
+                            }
+                            .addOnFailureListener {
+                                Log.e("Error", it.toString())
+                            }
+                    }
+
+//                    chatDetailsAdapter.addNewData(result.list)
                 }
                 is ChatDetailsViewModel.ReadMessageResult.ResultError -> {}
             }
@@ -103,7 +138,7 @@ class ChatDetailsActivity : AppCompatActivity() {
         binding()
         intentBinding()
         handleVariable()
-        initListMessage()
+//        initListMessage()
         sendChat()
         back()
     }
@@ -126,14 +161,6 @@ class ChatDetailsActivity : AppCompatActivity() {
                 }
             }
         }
-
-    private fun initListMessage() {
-        chatDetailsBinding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            chatDetailsAdapter = ChatDetailsAdapter(arrayListOf())
-            adapter = chatDetailsAdapter
-        }
-    }
 
     private fun back() {
         chatDetailsBinding.back.setOnClickListener {

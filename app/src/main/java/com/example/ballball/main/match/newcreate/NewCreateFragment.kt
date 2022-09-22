@@ -86,6 +86,8 @@ class NewCreateFragment : Fragment() {
                         newCreateBinding.recyclerView.visibility = View.GONE
                         newCreateBinding.progressBar.visibility = View.GONE
                     } else {
+                        newCreateBinding.imageLayout.visibility = View.GONE
+                        newCreateBinding.button.visibility = View.GONE
                         newCreateAdapter.addNewData(result.list)
                     }
                 }

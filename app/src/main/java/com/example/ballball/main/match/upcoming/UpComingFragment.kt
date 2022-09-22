@@ -81,6 +81,7 @@ class UpComingFragment : Fragment() {
                         upComingBinding.recyclerView.visibility = View.GONE
                         upComingBinding.progressBar.visibility = View.GONE
                     } else {
+                        upComingBinding.imageLayout.visibility = View.GONE
                         upComingAdapter.addNewData(result.list)
                     }
                 }

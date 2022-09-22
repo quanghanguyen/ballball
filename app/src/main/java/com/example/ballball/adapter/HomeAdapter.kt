@@ -14,7 +14,10 @@ import com.example.ballball.model.CreateMatchModel
 import com.example.ballball.model.UsersModel
 import javax.inject.Inject
 
-class HomeAdapter @Inject constructor(private var requestList : ArrayList<CreateMatchModel>)
+class HomeAdapter @Inject constructor(
+    private var requestList : ArrayList<CreateMatchModel>,
+//    private var teamImage : String
+    )
     : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
     private lateinit var listerner: OnItemClickListerner

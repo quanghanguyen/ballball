@@ -51,6 +51,7 @@ class TodayFragment : Fragment() {
                         todayBinding.progressBar.visibility = View.GONE
                         todayBinding.imageLayout.visibility = View.VISIBLE
                     } else {
+                        todayBinding.imageLayout.visibility = View.GONE
                         todayAdapter.addNewData(result.list)
                     }
                 }

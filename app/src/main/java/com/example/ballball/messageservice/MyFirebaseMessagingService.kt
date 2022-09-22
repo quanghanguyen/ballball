@@ -27,16 +27,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (remoteMessage.data.isNotEmpty()) {
             if (remoteMessage.data["uid"].isNullOrEmpty() || remoteMessage.data["uid"] != userUID) {
                 showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
             }
-//            showNotification(remoteMessage.data["title"], remoteMessage.data["content"])
         }
-
         remoteMessage.notification?.let {
             Log.d("Notifications Handle", it.body.toString())
         }

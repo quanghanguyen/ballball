@@ -72,6 +72,7 @@ class WaitFragment : Fragment() {
                         waitBinding.recyclerView.visibility = View.GONE
                         waitBinding.progressBar.visibility = View.GONE
                     } else {
+                        waitBinding.imageLayout.visibility = View.GONE
                         waitAdapter.addNewData(result.list)
                     }
                 }

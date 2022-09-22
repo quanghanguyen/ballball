@@ -6,85 +6,131 @@
     android:background="@color/white"
     >
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:visibility="gone"
+        android:id="@+id/chat_user_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_launcher_background"
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
         >
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/chat_user_avatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher_background" />
 
         <RelativeLayout
             android:id="@+id/team_name_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
             android:layout_marginTop="8dp"
-            android:layout_toStartOf="@+id/chat_user_avatar"
+            android:paddingHorizontal="24dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/chat_right_background"
             >
-
-            <RelativeLayout
-                android:id="@+id/time_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true">
-
-                <TextView
-                    android:id="@+id/chat_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="13:18 18-08-2022"
-                    android:textColor="#7A7A7A"
-                    android:textSize="12sp" />
-
-                <View
-                    android:id="@+id/dot"
-                    android:layout_width="3dp"
-                    android:layout_height="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/chat_time"
-                    android:background="@drawable/dot"
-                    android:backgroundTint="#7A7A7A" />
-
-                <TextView
-                    android:id="@+id/chat_team_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/dot"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="Frantic Saboteurs"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/chat_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/time_layout"
-                android:layout_alignParentEnd="true"
                 android:fontFamily="@font/inter_regular"
                 android:text="Cam on, toi van khoe"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/chat_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="13:18 18-08-2022"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="10sp"
+                android:layout_below="@+id/chat_message"
+                android:layout_alignStart="@+id/chat_message"
+                />
 
         </RelativeLayout>
 
     </RelativeLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        >-->
+
+<!--&lt;!&ndash;        <de.hdodenhof.circleimageview.CircleImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/chat_user_avatar"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="36dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="36dp"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_alignParentEnd="true"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_centerVertical="true"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/ic_launcher_background" &ndash;&gt;-->
+<!--&lt;!&ndash;            />&ndash;&gt;-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/team_name_layout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="4dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            >-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/chat_message"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/inter_regular"-->
+<!--                android:text="Cam on, toi van khoe"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="16sp"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/chat_time"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/inter_regular"-->
+<!--                android:text="13:18 18-08-2022"-->
+<!--                android:textColor="#7A7A7A"-->
+<!--                android:textSize="10sp"-->
+<!--                android:layout_below="@+id/chat_message"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_alignStart="@+id/chat_message"-->
+<!--                />-->
+
+<!--&lt;!&ndash;                <View&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/dot"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="3dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="3dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_centerVertical="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_marginStart="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_toEndOf="@+id/chat_time"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:background="@drawable/dot"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:backgroundTint="#7A7A7A" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/chat_team_name"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_marginStart="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_toEndOf="@+id/dot"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:fontFamily="@font/inter_regular"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:text="Frantic Saboteurs"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:textColor="@color/black"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:textSize="16sp" />&ndash;&gt;-->
+
+<!--        </RelativeLayout>-->
+
+<!--    </RelativeLayout>-->
 
 </RelativeLayout>

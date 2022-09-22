@@ -72,18 +72,17 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel.searchFilter.observe(this) {result ->
             when (result) {
                 is SearchViewModel.SearchFilterResult.ResultOk -> {
-                    if (searchBinding.search.text.isNullOrEmpty()) {
-                        searchBinding.recyclerView.visibility = View.GONE
-                        searchBinding.imageLayout.visibility = View.GONE
-                    }
                     if (result.list.isEmpty()) {
                         with(searchBinding) {
                             recyclerView.visibility = View.GONE
                             imageLayout.visibility = View.VISIBLE
                         }
-                    } else {
-                        homeAdapter.addFilterList(result.list)
                     }
+                    if (searchBinding.search.text.isEmpty()) {
+                        searchBinding.recyclerView.visibility = View.GONE
+                        searchBinding.imageLayout.visibility = View.GONE
+                    }
+                    homeAdapter.addFilterList(result.list)
                 }
                 is SearchViewModel.SearchFilterResult.ResultError -> {}
             }

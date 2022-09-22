@@ -51,6 +51,7 @@ class TomorrowFragment : Fragment() {
                         tomorrowBinding.imageLayout.visibility = View.VISIBLE
                         tomorrowBinding.progressBar.visibility = View.GONE
                     } else {
+                        tomorrowBinding.imageLayout.visibility = View.GONE
                         tomorrowAdapter.addNewData(result.list)
                     }
                 }

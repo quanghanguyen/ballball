@@ -73,6 +73,7 @@ class ConFirmFragment : Fragment() {
                         conFirmBinding.recyclerView.visibility = View.GONE
                         conFirmBinding.progressBar.visibility = View.GONE
                     } else {
+                        conFirmBinding.imageLayout.visibility = View.GONE
                         confirmAdapter.addNewData(result.list)
                     }
                 }

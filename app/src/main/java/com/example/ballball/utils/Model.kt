@@ -33,4 +33,5 @@ object Model {
     var geoHash : String? = null
     var uid : String? = null
     var userAvatarUrl : String? = null
+    var clientChatAvatar : String? = null
 }

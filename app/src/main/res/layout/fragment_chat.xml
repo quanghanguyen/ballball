@@ -96,6 +96,35 @@
             android:layout_marginBottom="72dp"
             />
 
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/empty_match"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Không tìm thấy kết quả tìm kiếm"
+                android:textColor="#363636"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

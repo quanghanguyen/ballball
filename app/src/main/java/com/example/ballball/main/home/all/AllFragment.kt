@@ -68,6 +68,7 @@ class AllFragment : Fragment() {
                         allFragmentBinding.imageLayout.visibility = View.VISIBLE
                         allFragmentBinding.progressBar.visibility = View.GONE
                     } else {
+                        allFragmentBinding.imageLayout.visibility = View.GONE
                         allAdapter.addNewData(result.list)
                     }
                 }
@@ -81,7 +82,7 @@ class AllFragment : Fragment() {
     private fun initList() {
         allFragmentBinding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            allAdapter = HomeAdapter(arrayListOf())
+            allAdapter = HomeAdapter(arrayListOf(), )
             adapter = allAdapter
 
             allAdapter.setOnItemClickListerner(object :

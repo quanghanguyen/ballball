@@ -15,7 +15,10 @@ import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
-class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatModel>)
+class ChatDetailsAdapter @Inject constructor(
+    private var list : ArrayList<ChatModel>,
+    private var teamAvatar : String
+    )
     : RecyclerView.Adapter<ChatDetailsAdapter.MyViewHolder>() {
 
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid
@@ -29,7 +32,6 @@ class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatMo
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val teamName : TextView = view.findViewById(R.id.chat_team_name)
         val message : TextView = view.findViewById(R.id.chat_message)
         val time : TextView = view.findViewById(R.id.chat_time)
         val image : CircleImageView = view.findViewById(R.id.chat_user_avatar)
@@ -49,8 +51,7 @@ class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatMo
         val chat = list[position]
         holder.message.text = chat.message
         holder.time.text = chat.time
-        holder.teamName.text = chat.teamName
-        Glide.with(holder.image).load(chat.teamAvatar).centerCrop().into(holder.image)
+        Glide.with(holder.image).load(teamAvatar).centerCrop().into(holder.image)
     }
 
     override fun getItemCount(): Int {
@@ -58,7 +59,6 @@ class ChatDetailsAdapter @Inject constructor(private var list : ArrayList<ChatMo
     }
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
         return if (list[position].senderId == userUID ) {
             MESSAGE_TYPE_RIGHT
         } else {

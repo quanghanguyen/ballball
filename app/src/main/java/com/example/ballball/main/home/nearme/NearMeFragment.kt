@@ -79,12 +79,12 @@ class NearMeFragment : Fragment() {
                     nearMeBinding.progressBar.visibility = View.VISIBLE
                 }
                 is NearMeViewModel.LoadNearMeResult.ResultOk -> {
-                    Log.e("SIZE", result.list.size.toString())
                     if (result.list.isEmpty()) {
                         nearMeBinding.nearMeRecyclerView.visibility = View.GONE
                         nearMeBinding.imageLayout.visibility = View.VISIBLE
                         nearMeBinding.progressBar.visibility = View.GONE
                     } else {
+                        nearMeBinding.imageLayout.visibility = View.GONE
                         nearMeAdapter.addNewData(result.list)
                     }
                 }

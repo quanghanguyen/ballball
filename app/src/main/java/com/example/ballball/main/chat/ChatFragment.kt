@@ -42,6 +42,28 @@ class ChatFragment : Fragment() {
     }
 
     private fun initObserve() {
+        loadListObserve()
+        filterObserve()
+    }
+
+    private fun filterObserve() {
+        chatViewModel.chatFilter.observe(viewLifecycleOwner) {result ->
+            when (result) {
+                is ChatViewModel.ChatFilter.ResultOk -> {
+                    if (result.list.isEmpty()) {
+                        with(chatBinding) {
+                            recyclerView.visibility = View.GONE
+                            imageLayout.visibility = View.VISIBLE
+                        }
+                    }
+                    chatAdapter.addFilterList(result.list)
+                }
+                is ChatViewModel.ChatFilter.ResultError -> {}
+            }
+        }
+    }
+
+    private fun loadListObserve() {
         chatViewModel.loadChatList.observe(viewLifecycleOwner) {result ->
             with(chatBinding){
                 progressBar.visibility = View.GONE
@@ -53,53 +75,27 @@ class ChatFragment : Fragment() {
                 }
                 is ChatViewModel.LoadChatList.ResultOk -> {
                     chatAdapter.addNewData(result.list)
-                    initSearch()
+                    chatBinding.search.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            //
+                        }
+
+                        override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            //
+                        }
+
+                        override fun afterTextChanged(s: Editable?) {
+                            chatViewModel.loadFilterList(userUID!!, s.toString())
+                            if (s.toString().isEmpty()) {
+                                chatViewModel.loadChatList(userUID)
+                                chatBinding.imageLayout.visibility = View.GONE
+                            }
+                        }
+                    })
                 }
                 is ChatViewModel.LoadChatList.ResultError -> {}
             }
         }
-    }
-
-    private fun initSearch() {
-        chatBinding.search.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //
-            }
-
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                filter(s.toString())
-            }
-        })
-    }
-
-    private fun filter(text: String) {
-        DatabaseConnection.databaseReference.getReference("Users").addValueEventListener(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val filteredList = ArrayList<UsersModel>()
-                    for (requestSnapshot in snapshot.children) {
-                        requestSnapshot.getValue(UsersModel::class.java)?.let {list ->
-                            when {
-                                list.teamName.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))
-                                        && userUID != list.userUid -> {
-                                    filteredList.add(0, list)
-                                }
-                            }
-                        }
-                    }
-                    chatAdapter.addFilterList(filteredList)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                //
-            }
-        })
     }
 
     private fun initList() {

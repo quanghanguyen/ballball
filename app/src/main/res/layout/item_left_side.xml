@@ -11,8 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="8dp"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -21,7 +19,8 @@
             android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/ic_launcher_background"
+            />
 
         <RelativeLayout
             android:id="@+id/team_name_layout"
@@ -30,6 +29,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/chat_user_avatar"
+            android:background="@drawable/chat_left_background"
+            android:paddingHorizontal="24dp"
             >
 
             <RelativeLayout
@@ -38,50 +39,48 @@
                 android:layout_height="wrap_content"
                 >
 
+<!--                <TextView-->
+<!--                    android:id="@+id/chat_team_name"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/inter_medium"-->
+<!--                    android:text="Frenzy Shooters"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="16sp"-->
+<!--                    />-->
+
+<!--                <View-->
+<!--                    android:id="@+id/dot"-->
+<!--                    android:layout_width="3dp"-->
+<!--                    android:layout_height="3dp"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_toEndOf="@+id/chat_team_name"-->
+<!--                    android:background="@drawable/dot"-->
+<!--                    android:backgroundTint="#7A7A7A" />-->
+
                 <TextView
-                    android:id="@+id/chat_team_name"
+                    android:id="@+id/chat_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Frenzy Shooters"
+                    android:text="Xin chao, ban co khoe khong?"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <View
-                    android:id="@+id/dot"
-                    android:layout_width="3dp"
-                    android:layout_height="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/chat_team_name"
-                    android:background="@drawable/dot"
-                    android:backgroundTint="#7A7A7A" />
-
-                <TextView
-                    android:id="@+id/chat_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="13:18 18-08-2022"
-                    android:textColor="#7A7A7A"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@id/dot"
-                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
                     />
-
 
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/chat_message"
+                android:id="@+id/chat_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/time_layout"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/inter_regular"
-                android:text="Xin chao, ban co khoe khong?"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:text="13:18 18-08-2022"
+                android:textColor="#7A7A7A"
+                android:textSize="10sp"
+                android:layout_below="@+id/time_layout"
                 />
 
         </RelativeLayout>
